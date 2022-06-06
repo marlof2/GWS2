@@ -29,7 +29,7 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('condominium_id')->references('id')->on('condominium')->onDelete('cascade');
-            $table->foreign('description_id')->references('id')->on('description')->onDelete('cascade');
+            $table->foreign('description_id')->references('id')->on('descriptions')->onDelete('cascade');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->timestamps();
         });
