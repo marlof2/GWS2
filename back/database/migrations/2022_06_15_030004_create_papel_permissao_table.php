@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('profiles', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
+        Schema::create('papel_permissao', function (Blueprint $table) {
+            $table->unsignedBigInteger('permissao_id');
+            $table->unsignedBigInteger('papel_id');
             $table->timestamps();
+            
+            $table->foreign('permissao_id')->references('id')->on('permissoes')->onDelete('cascade');
+            $table->foreign('papel_id')->references('id')->on('papeis')->onDelete('cascade');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('papel_permissao');
     }
 };

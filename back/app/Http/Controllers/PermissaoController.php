@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Action;
+use App\Models\Permissao;
 use Illuminate\Http\Request;
 
-class ActionController extends Controller
+class PermissaoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,16 +13,6 @@ class ActionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -41,21 +31,10 @@ class ActionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Action  $action
+     * @param  \App\Models\Permissao  $permissao
      * @return \Illuminate\Http\Response
      */
-    public function show(Action $action)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Action  $action
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Action $action)
+    public function show(Permissao $permissao)
     {
         //
     }
@@ -64,10 +43,10 @@ class ActionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Action  $action
+     * @param  \App\Models\Permissao  $permissao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Action $action)
+    public function update(Request $request, Permissao $permissao)
     {
         //
     }
@@ -75,10 +54,10 @@ class ActionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Action  $action
+     * @param  \App\Models\Permissao  $permissao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Action $action)
+    public function destroy(Permissao $permissao)
     {
         //
     }

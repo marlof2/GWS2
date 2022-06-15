@@ -2,13 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Action;
-use App\Models\Profile;
-use App\Models\ProfileAction;
-use App\Models\User;
+
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Papel;
+use App\Models\PapelPermissao;
+use App\Models\PapelUser;
+use App\Models\Permissao;
+use App\Models\User;
+
 
 class UserSeeder extends Seeder
 {
@@ -24,7 +27,6 @@ class UserSeeder extends Seeder
 
         $usuario = User::firstOrCreate(
             [
-                'profile_id' => 1,
                 'name' => 'Marlo',
                 'email' => 'marlosilva.f2@gmail.com',
                 'password' => Hash::make('teste'),
@@ -35,7 +37,6 @@ class UserSeeder extends Seeder
 
         $usuario = User::firstOrCreate(
             [
-                'profile_id' => 2,
                 'name' => $faker->name(),
                 'email' => $faker->unique()->safeEmail(),
                 'password' => Hash::make('teste'),
@@ -46,12 +47,20 @@ class UserSeeder extends Seeder
 
         $usuarios->each(function ($usuario) {
 
-            $acoes = Action::get();
+            $papel = Papel::find(1);
+            $permissao = Permissao::get();
 
-            $acoes->each(function ($acao) use ($usuario) {
-                ProfileAction::updateOrCreate([
-                    'profile_id' => $usuario->profile_id,
-                    'action_id' => $acao->id
+            $papel->each(function ($papel) use ($usuario) {
+                PapelUser::updateOrCreate([
+                    'user_id' => $usuario->id,
+                    'papel_id' => $papel->id
+                ]);
+            });
+
+            $permissao->each(function ($permissao) use ($papel) {
+                PapelPermissao::updateOrCreate([
+                    'permissao_id' => $permissao->id,
+                    'papel_id' => $papel->id
                 ]);
             });
         });

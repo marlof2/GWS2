@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProfileAction;
+use App\Models\PapelUser;
 use Illuminate\Http\Request;
 
-class ProfileActionController extends Controller
+class PapelUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,16 +13,6 @@ class ProfileActionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -41,21 +31,10 @@ class ProfileActionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProfileAction  $profileAction
+     * @param  \App\Models\PapelUser  $papelUser
      * @return \Illuminate\Http\Response
      */
-    public function show(ProfileAction $profileAction)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProfileAction  $profileAction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProfileAction $profileAction)
+    public function show(PapelUser $papelUser)
     {
         //
     }
@@ -64,10 +43,10 @@ class ProfileActionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProfileAction  $profileAction
+     * @param  \App\Models\PapelUser  $papelUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProfileAction $profileAction)
+    public function update(Request $request, PapelUser $papelUser)
     {
         //
     }
@@ -75,10 +54,10 @@ class ProfileActionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProfileAction  $profileAction
+     * @param  \App\Models\PapelUser  $papelUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProfileAction $profileAction)
+    public function destroy(PapelUser $papelUser)
     {
         //
     }

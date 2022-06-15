@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('actions', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
+        Schema::create('papel_users', function (Blueprint $table) {
+            $table->unsignedBigInteger('papel_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('papel_id')->references('id')->on('papeis')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actions');
+        Schema::dropIfExists('papel_users');
     }
 };
