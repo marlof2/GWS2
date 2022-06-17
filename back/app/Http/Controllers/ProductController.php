@@ -19,7 +19,7 @@ class ProductController extends Controller
             $product = Product::all();
 
             return response()->json([
-                'products' => $product
+                'data' => $product
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -37,11 +37,11 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request,  Product $product)
     {
         try {
-            $product::create($request->all());
+            $result = $product::create($request->all());
 
             return response()->json([
-                'products' => $product,
-                'status' => '200'
+                'data' => $result,
+                'status' => '201'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -65,7 +65,7 @@ class ProductController extends Controller
             $product->find($id)->update($request->all());
 
             return response()->json([
-                'message'=> 'Produto atualizado com sucesso!',
+                'message' => 'Produto atualizado com sucesso!',
                 'status' => '200'
             ]);
         } catch (\Exception $e) {
@@ -101,7 +101,7 @@ class ProductController extends Controller
             $products->delete();
 
             return response()->json([
-                'message' => $products->nome.' excluído(a) com sucesso!',
+                'message' => $products->nome . ' excluído(a) com sucesso!',
                 'status' => '200'
             ]);
         } catch (\Exception $e) {
