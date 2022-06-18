@@ -20,7 +20,7 @@
         <div v-for="(item, index) in items" :key="index">
           <v-divider v-if="index > 0 && index < items.length" inset></v-divider>
 
-          <v-list-item @click="">
+          <v-list-item>
             <v-list-item-avatar size="32" :color="item.color">
               <v-icon dark small>{{ item.icon }}</v-icon>
             </v-list-item-avatar>

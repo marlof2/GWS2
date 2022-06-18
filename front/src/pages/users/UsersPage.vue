@@ -130,7 +130,7 @@
 
 <script>
 import users from './content/users'
-import CopyLabel from '../../components/common/CopyLabel'
+import CopyLabel from '../../components/UI/CopyLabel.vue'
 
 export default {
   components: {

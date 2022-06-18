@@ -1,29 +1,45 @@
 <template>
   <v-menu offset-y left transition="slide-y-transition">
     <template v-slot:activator="{ on }">
-      <v-btn icon v-on="on">
-        <v-icon>mdi-view-grid-outline</v-icon>
+      <v-btn color="white" class="ml-1" icon v-on="on">
+        <v-icon size="28">mdi-dots-grid</v-icon>
       </v-btn>
     </template>
 
     <v-card class="d-flex flex-row flex-wrap" style="max-width: 280px">
-      <div
-        v-for="app in apps"
-        :key="app.link"
-        class="app-tile pa-3 text-center"
-        style="flex: 0 50%"
-        @click="navigateTo(app.link)"
+      <span
+        class="modulo"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="redirect($event, item.link)"
       >
-        <v-icon color="primary">{{ app.icon }}</v-icon>
-        <div class="font-weight-bold mt-1">{{ app.key ? $t(app.key) : app.text }}</div>
-        <div class="caption">{{ app.subtitleKey ? $t(app.subtitleKey) : app.subtitle }}</div>
-      </div>
+        <div
+          class="item-tile pa-1 text-center d-flex flex-columm"
+          style="flex: 0 50%"
+        >
+          <v-img
+            width="36px"
+            height="36px"
+            v-permissions_system="item.codigo"
+            :src="`${item.icone}`"
+          ></v-img>
+
+          <div class="font-weight-bold mt-1 ml-2">
+            <span class="item-descricao">
+              {{ item.descricao }}
+            </span>
+          </div>
+        </div>
+      </span>
     </v-card>
   </v-menu>
 </template>
 
 <script>
-import config from '../../configs'
+import jwt from "../../api/jwt";
+import config from "../../configs";
+import { mapGetters } from "vuex";
+
 /*
 |---------------------------------------------------------------------
 | Toolbar Apps Component
@@ -35,15 +51,32 @@ import config from '../../configs'
 export default {
   data() {
     return {
-      apps: config.toolbar.apps
-    }
+      apps: config.toolbar.apps,
+      items: [],
+    };
   },
+  mounted() {},
   methods: {
+     redirect(event, link) {
+      event.ctrlKey ? window.open(link, '_blank') : window.location = link;
+
+    },
     navigateTo(path) {
-      if (this.$route.path !== path) this.$router.push(path)
-    }
-  }
-}
+      return (window.location.href = `${path}/autenticar?token=${jwt.getToken()}`);
+      //if (this.$route.path !== path) this.$router.push(path);
+    },
+  },
+  computed: {
+    ...mapGetters({
+      permissions: "$_login/getUsuarioPermissoes",
+    }),
+  },
+  watch: {
+    permissions(value) {
+      this.items = value.systems;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -60,5 +93,16 @@ export default {
   &:hover {
     transform: scale(1.1);
   }
+}
+.v-toolbar__content {
+  padding: 1px 6px;
+}
+
+.item-descricao {
+  color: #393e46;
+}
+
+.modulo {
+  cursor: pointer;
 }
 </style>

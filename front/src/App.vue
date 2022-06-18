@@ -5,26 +5,40 @@
       <transition name="fade" mode="out-in">
         <router-view />
       </transition>
+      <Overlay v-if="requestPending" :overlay="overlay" />
     </component>
 
-    <v-snackbar v-model="toast.show" :timeout="toast.timeout" :color="toast.color" bottom>
+    <v-snackbar
+      v-model="toast.show"
+      :timeout="toast.timeout"
+      :color="toast.color"
+      bottom
+    >
       {{ toast.message }}
-      <v-btn v-if="toast.timeout === 0" color="white" text @click="toast.show = false">{{ $t('common.close') }}</v-btn>
+      <v-btn
+        v-if="toast.timeout === 0"
+        color="white"
+        text
+        @click="toast.show = false"
+        >{{ $t("common.close") }}</v-btn
+      >
     </v-snackbar>
   </v-app>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
-import config from './configs'
+import { mapState } from "vuex";
+import { mapGetters } from "vuex";
+import storeRequest from "@/modules/request/_store";
+import config from "./configs";
 
 // Layouts
-import defaultLayout from './layouts/DefaultLayout'
-import simpleLayout from './layouts/SimpleLayout'
-import landingLayout from './layouts/LandingLayout'
-import authLayout from './layouts/AuthLayout'
-import errorLayout from './layouts/ErrorLayout'
+import defaultLayout from "./layouts/DefaultLayout";
+import simpleLayout from "./layouts/SimpleLayout";
+import landingLayout from "./layouts/LandingLayout";
+import authLayout from "./layouts/AuthLayout";
+import errorLayout from "./layouts/ErrorLayout";
+import Overlay from "./components/UI/Overlay.vue";
 
 /*
 |---------------------------------------------------------------------
@@ -40,28 +54,42 @@ export default {
     simpleLayout,
     landingLayout,
     authLayout,
-    errorLayout
+    errorLayout,
+    Overlay,
+  },
+  data() {
+    return {
+      overlay: true,
+    };
   },
   computed: {
-    ...mapState('app', ['toast']),
-    isRouterLoaded: function() {
-      if (this.$route.name !== null) return true
+    ...mapState("app", ["toast"]),
+    isRouterLoaded: function () {
+      if (this.$route.name !== null) return true;
 
-      return false
+      return false;
     },
-    currentLayout: function() {
-      const layout = this.$route.meta.layout || 'default'
+    currentLayout: function () {
+      const layout = this.$route.meta.layout || "default";
 
-      return layout + 'Layout'
-    }
+      return layout + "Layout";
+    },
+    ...mapGetters({
+      requestPending: "$_request/requestsPending",
+    }),
+  },
+  beforeCreate() {
+    const STORE_REQUEST = "$_request";
+    if (!(STORE_REQUEST in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_REQUEST, storeRequest);
   },
   head: {
     link: [
       // adds config/icons into the html head tag
-      ...config.icons.map((href) => ({ rel: 'stylesheet', href }))
-    ]
-  }
-}
+      ...config.icons.map((href) => ({ rel: "stylesheet", href })),
+    ],
+  },
+};
 </script>
 
 <style scoped>
