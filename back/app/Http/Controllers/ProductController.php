@@ -16,10 +16,11 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $product = Product::all();
+            $product = Product::paginate(20);
 
             return response()->json([
-                'data' => $product
+                'data' => $product,
+                'status' => 200
             ]);
         } catch (\Exception $e) {
             return response()->json([

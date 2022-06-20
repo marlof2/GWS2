@@ -15,7 +15,18 @@ class ProgramationController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $programation = Programation::paginate(15);
+
+            return response()->json([
+                'data' => $programation,
+                'status' => 200
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 
     /**
@@ -24,9 +35,9 @@ class ProgramationController extends Controller
      * @param  \App\Http\Requests\StoreProgramationRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProgramationRequest $request)
+    public function store(StoreProgramationRequest $request, Programation $programation)
     {
-        //
+        $result = Programation::create($request->all());
     }
 
     /**
