@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row cols="12" dense class="py-2">
-      <v-col cols="5">
+      <v-col cols="6" >
         <span>
           <AddButton
             v-permissions="permissions.incluir"
@@ -24,7 +24,7 @@
           class="search-input"
         ></v-text-field>
       </v-col>
-      <div>
+      <!-- <div>
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -38,7 +38,7 @@
           </template>
           <span>Filtro Avançado</span>
         </v-tooltip>
-      </div>
+      </div> -->
     </v-row>
     <v-data-table
       :headers="headers"

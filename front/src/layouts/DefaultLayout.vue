@@ -1,20 +1,18 @@
 <template>
   <div>
     <!-- Navigation -->
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      floating
-      class="elevation-1"
-      :right="$vuetify.rtl"
-      :light="menuTheme === 'light'"
-      :dark="menuTheme === 'dark'"
-    >
+    <v-navigation-drawer v-model="drawer" app floating class="elevation-1" :right="$vuetify.rtl"
+      :light="menuTheme === 'light'" :dark="menuTheme === 'dark'">
       <!-- Navigation menu info -->
       <template v-slot:prepend>
         <div class="pa-2">
           <div class="title font-weight-bold text-uppercase primary--text">
-            {{ product.name }}
+            <v-row>
+              <v-img style="margin-left: 26px;" max-height="30" max-width="30" src="../../public/images/gws.png" />
+              <v-col col="12">
+                {{ product.name }}
+              </v-col>
+            </v-row>
           </div>
         </div>
       </template>
@@ -25,22 +23,12 @@
     </v-navigation-drawer>
 
     <!-- Toolbar -->
-    <v-app-bar
-      app
-      :color="isToolbarDetached ? 'surface' : undefined"
-      :flat="isToolbarDetached"
-      :light="toolbarTheme === 'light'"
-      :dark="toolbarTheme === 'dark'"
-    >
-      <v-card
-        class="flex-grow-1 d-flex"
-        :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']"
-        :flat="!isToolbarDetached"
-      >
+    <v-app-bar app :color="isToolbarDetached ? 'surface' : undefined" :flat="isToolbarDetached"
+      :light="toolbarTheme === 'light'" :dark="toolbarTheme === 'dark'">
+      <v-card class="flex-grow-1 d-flex" :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']"
+        :flat="!isToolbarDetached">
         <div class="d-flex flex-grow-1 align-center">
-          <v-app-bar-nav-icon
-            @click.stop="drawer = !drawer"
-          ></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
           <v-spacer class="d-none d-lg-block"></v-spacer>
 

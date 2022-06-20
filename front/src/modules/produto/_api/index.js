@@ -1,8 +1,7 @@
 import Api from "@/api";
 import { constants } from "../_constants";
 
-const apiUrl =
-  process.env.VUE_APP_URL_API_CADASTRO_BASICO + constants.routeMain;
+const apiUrl = process.env.VUE_APP_URL_API + constants.routeMain;
 
 const getItems = async (params) => {
   const result = await Api.query(apiUrl, params);

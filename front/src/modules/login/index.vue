@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-card class="text-center pa-1">
-      <img class="image-logo" src="../../assets/images/logo.png" />
-      <v-card-title class="justify-center display-1">Bem-vindo(a)</v-card-title>
-      <v-card-subtitle>Entre em sua conta</v-card-subtitle>
+      <img class="image-logo" height="100" width="100"  src="../../../public/images/gws.jpeg" />
+      <v-card-title class="justify-center display-1 mb-1">Bem-vindo(a)</v-card-title>
+      <v-card-subtitle>FAÇA LOGIN PARA INICIAR SUA SESSÃO.</v-card-subtitle>
 
       <!-- sign in form -->
       <v-card-text>
@@ -36,7 +36,7 @@
             :disabled="isSignInDisabled"
             block
             x-large
-            :color="'#00A370'"
+            :color="'#ff6a37'"
             dark
             @click="submit"
             >{{ $t("login.button") }}</v-btn

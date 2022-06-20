@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- Layout component -->
-    <component :is="currentLayout" v-if="isRouterLoaded">
+    <component  :is="currentLayout" v-if="isRouterLoaded">
       <transition name="fade" mode="out-in">
         <router-view />
       </transition>

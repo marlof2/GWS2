@@ -4,7 +4,7 @@
       <div>
         <div class="display-1">
           {{
-            $route.params.id != undefined ? "Edição de Produto" : "Novo Produto"
+              $route.params.id != undefined ? "Edição de Produto" : "Novo Produto"
           }}
         </div>
         <Breadcrumbs :breadcrumbs="breadcrumbs" />
@@ -14,44 +14,26 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
           <v-col cols="3" sm="3" md="3">
-            <TextField
-              v-model="form.nome"
-              label="Nome"
-              :maxlength="30"
-              v-mask="''"
-              :rules="required"
-              required
-            />
+            <TextField v-model="form.nome" label="Nome" :maxlength="30" v-mask="''" :rules="required" required />
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="3" sm="3" md="3">
-            <TextField
-              v-model="form.quantidade"
-              label="Quantidade"
-              :maxlength="30"
-              v-mask="''"
-              :rules="required"
-              required
-            />
+            <TextField v-model="form.quantidade" label="Quantidade" :maxlength="30" v-mask="''" :rules="required"
+              required />
           </v-col>
         </v-row>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <FormButton
-            :background="this.$colors.btn_voltar"
-            :label="this.$strings.btn_voltar"
-            dark
-            @click="$router.go(-1)"
-          />
-          <FormButton
-            :background="this.$colors.medium_green"
-            :label="this.$strings.btn_salvar"
-            dark
-            @click="save"
-          />
-        </v-card-actions>
+        <v-row>
+          <v-col>
+            <v-card-actions>
+              <FormButton :background="this.$colors.btn_voltar" :label="this.$strings.btn_voltar" dark
+                @click="$router.go(-1)" />
+              <FormButton :background="this.$colors.medium_green" :label="this.$strings.btn_salvar" dark
+                @click="save" />
+            </v-card-actions>
+          </v-col>
+        </v-row>
       </v-form>
     </v-card>
   </div>
@@ -66,16 +48,16 @@ import { constants } from "../_constants";
 import TextField from "../../../components/Inputs/TextField.vue";
 
 export default {
-  name: "paisForm",
+  name: "produtoForm",
   components: {
     FormButton,
     Breadcrumbs,
     TextField,
   },
   beforeCreate() {
-    const STORE_PAIS = "$_pais";
-    if (!(STORE_PAIS in this.$store._modules.root._children))
-      this.$store.registerModule(STORE_PAIS, store);
+    const STORE_PRODUTO = "$_produto";
+    if (!(STORE_PRODUTO in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_PRODUTO, store);
   },
   data() {
     return {
@@ -99,14 +81,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getItemById: "$_pais/getItemById",
+      getItemById: "$_produto/getItemById",
     }),
   },
   methods: {
     ...mapActions({
-      itemById: "$_pais/getItemById",
-      createItem: "$_pais/createItem",
-      updateItem: "$_pais/updateItem",
+      itemById: "$_produto/getItemById",
+      createItem: "$_produto/createItem",
+      updateItem: "$_produto/updateItem",
     }),
     async save() {
       this.formValidated = await this.$refs.form.validate();
@@ -117,13 +99,14 @@ export default {
         this.form.id = this.$route.params.id;
         const resp = await this.updateItem(this.form);
         if (resp.status == 200) {
-          this.$router.push({ name: "pais" });
+          this.$router.push({ name: "produto" });
           Swal.messageToast(this.$strings.msg_alterar, "success");
         }
       } else {
         const resp = await this.createItem(this.form);
+        console.log(resp);
         if (resp.status == 201) {
-          this.$router.push({ name: "pais" });
+          this.$router.push({ name: "produto" });
           Swal.messageToast(this.$strings.msg_adicionar, "success");
         }
       }
@@ -134,7 +117,7 @@ export default {
       if (this.$route.params.id != undefined) {
         let keys = Object.keys(this.form);
         keys.forEach((i) => {
-          this.form[i] = item[i];
+          this.form[i] = item[0][i];
         });
       }
     },
@@ -142,4 +125,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

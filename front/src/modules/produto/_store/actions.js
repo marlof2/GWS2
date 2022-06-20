@@ -19,16 +19,6 @@ const updateItem = async (context, object) => {
   return await api.updateItem(object);
 };
 
-const inactivateItem = async (context, id) => {
-  // await api.inactivateAlcada(id);
-  //context.commit("STORE_ALCADA", result.data);
-};
-
-const activateItem = async (context, id) => {
-  // await api.activeItemAlcada(id);
-  //context.commit("STORE_ALCADA", result.data);
-};
-
 const deleteItem = async (context, id) => {
   const result = await api.deleteItem(id);
 };
@@ -37,8 +27,6 @@ export default {
   getItems,
   getItemById,
   createItem,
-  inactivateItem,
-  activateItem,
   updateItem,
   deleteItem,
 };

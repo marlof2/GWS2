@@ -23,7 +23,7 @@ export const routes = [
   },
   {
     path: "/autenticar",
-    name: "autenticar",
+    name: "autenticar-user",
     component: () => import("@/modules/login"),
     meta: {
       layout: "auth",

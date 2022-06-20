@@ -1,4 +1,4 @@
-const routeMain = "produto";
+const routeMain = "produtos";
 
 let state = {};
 
@@ -8,11 +8,7 @@ state[`${routeMain}ById`] = [];
 const form = {
   id: null,
   nome: "",
-  nacionalidade: "",
-  codigo_m49: "",
-  codigo_iso_alpha2: "",
-  codigo_iso_alpha3: "",
-  codigo_esus: "",
+  quantidade: "",
 };
 
 const permissions = {

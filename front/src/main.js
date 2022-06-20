@@ -54,22 +54,30 @@ Vue.prototype.$masks = MASKS;
 Vue.config.productionTip = false;
 Api.init();
 
-// Vue.directive("permissions", {
-//   inserted(el, binding, vnode) {
-//     if (!binding.value || binding.value == "") {
-//       return true;
-//     }
-//     if (
-//       !JSON.parse(
-//         cryptografia
-//           .descryptografar(localStorage.getItem("permissions"))
-//           .includes(binding.value)
-//       )
-//     ) {
-//       vnode.elm.parentElement.remove();
-//     }
-//   },
-// });
+Vue.directive("permissions", {
+  inserted(el, binding, vnode) {
+    if (!binding.value || binding.value == "") {
+      return true;
+    }
+    if (true) {
+      vnode.elm.parentElement.remove();
+    }
+  },
+  // inserted(el, binding, vnode) {
+  //   if (!binding.value || binding.value == "") {
+  //     return true;
+  //   }
+  //   if (
+  //     !JSON.parse(
+  //       cryptografia
+  //         .descryptografar(localStorage.getItem("permissions"))
+  //         .includes(binding.value)
+  //     )
+  //   ) {
+  //     vnode.elm.parentElement.remove();
+  //   }
+  // },
+});
 
 
 

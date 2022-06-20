@@ -10,7 +10,7 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="12" md="12">
+      <!-- <v-col cols="12" sm="12" md="12">
         <Select
           v-model="filter.quantidade"
           :itemValue="'id'"
@@ -18,9 +18,9 @@
           :items="['teste']"
           :label="'Porte'"
         />
-      </v-col>
+      </v-col> -->
 
-      <v-row align="center" justify="center">
+      <v-row justify="center">
         <FormButton
           :background="this.$colors.dark_green"
           :label="this.$strings.btn_filtrar"
@@ -68,7 +68,7 @@ import TextField from "../../components/Inputs/TextField.vue";
 import Select from "../../components/Inputs/Select.vue";
 
 export default {
-  name: "paisModule",
+  name: "produtoModule",
   components: {
     DataTable,
     Breadcrumbs,
@@ -96,67 +96,29 @@ export default {
   },
   methods: {
     ...mapActions({
-      pais: "$_pais/getItems",
+      produto: "$_produto/getItems",
     }),
     async search(search) {
-      await this.pais({ search });
+      await this.produto({ search });
     },
     async handlePageChange(paginate) {
-      await this.pais(paginate);
+      await this.produto(paginate);
     },
   },
   beforeCreate() {
-    const STORE_PAIS = "$_pais";
-    if (!(STORE_PAIS in this.$store._modules.root._children))
-      this.$store.registerModule(STORE_PAIS, store);
+    const STORE_PRODUTO = "$_produto";
+    if (!(STORE_PRODUTO in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_PRODUTO, store);
   },
   computed: {
     ...mapGetters({
-      getItems: "$_pais/getItems",
+      getItems: "$_produto/getItems",
     }),
   },
   watch: {
     getItems(value) {
       const resp = value;
-      this.items = [
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-        {
-          nome: "Marlo Marques da Silva Filho",
-          quantidade: 10,
-        },
-      ];
-      // this.items = resp.data;
+      this.items = resp.data;
       this.paginate.totalPages = resp.total;
       this.paginate.page = resp.current_page;
       this.paginate.lastPage = resp.last_page;

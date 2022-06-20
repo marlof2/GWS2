@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -13,14 +14,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $product = Product::all();
+            if ($request->filled('search')) {
+                $product = Product::where('nome', $request->search)->paginate(15);
+                return response()->json($product);
+            }
+            $product = Product::paginate(15);
 
-            return response()->json([
-                'data' => $product
-            ]);
+            return response()->json($product);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
@@ -41,12 +44,10 @@ class ProductController extends Controller
 
             return response()->json([
                 'data' => $result,
-                'status' => '201'
-            ]);
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'msg' => $e->getMessage(),
-                'error_linha' => $e->getLine(),
+                'message' => $e->getMessage(),
             ], 406);
         }
     }
@@ -70,8 +71,7 @@ class ProductController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'msg' => $e->getMessage(),
-                'error_linha' => $e->getLine(),
+                'message' => $e->getMessage(),
             ], 406);
         }
     }
@@ -82,9 +82,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id, Product $product)
     {
-        //
+        try {
+            return response()->json($product->where('id', $id)->get(), 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 
 
