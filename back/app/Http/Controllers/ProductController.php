@@ -18,11 +18,11 @@ class ProductController extends Controller
     {
         try {
             if ($request->filled('search')) {
-                $product = Product::where('nome', $request->search)->paginate(15);
+                $product = Product::PesquisaPorNome($request->search);
                 return response()->json($product);
             }
+            
             $product = Product::paginate(15);
-
             return response()->json($product);
         } catch (\Exception $e) {
             return response()->json([
