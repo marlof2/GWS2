@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProgramationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,4 @@ use App\Http\Controllers\ProductController;
 // Route::get('/produtos', [ProductController::class, 'index']);
 
 Route::apiResource('produtos', ProductController::class);
+Route::apiResource('programations', ProgramationController::class);

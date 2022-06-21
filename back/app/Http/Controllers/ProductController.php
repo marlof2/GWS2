@@ -22,7 +22,7 @@ class ProductController extends Controller
                 return response()->json($product);
             }
 
-            $product = Product::paginate(15);
+            $product = Product::paginate(config('app.pageLimit'));
             return response()->json($product);
         } catch (\Exception $e) {
             return response()->json([
