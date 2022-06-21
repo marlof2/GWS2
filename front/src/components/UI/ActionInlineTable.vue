@@ -92,12 +92,13 @@ export default {
         .then(async (result) => {
           if (result.isConfirmed) {
             const response = await Api.delete(
-              `${process.env.VUE_APP_URL_API_CADASTRO_BASICO}${pathRoute}`,
+              `${process.env.VUE_APP_URL_API}${pathRoute}`,
               id
             );
             if (!response) return false;
+            console.log(response);
             this.$swal.fire({
-              title: response.data.success,
+              title: response.data.message,
               icon: "success",
             });
             this.$root.$emit("reloadDelete");

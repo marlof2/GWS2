@@ -22,7 +22,7 @@ export default {
           icon: "mdi-archive-outline",
           key: "Produtos",
           text: "Produtos",
-          link: "/produto",
+          link: "/produtos",
         },
         {
           icon: "mdi-home-city-outline",

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProgramationController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +17,12 @@ use App\Http\Controllers\ProgramationController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/autenticar', [AuthController::class, 'autenticar']);
 
 
-// Route::get('/produtos', [ProductController::class, 'index']);
-// Route::get('/produtos', [ProductController::class, 'index']);
-
-Route::apiResource('produtos', ProductController::class);
-Route::apiResource('programations', ProgramationController::class);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResource('produtos', ProductController::class);
+    Route::apiResource('programations', ProgramationController::class);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});

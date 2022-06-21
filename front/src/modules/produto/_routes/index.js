@@ -1,7 +1,7 @@
 export default [
   {
-    path: "/produto",
-    name: "produto",
+    path: "/produtos",
+    name: "produtos",
     component: () => import("@/modules/produto"),
   },
   {
