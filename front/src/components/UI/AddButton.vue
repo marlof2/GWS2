@@ -1,7 +1,6 @@
 <template>
   <v-btn
-    dark
-    :color="'#00A370'"
+    :color="'primary'"
     :to="to ? to : `${currentRoutePath}/cadastrar`"
   >
     {{ label ? label : "Adicionar" }}

@@ -5,7 +5,8 @@
     class="py-2 label"
     v-on="$listeners"
     :dark="dark"
-    :style="{ background: background }"
+    :outlined="isBack"
+    :color="'primary'"
     :loading="isLoading"
     >{{ label }}</v-btn
   >
@@ -13,7 +14,7 @@
 <script>
 export default {
   props: {
-    background: String,
+    isBack: Boolean,
     label: String,
     dark: Boolean,
     click: Function,

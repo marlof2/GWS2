@@ -2,39 +2,42 @@
   <div class="d-flex flex-grow-1 flex-column">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Visualização País</div>
+        <div class="display-1">Visualização Produto</div>
         <Breadcrumbs :items="breadcrumbs" />
       </div>
     </div>
     <v-card class="pa-2">
-      <v-form>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <FormButton
-            :background="this.$colors.btn_voltar"
-            :label="this.$strings.btn_voltar"
-            dark
-            @click="$router.go(-1)"
-          />
-        </v-card-actions>
-      </v-form>
+      <v-row>
+        <ShowData :cols="6" :label="'Nome'" :data="form.nome" />
+        <ShowData :cols="6" :label="'Quantidade'" :data="form.quantidade" />
+      </v-row>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <FormButton
+          :isBack="true"
+          :label="this.$strings.btn_voltar"
+          dark
+          @click="$router.go(-1)"
+        />
+      </v-card-actions>
     </v-card>
   </div>
 </template>
 <script>
-
 import { mapActions, mapGetters } from "vuex";
-import storePaises from "../_store";
+import store from "../_store";
 import FormButton from "../../../components/UI/FormButton.vue";
 import Breadcrumbs from "../../../components/UI/Breadcrumbs.vue";
+import Vcol from "../../../components/UI/Vcol.vue";
+import ShowData from "../../../components/UI/ShowData.vue";
 import { constants } from "../_constants";
 
 export default {
-  name:"<%=NMEntidadeCamelCase%>Show",
+  name: "ProdutosShow",
   beforeCreate() {
-    const STORE_PAIS = "$_pais";
-    if (!(STORE_PAIS in this.$store._modules.root._children))
-      this.$store.registerModule(STORE_PAIS, store);
+    const STORE_PRODUTO = "$_produto";
+    if (!(STORE_PRODUTO in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_PRODUTO, store);
   },
   data() {
     return {
@@ -51,19 +54,22 @@ export default {
   components: {
     FormButton,
     Breadcrumbs,
+    Vcol,
+    ShowData,
   },
   computed: {
     ...mapGetters({
-      getItemById: "$_pais/getItemById",
+      getItemById: "$_produto/getItemById",
     }),
   },
   methods: {
     ...mapActions({
-      itemById: "$_pais/getItemById",
+      itemById: "$_produto/getItemById",
     }),
   },
   watch: {
     getItemById(item) {
+      console.log("first");
       if (this.$route.params.id != undefined) {
         let keys = Object.keys(this.form);
         keys.forEach((i) => {

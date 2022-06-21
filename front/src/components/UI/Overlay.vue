@@ -18,7 +18,7 @@ export default {
 <style scoped>
 .blob {
   transform: scale(1);
-  animation: pulse linear 1.5s infinite;
+  animation: pulse linear 1.8s infinite;
 }
 
 @keyframes pulse {

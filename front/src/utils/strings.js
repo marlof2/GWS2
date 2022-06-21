@@ -1,7 +1,7 @@
 const STRINGS = {
   //buttons
   btn_proximo: "Avançar",
-  btn_voltar: "Cancelar",
+  btn_voltar: "Voltar",
   btn_salvar: "Salvar",
   btn_filtrar: "Filtrar",
   btn_login: "Login",

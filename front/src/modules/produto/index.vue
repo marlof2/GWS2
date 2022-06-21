@@ -22,7 +22,7 @@
 
       <v-row justify="center">
         <FormButton
-          :background="this.$colors.dark_green"
+          :isBack="true"
           :label="this.$strings.btn_filtrar"
           dark
           @click="filterAdvanced()"

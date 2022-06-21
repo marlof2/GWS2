@@ -89,7 +89,7 @@
           @input="handlePageChange"
           total-visible="5"
           :items-per-page="itemsPerPage"
-          :color="this.$colors.green_default"
+          :color="'primary'"
         >
         </v-pagination>
         <v-btn

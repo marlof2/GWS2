@@ -27,9 +27,9 @@
         <v-row>
           <v-col>
             <v-card-actions>
-              <FormButton :background="this.$colors.btn_voltar" :label="this.$strings.btn_voltar" dark
+              <FormButton :isBack="true" :label="this.$strings.btn_voltar" dark
                 @click="$router.go(-1)" />
-              <FormButton :background="this.$colors.medium_green" :label="this.$strings.btn_salvar" dark
+              <FormButton :label="this.$strings.btn_salvar" dark
                 @click="save" />
             </v-card-actions>
           </v-col>
@@ -117,7 +117,7 @@ export default {
       if (this.$route.params.id != undefined) {
         let keys = Object.keys(this.form);
         keys.forEach((i) => {
-          this.form[i] = item[0][i];
+          this.form[i] = item[i];
         });
       }
     },

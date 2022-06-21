@@ -24,13 +24,12 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <FormButton
-            :background="this.$colors.btn_voltar"
+            :isBack="true"
             :label="this.$strings.btn_voltar"
             dark
             @click="$router.go(-1)"
           />
           <FormButton
-            :background="this.$colors.medium_green"
             :label="this.$strings.btn_salvar"
             dark
             @click="save"

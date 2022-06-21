@@ -1,13 +1,18 @@
 <template>
-  <v-col :cols="cols" :sm="cols" :md="cols" :xl="cols">
+  <Vcol :col="cols">
     <h5>{{ label }}</h5>
     <span>{{ data ? data : "" }}</span>
     <span v-if="data === false">Não</span>
     <span v-if="data === true">Sim</span>
-  </v-col>
+  </Vcol>
 </template>
 <script>
+import Vcol from './Vcol.vue';
+
 export default {
+  components: {
+    Vcol,
+  },
   props: {
     label: {
       type: String,
