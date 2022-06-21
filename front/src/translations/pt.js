@@ -84,15 +84,15 @@ export default {
   'forgot': {
     'title': 'Esqueceu a senha?',
     'subtitle': 'Insira o endereço de e-mail da sua conta e enviaremos um link para redefinir sua senha.',
-    'email': 'O email',
+    'email': 'Email',
     'button': 'Solicitar redefinição de senha',
     'backtosign': 'Voltar para Entrar'
   },
   'login': {
     'title': 'Assinar em',
-    'email': 'O email',
+    'email': 'Email',
     'password': 'Senha',
-    'button': 'Assinar em',
+    'button': 'Entrar',
     'orsign': 'Ou faça login com',
     'forgot': 'Esqueceu a senha?',
     'noaccount': 'Não tem conta?',
@@ -102,7 +102,7 @@ export default {
   'register': {
     'title': 'Criar Conta',
     'name': 'Nome completo',
-    'email': 'O email',
+    'email': 'Email',
     'password': 'Senha',
     'button': 'Criar Conta',
     'orsign': 'Ou inscreva-se com',

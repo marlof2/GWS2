@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Product extends Model
 {
     use HasFactory;
@@ -12,4 +13,9 @@ class Product extends Model
     protected $table = 'products';
 
     protected $fillable = ['nome', 'quantidade'];
+
+    public  function scopePesquisaPorNome($query, $nome)
+    {
+        return $query->where('nome', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
+    }
 }

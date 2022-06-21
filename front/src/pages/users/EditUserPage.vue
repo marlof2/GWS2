@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import CopyLabel from '../../components/common/CopyLabel'
+import CopyLabel from '../../components/UI/CopyLabel.vue'
 import AccountTab from './EditUser/AccountTab'
 import InformationTab from './EditUser/InformationTab'
 

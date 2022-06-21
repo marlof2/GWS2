@@ -1,13 +1,14 @@
-import Vue from 'vue'
-import moment from 'moment-timezone'
-import store from '../store'
+const newDate = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+.toISOString()
+.substr(0, 10);
 
-Vue.filter('formatDate', (value, filterFormat) => {
-  const { zone, format } = store.state.app.time
+const formatDate = (date) => {
+  if (!date) return null;
 
-  if (value) {
-    return moment(value).tz(zone).format(filterFormat || format || 'lll')
-  }
-
-  return ''
-})
+      const [year, month, day] = date.split("-");
+      return `${day}/${month}/${year}`;
+}
+export default {
+  newDate,
+  formatDate,
+}
