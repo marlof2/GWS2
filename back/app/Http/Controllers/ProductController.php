@@ -21,7 +21,7 @@ class ProductController extends Controller
                 $product = Product::PesquisaPorNome($request->search);
                 return response()->json($product);
             }
-            
+
             $product = Product::paginate(15);
             return response()->json($product);
         } catch (\Exception $e) {
@@ -85,7 +85,7 @@ class ProductController extends Controller
     public function show($id, Product $product)
     {
         try {
-            return response()->json($product->where('id', $id)->get(), 200);
+            return response()->json($product->where('id', $id)->get()[0], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
