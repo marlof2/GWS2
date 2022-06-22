@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('condominium_id');
             $table->unsignedBigInteger('description_id');
             $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('product_id');
             $table->string('nome_programacao');
             $table->string('pagamento');
             $table->string('valor');
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->foreign('condominium_id')->references('id')->on('condominium')->onDelete('cascade');
             $table->foreign('description_id')->references('id')->on('descriptions')->onDelete('cascade');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }
