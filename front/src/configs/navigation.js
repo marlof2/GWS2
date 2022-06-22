@@ -28,7 +28,7 @@ export default {
           icon: "mdi-home-city-outline",
           key: "Condominios",
           text: "Condominios",
-          link: "/condominio",
+          link: "/condominios",
         },
         {
           icon: "mdi-account-group-outline",

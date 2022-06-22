@@ -7,13 +7,13 @@ import PagesRoutes from "./pages.routes";
 import UsersRoutes from "./users.routes";
 import Login from "@/modules/login/_routes";
 import Produtos from "@/modules/produto/_routes";
-// import Condominio from "@/modules/condominio/_routes";
+import Condominio from "@/modules/condominio/_routes";
 
 Vue.use(Router);
 
 export const routes = [
   ...Produtos,
-  // ...Condominio,
+  ...Condominio,
   ...Login,
   ...PagesRoutes,
   ...UsersRoutes,

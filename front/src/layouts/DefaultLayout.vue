@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Navigation -->
-    <v-navigation-drawer v-model="drawer" app floating class="elevation-1" :right="$vuetify.rtl"
+    <v-navigation-drawer v-model="drawer" absolute app floating class="elevation-1" :right="$vuetify.rtl"
       :light="menuTheme === 'light'" :dark="menuTheme === 'dark'">
       <!-- Navigation menu info -->
       <template v-slot:prepend>
