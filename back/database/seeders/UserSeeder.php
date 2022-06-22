@@ -37,32 +37,29 @@ class UserSeeder extends Seeder
 
         $usuario = User::firstOrCreate(
             [
-                'name' => $faker->name(),
-                'email' => $faker->unique()->safeEmail(),
+                'name' => 'Juliana',
+                'email' => 'juli@gmail.com',
                 'password' => Hash::make('teste'),
             ]
         );
 
         $usuarios->push($usuario);
 
-        $usuarios->each(function ($usuario) {
+        $papel = Papel::find(1);
+        $permissao = Permissao::get();
 
-            $papel = Papel::find(1);
-            $permissao = Permissao::get();
+        $usuarios->each(function ($usuario) use ($papel) {
+            PapelUser::updateOrCreate([
+                'user_id' => $usuario->id,
+                'papel_id' => $papel->id
+            ]);
+        });
 
-            $papel->each(function ($papel) use ($usuario) {
-                PapelUser::updateOrCreate([
-                    'user_id' => $usuario->id,
-                    'papel_id' => $papel->id
-                ]);
-            });
-
-            $permissao->each(function ($permissao) use ($papel) {
-                PapelPermissao::updateOrCreate([
-                    'permissao_id' => $permissao->id,
-                    'papel_id' => $papel->id
-                ]);
-            });
+        $permissao->each(function ($permissao) use ($papel) {
+            PapelPermissao::updateOrCreate([
+                'permissao_id' => $permissao->id,
+                'papel_id' => $papel->id
+            ]);
         });
     }
 }

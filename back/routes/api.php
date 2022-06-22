@@ -20,6 +20,10 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/autenticar', [AuthController::class, 'autenticar']);
 
+Route::get('withoutAuth', function () {
+    return response()->json('Usuário não autenticado.');
+})->name('withoutAuth');
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('produtos', ProductController::class);
