@@ -66,7 +66,7 @@ export default {
       isFormValid: true,
       form: {
         email: "marlosilva.f2@gmail.com",
-        password: "12345678",
+        password: "teste",
       },
 
       // form error
@@ -91,9 +91,9 @@ export default {
     async submit() {
       if (this.$refs.form.validate()) {
         this.isSignInDisabled = true;
-        // await this.login(this.form);
+        await this.login(this.form);
         const result = this.authenticate;
-        if (true) {
+        if (result.token) {
           // const current_system = result.systems.filter((sys) => sys.id == 3);
 
           // await this.gerenciarAcesso({ sistema_id: current_system[0].id });

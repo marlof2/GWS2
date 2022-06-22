@@ -40,7 +40,7 @@ class AuthController extends Controller
         ]);
 
         // Check email
-        $user = User::where('email', $fields['email'])->first();
+        $user = User::select('id','name', 'email', 'password')->where('email', $fields['email'])->first();
         // Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
@@ -55,7 +55,7 @@ class AuthController extends Controller
             'token' => $token
         ];
 
-        return response($response, 201);
+        return response($response, 200);
     }
 
     public function logout() {

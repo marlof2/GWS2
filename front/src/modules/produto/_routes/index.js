@@ -5,17 +5,17 @@ export default [
     component: () => import("@/modules/produto"),
   },
   {
-    path: "/produto/cadastrar",
+    path: "/produtos/cadastrar",
     name: "produto-cadastrar",
     component: () => import("@/modules/produto/_components/form"),
   },
   {
-    path: "/produto/editar/:id",
+    path: "/produtos/editar/:id",
     name: "produto-editar",
     component: () => import("@/modules/produto/_components/form"),
   },
   {
-    path: "/produto/visualizar/:id",
+    path: "/produtos/visualizar/:id",
     name: "produto-visualizar",
     component: () => import("@/modules/produto/_components/show"),
   },

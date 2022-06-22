@@ -99,14 +99,14 @@ export default {
         this.form.id = this.$route.params.id;
         const resp = await this.updateItem(this.form);
         if (resp.status == 200) {
-          this.$router.push({ name: "produto" });
+          this.$router.push({ name: "produtos" });
           Swal.messageToast(this.$strings.msg_alterar, "success");
         }
       } else {
         const resp = await this.createItem(this.form);
         console.log(resp);
         if (resp.status == 201) {
-          this.$router.push({ name: "produto" });
+          this.$router.push({ name: "produtos" });
           Swal.messageToast(this.$strings.msg_adicionar, "success");
         }
       }

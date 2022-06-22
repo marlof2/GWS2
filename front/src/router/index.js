@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-// import Jwt from "../api/jwt";
+import Jwt from "../api/jwt";
 
 // Routes
 import PagesRoutes from "./pages.routes";
@@ -59,18 +59,17 @@ const router = new Router({
  * Before each route update
  */
 router.beforeEach((to, from, next) => {
-  // if (to.name === "autenticar" && to.query.token) {
-  //   console.log(to.query.token);
-  //   //verificar token válido antes de setar(backend)
-  //   Jwt.saveToken(to.query.token);
-  // }
-  // if (to.name === "autenticar" && Jwt.getToken()) {
-  //   return next("pagina-inicial");
-  // }
-  // if (to.name !== "autenticar" && !Jwt.getToken()) {
-  //   // window.localStorage.removeItem("expired_at");
-  //   return next("autenticar");
-  // }
+  if (to.name === "autenticar" && to.query.token) {
+    //verificar token válido antes de setar(backend)
+    Jwt.saveToken(to.query.token);
+  }
+  if (to.name === "autenticar" && Jwt.getToken()) {
+    return next("pagina-inicial");
+  }
+  if (to.name !== "autenticar" && !Jwt.getToken()) {
+    // window.localStorage.removeItem("expired_at");
+    return next("autenticar");
+  }
 
   return next();
 });
