@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProgramationController;
+use App\Http\Controllers\CondominiumController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -24,5 +25,6 @@ Route::post('/autenticar', [AuthController::class, 'autenticar']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('produtos', ProductController::class);
     Route::apiResource('programations', ProgramationController::class);
+    Route::apiResource('condominios', CondominiumController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
