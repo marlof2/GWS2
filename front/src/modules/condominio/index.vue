@@ -32,7 +32,7 @@
     </FiltroAvancado>
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Produtos</div>
+        <div class="display-1">Condominios</div>
         <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </div>
     </div>
@@ -68,7 +68,7 @@ import TextField from "../../components/Inputs/TextField.vue";
 import Select from "../../components/Inputs/Select.vue";
 
 export default {
-  name: "produtoModule",
+  name: "condominioModule",
   components: {
     DataTable,
     Breadcrumbs,
@@ -96,23 +96,23 @@ export default {
   },
   methods: {
     ...mapActions({
-      produto: "$_produto/getItems",
+      condominio: "$_condominio/getItems",
     }),
     async search(search) {
-      await this.produto({ search });
+      await this.condominio({ search });
     },
     async handlePageChange(paginate) {
-      await this.produto(paginate);
+      await this.condominio(paginate);
     },
   },
   beforeCreate() {
-    const STORE_PRODUTO = "$_produto";
-    if (!(STORE_PRODUTO in this.$store._modules.root._children))
-      this.$store.registerModule(STORE_PRODUTO, store);
+    const STORE_CONDOMINIO = "$_condominio";
+    if (!(STORE_CONDOMINIO in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_CONDOMINIO, store);
   },
   computed: {
     ...mapGetters({
-      getItems: "$_produto/getItems",
+      getItems: "$_condominio/getItems",
     }),
   },
   watch: {
