@@ -5,18 +5,20 @@ import Jwt from "../api/jwt";
 // Routes
 import PagesRoutes from "./pages.routes";
 import UsersRoutes from "./users.routes";
-import Login from "@/modules/login/_routes";
-import Produtos from "@/modules/produto/_routes";
-import Condominio from "@/modules/condominio/_routes";
+import LoginRoutes from "@/modules/login/_routes";
+import ProdutosRoutes from "@/modules/produto/_routes";
+import CondominioRoutes from "@/modules/condominio/_routes";
+import ProgramacaoRoutes from "@/modules/programacao/_routes";
 
 Vue.use(Router);
 
 export const routes = [
-  ...Produtos,
-  ...Condominio,
-  ...Login,
+  ...ProdutosRoutes,
+  ...CondominioRoutes,
+  ...LoginRoutes,
   ...PagesRoutes,
   ...UsersRoutes,
+  ...ProgramacaoRoutes,
   {
     path: "/",
     redirect: "/autenticar",
@@ -77,6 +79,6 @@ router.beforeEach((to, from, next) => {
 /**
  * After each route update
  */
-router.afterEach((to, from) => {});
+router.afterEach((to, from) => { });
 
 export default router;

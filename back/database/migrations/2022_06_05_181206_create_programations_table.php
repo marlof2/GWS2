@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('descricao_outros')->nullable();
             $table->string('observacao')->nullable();
             $table->string('garantia');
+            $table->date('data');
+
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('condominium_id')->references('id')->on('condominium')->onDelete('cascade');
