@@ -2,14 +2,15 @@
   <div class="d-flex flex-grow-1 flex-column">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Visualização Produto</div>
+        <div class="display-1">Visualização Condomínio</div>
         <Breadcrumbs :items="breadcrumbs" />
       </div>
     </div>
     <v-card class="pa-2">
       <v-row>
         <ShowData :cols="6" :label="'Nome'" :data="form.nome" />
-        <ShowData :cols="6" :label="'Quantidade'" :data="form.quantidade" />
+        <ShowData :cols="6" :label="'Valor à vista'" :data="form.valor_avista" />
+        <ShowData :cols="6" :label="'Valor em cartão'" :data="form.valor_cartao" />
       </v-row>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -33,11 +34,11 @@ import ShowData from "../../../components/UI/ShowData.vue";
 import { constants } from "../_constants";
 
 export default {
-  name: "ProdutosShow",
+  name: "condominioShow",
   beforeCreate() {
-    const STORE_PRODUTO = "$_produto";
-    if (!(STORE_PRODUTO in this.$store._modules.root._children))
-      this.$store.registerModule(STORE_PRODUTO, store);
+    const STORE_CONDOMINIO = "$_condominio";
+    if (!(STORE_CONDOMINIO in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_CONDOMINIO, store);
   },
   data() {
     return {
@@ -59,17 +60,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getItemById: "$_produto/getItemById",
+      getItemById: "$_condominio/getItemById",
     }),
   },
   methods: {
     ...mapActions({
-      itemById: "$_produto/getItemById",
+      itemById: "$_condominio/getItemById",
     }),
   },
   watch: {
     getItemById(item) {
-      console.log("first");
       if (this.$route.params.id != undefined) {
         let keys = Object.keys(this.form);
         keys.forEach((i) => {

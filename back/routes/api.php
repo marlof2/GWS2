@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProgramationController;
 use App\Http\Controllers\CondominiumController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +31,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('produtos', ProductController::class);
     Route::apiResource('programations', ProgramationController::class);
     Route::apiResource('condominios', CondominiumController::class);
+    Route::apiResource('users', UserController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

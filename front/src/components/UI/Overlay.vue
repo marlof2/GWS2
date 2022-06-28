@@ -1,5 +1,5 @@
 <template>
-  <v-overlay :value="overlay" opacity="0.8">
+  <v-overlay :value="overlay" opacity="0.5">
     <div class="blob">
       <v-img src="../../assets/images/logo.png" />
     </div>
