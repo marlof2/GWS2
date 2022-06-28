@@ -2,7 +2,9 @@
   <div>
     <span
       >{{ label
-      }}<span v-if="required" style="fontSize: 14px" class="red--text"> *</span></span
+      }}<span v-if="required" style="fontsize: 14px" class="red--text">
+        *</span
+      ></span
     >
     <v-text-field
       :rules="rules"

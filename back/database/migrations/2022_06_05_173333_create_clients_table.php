@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('cpf_cnpj');
             $table->string('cep')->nullable();
+            $table->string('nome')->nullable();
             $table->string('complemento');
             $table->string('endereco')->nullable();
             $table->string('bairro')->nullable();
             $table->string('cidade')->nullable();
             $table->string('telefone');
-            $table->date('data');
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
