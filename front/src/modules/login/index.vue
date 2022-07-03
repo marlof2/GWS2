@@ -86,7 +86,7 @@ export default {
   methods: {
     ...mapActions({
       login: "$_login/authenticate",
-      gerenciarAcesso: "$_login/usuarioPermissoes",
+      // gerenciarAcesso: "$_login/usuarioPermissoes",
     }),
     async submit() {
       if (this.$refs.form.validate()) {

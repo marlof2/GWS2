@@ -7,8 +7,10 @@ const url = process.env.VUE_APP_URL_API;
 const authenticate = async (params) => {
   const result = await Api.post(`${url}autenticar`, params);
   if (result) {
-    if (result.data.token) Jwt.saveToken(result.data.token);
-    return result.data;
+    if (result.data.token) {
+      Jwt.saveToken(result.data.token);
+      return result.data;
+    }
   }
   return false;
 };

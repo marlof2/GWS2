@@ -26,7 +26,7 @@
 
         <v-row>
           <v-col>
-            <v-card-actions style="margin-left: -7px;">
+            <v-card-actions >
               <FormButton :isBack="true" :label="this.$strings.btn_voltar" dark
                 @click="$router.go(-1)" />
               <FormButton :label="this.$strings.btn_salvar" dark

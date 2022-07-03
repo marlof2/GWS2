@@ -18,6 +18,10 @@ class DatabaseSeeder extends Seeder
             PermissaoSeeder::class,
             PapelSeeder::class,
             UserSeeder::class,
+            ProdutoSeeder::class,
+            CondominioSeeder::class,
+            FormaPagamentoSeeder::class,
+            ClienteSeeder::class,
         ]);
     }
 }

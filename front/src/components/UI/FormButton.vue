@@ -2,7 +2,7 @@
   <v-btn
     :min-width="small ? '' : '150px'"
     :min-height="small ? '' : '42px'"
-    class="py-2 label"
+    class="label"
     v-on="$listeners"
     :dark="dark"
     :outlined="isBack"
@@ -27,5 +27,6 @@ export default {
 <style scoped>
 .label {
   font-size: 12pt;
+  margin-left: -7px
 }
 </style>

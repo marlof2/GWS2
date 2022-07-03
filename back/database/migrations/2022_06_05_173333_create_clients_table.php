@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('cpf_cnpj');
             $table->string('cep')->nullable();
-            $table->string('nome')->nullable();
+            $table->string('nome');
             $table->string('complemento');
             $table->string('endereco')->nullable();
             $table->string('bairro')->nullable();

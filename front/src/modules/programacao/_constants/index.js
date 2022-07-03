@@ -7,13 +7,30 @@ state[`${routeMain}ById`] = [];
 
 const formStep1 = {
   id: null,
-  nome: null
+  nome: null,
+  cpf_cnpj: null,
+  cep: null,
+  endereco: null,
+  complemento: null,
+  cidade: null,
+  bairro: null,
+  telefone: null,
+  email: null,
 };
 const formStep2 = {
   id: null,
+  valor: null,
+  situacao: 'N',
+  observacao: null,
+  garantia: null,
+  forma_pagmento_id: null,
+  condominium_id: null,
+  user_id: null,
+  client_id: null,
 };
 const formStep3 = {
-  id: null,
+  programation_id: null,
+  product_id: null,
 };
 
 const permissions = {

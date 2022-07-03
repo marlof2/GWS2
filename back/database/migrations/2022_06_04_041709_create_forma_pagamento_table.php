@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('condominium', function (Blueprint $table) {
+        Schema::create('forma_pagamento', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->integer('valor_avista')->nullable();
-            $table->integer('valor_cartao')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('condominium');
+        Schema::dropIfExists('forma_pagamento');
     }
 };

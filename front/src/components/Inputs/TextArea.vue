@@ -11,7 +11,6 @@
       :maxlength="maxlength"
       :rows="rows"
       :row-height="rowHeight"
-      auto-grow
       :counter="maxlength"
       :rules="rules"
     ></v-textarea>

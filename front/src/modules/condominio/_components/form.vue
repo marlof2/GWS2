@@ -31,8 +31,6 @@
               label="Valor à vista"
               :maxlength="30"
               v-mask="''"
-              :rules="required"
-              required
             />
           </v-col>
           <v-col cols="12" xs="12" sm="12" md="12" lg="12" xl="12">
@@ -41,8 +39,6 @@
               label="Valor em cartão"
               :maxlength="30"
               v-mask="''"
-              :rules="required"
-              required
             />
           </v-col>
         </v-row>
