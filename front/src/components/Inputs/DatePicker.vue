@@ -6,7 +6,7 @@
     <v-menu
       ref="datePickerMenu"
       v-model="datePickerMenu"
-      :close-on-content-click="true"
+      :close-on-content-click="false"
       transition="scale-transition"
       offset-y
       max-width="290px"
