@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('programation_products', function (Blueprint $table) {
             $table->unsignedBigInteger('programation_id');
             $table->unsignedBigInteger('product_id');
+            $table->string('quantidade');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

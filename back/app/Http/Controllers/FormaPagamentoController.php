@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
+use App\Models\FormaPagamento;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class FormaPagamentoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +16,11 @@ class ClientController extends Controller
     {
         try {
             if ($request->filled('search')) {
-                $client = Client::PesquisaPorNome($request->search);
+                $client = FormaPagamento::PesquisaPorNome($request->search);
                 return response()->json($client);
             }
 
-            $client = Client::paginate(config('app.pageLimit'));
+            $client = FormaPagamento::paginate(config('app.pageLimit'));
             return response()->json($client);
         } catch (\Exception $e) {
             return response()->json([
@@ -31,35 +29,24 @@ class ClientController extends Controller
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreClientRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClientRequest $request, Client $client)
+    public function store(Request $request)
     {
-        try {
-            $result = $client::create($request->all());
-
-            return response()->json([
-                'data' => $result,
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], 406);
-        }
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show($id)
     {
         //
     }
@@ -67,11 +54,11 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateClientRequest  $request
-     * @param  \App\Models\Client  $client
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -79,10 +66,10 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Client  $client
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
         //
     }

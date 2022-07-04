@@ -1,18 +1,18 @@
 <template>
   <div>
-    <label>
-      {{ label }}<span v-if="required" class="red--text text-h6">*</span></label
+    <span>
+      {{ label }}<span v-if="required" class="red--text text-h6">*</span></span
     >
     <v-autocomplete
       :items="items"
+      :item-text="itemText"
       :item-value="itemValue"
       :rules="rules"
       v-model="localValue"
       dense
       outlined
       clearable
-    >
-    </v-autocomplete>
+    ></v-autocomplete>
   </div>
 </template>
 <script>
@@ -26,6 +26,10 @@ export default {
     items: {
       type: Array,
       default: [],
+    },
+    itemText: {
+      type: String,
+      default: "",
     },
     itemValue: {
       type: [String, Number, Boolean, Array],

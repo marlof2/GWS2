@@ -9,4 +9,10 @@ class FormaPagamento extends Model
 {
     use HasFactory;
     protected $table = 'forma_pagamento';
+
+
+    public  function scopePesquisaPorNome($query, $nome)
+    {
+        return $query->where('nome', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
+    }
 }

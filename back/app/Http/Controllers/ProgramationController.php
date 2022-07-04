@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Programation;
 use App\Http\Requests\StoreProgramationRequest;
 use App\Http\Requests\UpdateProgramationRequest;
+use Illuminate\Http\Request;
 
 class ProgramationController extends Controller
 {
@@ -13,15 +14,16 @@ class ProgramationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $programation = Programation::paginate(15);
+            if ($request->filled('search')) {
+                $programation = Programation::PesquisaPorNome($request->search);
+                return response()->json($programation);
+            }
 
-            return response()->json([
-                'data' => $programation,
-                'status' => 200
-            ]);
+            $programation = Programation::with('cliente','condominio','user')->paginate(config('app.pageLimit'));
+            return response()->json($programation);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
@@ -37,7 +39,18 @@ class ProgramationController extends Controller
      */
     public function store(StoreProgramationRequest $request, Programation $programation)
     {
-        $result = Programation::create($request->all());
+        
+        try {
+            $result = $programation::create($request->all());
+
+            return response()->json([
+                'data' => $result,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 
     /**
