@@ -1,48 +1,88 @@
 <template>
   <div>
     <span>
-      {{ label }}<span v-if="required" class="red--text text-h6">*</span></span
+      {{ label }}<span v-if="required" class="red--text text-h6"> *</span></span
     >
-    <v-combobox
-      v-model="localValue"
-      :rules="rules"
-      :items="items"
-      dense
-      outlined
-      clearable
-      multiple
-      :item-text="itemText"
-    ></v-combobox>
+    <v-menu
+      ref="datePickerMenu"
+      v-model="datePickerMenu"
+      :close-on-content-click="false"
+      transition="scale-transition"
+      offset-y
+      max-width="290px"
+      min-width="auto"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
+          v-model="dateFormatted"
+          hint="DD/MM/AAAA"
+          persistent-hint
+          prepend-inner-icon="mdi-calendar"
+          v-bind="attrs"
+          v-on="on"
+          clearable
+          outlined
+          dense
+          :rules="rules"
+          :disabled="disabled"
+        ></v-text-field>
+      </template>
+      <v-date-picker
+        :max="maxDate"
+        :min="minDate"
+        no-title
+        v-model="localValue"
+        @input="datePickerMenu = false"
+        :disabled="disabled"
+      ></v-date-picker>
+    </v-menu>
   </div>
 </template>
 <script>
+import dateFilter from "../../filters/formatDate";
 export default {
-  name: "Combobox",
+  name: "DatePicker",
   props: {
+    date: {
+      type: [Date, String],
+      default: null,
+    },
+    value: {
+      type: [String, Date],
+      default: null,
+    },
+    rules: {
+      type: Array,
+      default: () => [],
+    },
     required: {
       type: Boolean,
       default: false,
     },
-    rules: {
-      type: Array,
-     default: () => [],
-    },
-    value: {
-      type: [String, Number, Boolean, Array],
+    maxDate: {
+      type: [String, Date],
       default: null,
     },
-    items: {
-      type: Array,
-      default: [],
+    minDate: {
+      type: [String, Date],
+      default: null,
     },
     label: {
       type: String,
-      default: "",
+      default: null,
     },
-    itemText: {
-      type: String,
-      default: "",
+    disabled: {
+      type: Boolean,
+      default: false,
     },
+  },
+  data() {
+    return {
+      datePickerMenu: false,
+      dateFormatted: !this.value
+        ? null
+        : dateFilter.formatDate(dateFilter.newDate),
+    };
   },
   computed: {
     localValue: {
@@ -54,6 +94,10 @@ export default {
       },
     },
   },
+  watch: {
+    date(val) {
+      this.dateFormatted = dateFilter.formatDate(val);
+    },
+  },
 };
 </script>
-<style></style>
