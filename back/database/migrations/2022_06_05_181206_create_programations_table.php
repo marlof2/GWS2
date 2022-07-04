@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('forma_pagamento_id');
             // $table->unsignedBigInteger('product_id');
-            $table->string('pagamento');
             $table->string('valor');
             $table->char('situacao', 1)->comment('A = Atendido, N = Não Atendido');
             $table->string('observacao')->nullable();

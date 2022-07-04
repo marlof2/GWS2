@@ -8,12 +8,12 @@ const destroyErrors = async context => {
   context.commit("SET_ERRORS", []);
 };
 
-const setErrorsNotAcceptable = async (context, data) => {
-  let errors = {
-    title: "ERRO DE PREENCHIMENTO",
-    type: "error",
-    errors: []
-  };
+// const setErrorsNotAcceptable = async (context, data) => {
+//   let errors = {
+//     title: "ERRO DE PREENCHIMENTO",
+//     type: "error",
+//     errors: []
+//   };
 
   // Object.entries(data).forEach(async element => {
   //   let feature = element[0].split(".");
@@ -27,13 +27,13 @@ const setErrorsNotAcceptable = async (context, data) => {
   //   //   type: element[1]
   //   // });
   // });
-  errors.message = `${errors.errors.length} campo(s) não preenchido(s). Clique no(s) item(ns) da listagem para alcança-lo(s) e corrigí-lo(s).`;
-  context.commit("SET_ERRORS", errors);
-};
+//   errors.message = `${errors.errors.length} campo(s) não preenchido(s). Clique no(s) item(ns) da listagem para alcança-lo(s) e corrigí-lo(s).`;
+//   context.commit("SET_ERRORS", errors);
+// };
 
 
 export default {
   setErrors,
   destroyErrors,
-  setErrorsNotAcceptable
+  // setErrorsNotAcceptable
 };

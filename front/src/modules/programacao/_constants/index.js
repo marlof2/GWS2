@@ -1,4 +1,4 @@
-const routeMain = "programacao";
+const routeMain = "programations";
 
 let state = {};
 
@@ -19,11 +19,12 @@ const formStep1 = {
 };
 const formStep2 = {
   id: null,
+  data_hora: null,
   valor: null,
   situacao: 'N',
   observacao: null,
   garantia: null,
-  forma_pagmento_id: null,
+  forma_pagamento_id: null,
   condominium_id: null,
   user_id: null,
   client_id: null,
@@ -31,6 +32,27 @@ const formStep2 = {
 const formStep3 = {
   programation_id: null,
   product_id: null,
+  quantidade: null
+};
+
+const tblProducts = {
+  products:[],
+  allProducts:[{nome:'Marlo', quantidade:10}],
+  programation_id: null,
+  product_id: null,
+  quantidade: null,
+  dialog: false,
+  dialogDelete: false,
+  headers: [
+    {
+      text: "Item",
+      value: "nome",
+      align: "left",
+    },
+    { text: "Quantidade", value: "quantidade", align: "left" },
+    { text: "Ações", value: "actions", sortable: false },
+  ],
+  editedIndex: -1,
 };
 
 const permissions = {
@@ -84,8 +106,11 @@ const paginate = {
 };
 
 const headers = [
-  { text: "Nome", value: "nome", align: "left" },
-  { text: "Quantidade", value: "quantidade", align: "left" },
+  { text: "Nome", value: "cliente.nome", align: "left" },
+  { text: "Condomínio", value: "condominio.nome", align: "left" },
+  { text: "Data/Hora", value: "data_hora", align: "left" },
+  { text: "Situação", value: "situacao", align: "left" },
+  { text: "Funcionário", value: "user.name", align: "left" },
   { text: "Ação", value: "acao" },
 ];
 
@@ -101,4 +126,5 @@ export const constants = {
   paginate,
   headers,
   permissions,
+  tblProducts,
 };

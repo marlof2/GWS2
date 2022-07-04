@@ -2,7 +2,12 @@
   <div class="d-flex flex-grow-1 flex-column">
     <FiltroAvancado v-model="drawer">
       <v-col cols="12" sm="12" md="12">
-        <TextField v-model="filter.nome" label="Nome" :maxlength="40" v-mask="''" />
+        <TextField
+          v-model="filter.nome"
+          label="Nome"
+          :maxlength="40"
+          v-mask="''"
+        />
       </v-col>
 
       <!-- <v-col cols="12" sm="12" md="12">
@@ -16,7 +21,13 @@
       </v-col> -->
 
       <v-row justify="center">
-        <FormButton :isBack="true" :label="this.$strings.btn_filtrar" dark @click="filterAdvanced()" small />
+        <FormButton
+          :isBack="true"
+          :label="this.$strings.btn_filtrar"
+          dark
+          @click="filterAdvanced()"
+          small
+        />
       </v-row>
     </FiltroAvancado>
     <div class="d-flex align-center py-3">
@@ -26,12 +37,24 @@
       </div>
     </div>
     <v-card class="pa-2 elevation-0">
-      <DataTable :headersProp="headers" :dataProp="items" :lastPageProp="paginate.lastPage" :pageProp="paginate.page"
-        :itemsPerPageProp="paginate.perPages" @handleSearch="search" @handlePageChange="handlePageChange" @handleDrawer="
+      <DataTable
+        :headersProp="headers"
+        :dataProp="items"
+        :lastPageProp="paginate.lastPage"
+        :pageProp="paginate.page"
+        :itemsPerPageProp="paginate.perPages"
+        @handleSearch="search"
+        @handlePageChange="handlePageChange"
+        @handleDrawer="
           (drawer) => {
             this.drawer = drawer;
           }
-        " :itemToExclude="'nome'" :permissions="permissions" />
+        "
+        :itemToExclude="'nome'"
+        :permissions="permissions"
+        :customItemsProp="customItemTable"
+      >
+      </DataTable>
     </v-card>
   </div>
 </template>
@@ -67,6 +90,7 @@ export default {
       permissions: { ...constants.permissions },
       filter: {},
       drawer: null,
+      customItemTable: [{ situacao: true }],
     };
   },
   async mounted() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row cols="12" dense class="py-2">
-      <v-col cols="6" >
+      <v-col cols="6">
         <span>
           <AddButton
             v-permissions="permissions.incluir"
@@ -47,6 +47,12 @@
       :items-per-page="itemsPerPage"
       hide-default-footer
     >
+      <template v-slot:[`item.situacao`]="{ item }">
+        <v-chip  v-if="customItemsProp[0].situacao" :color="getColor(item.situacao)" dark>
+          {{ item.situacao == "N" ? "Não Atendido" : "Atendido" }}
+        </v-chip>
+      </template>
+
       <template
         v-for="customItem in customItemsProp"
         v-slot:[`item.${customItem.name}`]="{ item }"
@@ -217,6 +223,13 @@ export default {
         array.push(i);
       }
       return array;
+    },
+    getColor(situacao) {
+      if (situacao == "A") {
+        return "success";
+      } else {
+        return "error";
+      }
     },
   },
   watch: {
