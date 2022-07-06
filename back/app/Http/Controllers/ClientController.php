@@ -22,6 +22,11 @@ class ClientController extends Controller
                 return response()->json($client);
             }
 
+            if ($request->filled('limit')) {
+                $client = Client::all();
+                return response()->json(['data' => $client]);
+            }
+
             $client = Client::paginate(config('app.pageLimit'));
             return response()->json($client);
         } catch (\Exception $e) {

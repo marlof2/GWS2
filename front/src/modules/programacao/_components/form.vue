@@ -40,7 +40,6 @@
                       v-model="formStep1.nome"
                       label="Nome"
                       :maxlength="30"
-                      v-mask="''"
                       :rules="required"
                       required
                     />
@@ -69,7 +68,6 @@
                       v-model="formStep1.endereco"
                       label="Endereço"
                       :maxlength="60"
-                      v-mask="''"
                     />
                   </v-col>
                   <v-col cols="5" sm="5" md="5" xs="12">
@@ -77,7 +75,6 @@
                       v-model="formStep1.complemento"
                       label="Complemento"
                       :maxlength="60"
-                      v-mask="''"
                       :rules="required"
                       required
                     />
@@ -89,7 +86,6 @@
                       v-model="formStep1.cidade"
                       label="Cidade"
                       :maxlength="30"
-                      v-mask="''"
                     />
                   </v-col>
                   <v-col cols="6" sm="6" md="6" xs="12">
@@ -97,7 +93,6 @@
                       v-model="formStep1.bairro"
                       label="Bairro"
                       :maxlength="30"
-                      v-mask="''"
                     />
                   </v-col>
                 </v-row>
@@ -117,7 +112,6 @@
                       v-model="formStep1.email"
                       label="E-mail"
                       :maxlength="30"
-                      v-mask="''"
                     />
                   </v-col>
                 </v-row>
@@ -129,7 +123,11 @@
                         :isBack="true"
                         :label="'Voltar'"
                         dark
-                        @click="()=>{this.$router.push({ name: 'programacao' })}"
+                        @click="
+                          () => {
+                            this.$router.push({ name: 'programacao' });
+                          }
+                        "
                         small
                       />
                       <FormButton
@@ -139,6 +137,7 @@
                         small
                       />
                       <FormButton
+                        :isBack="true"
                         :label="'Avançar'"
                         dark
                         @click="e1 = 2"
@@ -205,11 +204,12 @@
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="12" md="12" xs="12">
-                    <TextArea
-                      v-model="formStep2.observacao"
-                      label="Observação"
-                      :maxlength="200"
-                      v-mask="''"
+                    <DatePicker
+                      :label="'Data/Hora'"
+                      :date.sync="formStep2.data_hora"
+                      v-model="formStep2.data_hora"
+                      :rules="required"
+                      required
                     />
                   </v-col>
                 </v-row>
@@ -219,7 +219,6 @@
                       v-model="formStep2.valor"
                       label="Valor"
                       :maxlength="30"
-                      v-mask="''"
                       :rules="required"
                       required
                     />
@@ -229,9 +228,15 @@
                       v-model="formStep2.garantia"
                       label="Garantia"
                       :maxlength="30"
-                      v-mask="''"
                       :rules="required"
                       required
+                    />
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12" xs="12">
+                    <TextArea
+                      v-model="formStep2.observacao"
+                      label="Observação"
+                      :maxlength="200"
                     />
                   </v-col>
                 </v-row>
@@ -253,6 +258,7 @@
                         small
                       />
                       <FormButton
+                        :isBack="true"
                         :label="'Avançar'"
                         dark
                         @click="e1 = 3"
@@ -268,9 +274,25 @@
           <v-stepper-content step="3">
             <v-card class="pa-2">
               <v-col cols="12" sm="12" md="12">
+                <v-row>
+                  <v-col cols="12" sm="4" md="4" xs="12">
+                    <h4>
+                      Código da Programação
+                      {{
+                        formStep3.programation_id
+                          ? "#" + formStep3.programation_id
+                          : "#"
+                      }}
+                    </h4>
+                  </v-col>
+                </v-row>
                 <DataTableInsider
                   :headers="tblProducts.headers"
-                  :items="tblProducts.allProducts"
+                  :items="
+                    formStep3.programation_id && getProgramacaoById[0]
+                      ? getProgramacaoById[0].produtos
+                      : []
+                  "
                   @onClickEdit="editProducts"
                   @onClickDelete="deleteProductsDialog"
                 >
@@ -293,10 +315,10 @@
                       >
                         <v-row>
                           <v-col cols="6" sm="6" md="6">
-                            <Select
-                              v-model="tblProducts.product_id"
+                            <SelectAutocomplete
+                              v-model="formStep3.product_id"
                               :itemValue="'id'"
-                              :itemText="'descricao'"
+                              :itemText="'nome'"
                               :items="getProduto.data"
                               :label="'Produto'"
                               :rules="required"
@@ -308,10 +330,9 @@
                         <v-row>
                           <v-col cols="3" sm="3" md="3">
                             <TextField
-                              v-model="tblProducts.quantidade"
+                              v-model="formStep3.quantidade"
                               label="Quantidade"
                               :maxlength="30"
-                              v-mask="''"
                               :rules="required"
                               required
                             />
@@ -367,6 +388,7 @@ import storeCondominio from "../../condominio/_store";
 import storeCliente from "../../cliente/_store";
 import storeUser from "../../users/_store";
 import storeFormaPagamento from "../../formaPagamento/_store";
+import storeProgramacaoProduto from "../../programacaoProduto/_store";
 import storeProduto from "../../produto/_store";
 
 import FormButton from "../../../components/UI/FormButton.vue";
@@ -379,6 +401,7 @@ import TextArea from "../../../components/Inputs/TextArea.vue";
 import Dialog from "../../../components/UI/Dialog.vue";
 import DataTableInsider from "../../../components/UI/DataTableInsider.vue";
 import HeaderDataTableInsider from "../../../components/UI/HeaderDataTableInsider.vue";
+import DatePicker from "../../../components/Inputs/DatePicker.vue";
 
 export default {
   name: "produtoForm",
@@ -391,6 +414,7 @@ export default {
     Dialog,
     DataTableInsider,
     HeaderDataTableInsider,
+    DatePicker,
   },
   beforeCreate() {
     const STORE_PROGRAMACAO = "$_programacao";
@@ -416,6 +440,13 @@ export default {
     const STORE_PRODUTO = "$_produto";
     if (!(STORE_PRODUTO in this.$store._modules.root._children))
       this.$store.registerModule(STORE_PRODUTO, storeProduto);
+
+    const STORE_PROGRAMACAO_PRODUTO = "$_programacaoProduto";
+    if (!(STORE_PROGRAMACAO_PRODUTO in this.$store._modules.root._children))
+      this.$store.registerModule(
+        STORE_PROGRAMACAO_PRODUTO,
+        storeProgramacaoProduto
+      );
   },
   data() {
     return {
@@ -426,7 +457,7 @@ export default {
       required: [(v) => !!v || "Campo obrigatório"],
       formStep1: { ...constants.formStep1 },
       formStep2: { ...constants.formStep2 },
-      // formStep3: { ...constants.formStep3 },
+      formStep3: { ...constants.formStep3 },
       tblProducts: { ...constants.tblProducts },
       breadcrumbs: [...constants.breadcrumbsForm],
 
@@ -438,19 +469,21 @@ export default {
     this.breadcrumbs[1].text = "Cadastrar";
     if (this.$route.params.id != undefined) {
       this.breadcrumbs[1].text = "Editar";
-      await this.itemById(this.$route.params.id);
+      await this.actionProgramacaoById(this.$route.params.id);
     }
-    console.log(this.formStep1);
-    await this.actionCliente();
-    await this.actionProduto();
-    await this.actionCondominio();
-    await this.actionUsuario();
+    await this.actionCliente({ limit: "-1" });
+    await this.actionProduto({ limit: "-1" });
+    await this.actionCondominio({ limit: "-1" });
+    await this.actionUsuario({ limit: "-1" });
     await this.actionFormaPagamento();
+    // this.formStep3.programation_id = 1
+    //       await this.actionProgramacaoById(this.formStep3.programation_id);
   },
   computed: {
     ...mapGetters({
       //programacao
       getProgramacao: "$_programacao/getItems",
+      getProgramacaoById: "$_programacao/getItemById",
       //cliente
       getCliente: "$_cliente/getItems",
       getClienteById: "$_cliente/getItemById",
@@ -466,10 +499,14 @@ export default {
   },
   methods: {
     ...mapActions({
+      //programacaoProduto
+      actionCreateProgramacaoProduto: "$_programacaoProduto/createItem",
+      actionUpdateProgramacaoProduto: "$_programacaoProduto/updateItem",
       //programacao
       actionProgramacao: "$_programacao/getItems",
       actionCreateProgramacao: "$_programacao/createItem",
       actionUpdateProgramacao: "$_programacao/updateItem",
+      actionProgramacaoById: "$_programacao/getItemById",
       //cliente
       actionCliente: "$_cliente/getItems",
       actionCreateCliente: "$_cliente/createItem",
@@ -519,37 +556,46 @@ export default {
         const resp = await this.actionCreateProgramacao(this.formStep2);
         if (resp.status == 201) {
           Swal.messageToast(this.$strings.msg_adicionar, "success");
+          this.formStep3.programation_id = resp.data.data.id;
+          await this.actionProgramacaoById(this.formStep3.programation_id);
         }
       }
     },
 
     async saveProducts() {
-      this.formProductsValidated = await this.$refs.formProducts.validate();
-      if (!this.formProductsValidated) {
+      this.formValidated = await this.$refs.form3.validate();
+      if (!this.formValidated) {
         return false;
       }
 
       if (this.tblProducts.editedIndex > -1) {
-        const { status } = await this.updateProducts(this.tblProducts);
+        const { status } = await this.actionUpdateProgramacaoProduto(
+          this.tblProducts
+        );
         if (status == 200)
           Swal.messageToast(this.$strings.msg_alterar, "success");
+        await this.actionProgramacaoById(this.$route.params.id);
       } else {
-        this.tblProducts.pessoa_fisica_id = this.$route.params.id;
-        const { status } = await this.createProducts(this.tblProducts);
+        // this.formStep3.programation_id = this.$route.params.id;
+        const { status } = await this.actionCreateProgramacaoProduto(
+          this.formStep3
+        );
         if (status == 201)
           Swal.messageToast(this.$strings.msg_adicionar, "success");
+        await this.actionProgramacaoById(this.formStep3.programation_id);
       }
-      await this.itemById(this.$route.params.id);
+
       this.resetProducts();
       this.closeProducts();
       this.tblProducts.editedIndex = -1;
     },
 
     async editProducts(item) {
-      await this.ProductsById(item.id);
+      await this.actionProgramacaoById(item.id);
+      console.log(item);
 
-      this.tblProducts.editedIndex =
-        this.form.pessoa_fisica_documento.indexOf(item);
+      this.tblProducts.editedIndex = this.formStep3.indexOf(item);
+      console.log(this.formStep3);
       this.tblProducts.dialog = true;
     },
 
@@ -559,7 +605,7 @@ export default {
       const { status } = await this.deleteProducts(id);
       if (status == 200) {
         Swal.messageToast(this.$strings.item_excluido, "success");
-        await this.itemById(this.$route.params.id);
+        await this.actionProgramacaoById(this.$route.params.id);
       }
       this.tblProducts.dialogDelete = false;
     },
@@ -577,31 +623,27 @@ export default {
     closeProducts() {
       this.tblProducts.dialog = false;
       this.tblProducts = { ...constants.tblProducts };
-      this.$refs.formProducts.reset();
+      this.$refs.form3.reset();
     },
 
     closeDeleteProducts() {
       this.tblProducts.dialogDelete = false;
       this.tblProducts = { ...constants.tblProducts };
-      this.$refs.formProducts.reset();
+      this.$refs.form3.reset();
+    },
+
+    itemDataTableInsider() {
+      this.formStep3.programation_id && this.getProgramacaoById[0]
+        ? this.getProgramacaoById[0].produtos
+        : [];
     },
   },
   watch: {
-    getItemById(item) {
+    getProgramacaoById(item) {
       if (this.$route.params.id != undefined) {
-        let keys = Object.keys(this.form);
-        keys.forEach((i) => {
-          this.form[i] = item[i];
-        });
-      }
-    },
-    getClienteById(item) {
-      console.log(item);
-      if (this.$route.params.id != undefined) {
-        let keys = Object.keys(this.formStep1);
-        keys.forEach((i) => {
-          this.form[i] = item[i];
-        });
+        this.formStep1 = { ...item[0].cliente };
+        this.formStep2 = { ...item[0] };
+        this.formStep3.programation_id = item[0].id;
       }
     },
     getProductsById(Products) {

@@ -2,10 +2,10 @@
   <div class="d-flex text-center flex-column flex-md-row flex-grow-1">
     <v-sheet class="layout-side mx-auto mx-md-1 d-none d-md-flex flex-md-column justify-space-between px-2">
       <div class="mt-6 mt-md-10 pa-2">
+        <div class="title my-2">Bem Vindo Ao Sistema Da</div>
         <div class="display-2 font-weight-bold primary--text">
           {{ product.name }}
         </div>
-        <div class="title my-2">Bem Vindo Ao Sistema De Gerenciamento!</div>
       </div>
       <img class="w-full" src="../assets/images/company.svg" />
     </v-sheet>

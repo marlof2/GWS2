@@ -12,16 +12,10 @@ class FormaPagamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         try {
-            if ($request->filled('search')) {
-                $client = FormaPagamento::PesquisaPorNome($request->search);
-                return response()->json($client);
-            }
-
-            $client = FormaPagamento::paginate(config('app.pageLimit'));
-            return response()->json($client);
+            return response()->json(['data' => FormaPagamento::all()]);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),

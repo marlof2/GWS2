@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="mx-2" v-bind="vBind" v-on="on" color="#10A375" dark fab x-small>
+  <v-btn @click="click" class="mx-2" v-bind="vBind" v-on="on" color="#10A375" dark fab x-small>
     <v-icon>mdi-plus</v-icon>
   </v-btn>
 </template>
@@ -8,6 +8,10 @@ export default {
   props: {
     vBind: null,
     on: null,
-  }
-}
+    click: {
+      type: Function,
+      default: () => {},
+    },
+  },
+};
 </script>

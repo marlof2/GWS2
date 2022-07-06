@@ -26,7 +26,7 @@ class Programation extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Client::class, 'client_id', 'id')->select('id','nome');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
     public function condominio()
     {
@@ -41,4 +41,11 @@ class Programation extends Model
     {
         return $query->where('nome', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
     }
+
+    public function produtos()
+    {
+        return $this->belongsToMany(Product::class, 'programation_products', 'programation_id', 'product_id')->select('id','nome','programation_products.quantidade');
+    }
+
+    
 }

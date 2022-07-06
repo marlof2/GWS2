@@ -21,6 +21,11 @@ class UserController extends Controller
                 $user = User::PesquisaPorNome($request->search);
                 return response()->json($user);
             }
+            
+            if ($request->filled('limit')) {
+                $user = User::all();
+                return response()->json(['data' => $user]);
+            }
 
             $user = User::paginate(config('app.pageLimit'));
             return response()->json($user);

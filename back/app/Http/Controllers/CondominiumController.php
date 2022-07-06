@@ -22,6 +22,12 @@ class CondominiumController extends Controller
                 return response()->json($condominium);
             }
 
+            if ($request->filled('limit')) {
+                $condominium = Condominium::all();
+                return response()->json(['data' => $condominium]);
+            }
+
+
             $condominium = Condominium::paginate(config('app.pageLimit'));
             return response()->json($condominium);
         } catch (\Exception $e) {

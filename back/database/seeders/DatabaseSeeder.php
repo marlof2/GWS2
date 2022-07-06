@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             CondominioSeeder::class,
             FormaPagamentoSeeder::class,
             ClienteSeeder::class,
+            ProgramacaoSeeder::class,
+            ProgramacaoProdutosSeeder::class,
         ]);
     }
 }

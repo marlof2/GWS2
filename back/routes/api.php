@@ -9,32 +9,25 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FormaPagamentoController;
+use App\Http\Controllers\ProgramationProductController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/autenticar', [AuthController::class, 'autenticar']);
 
 Route::get('withoutAuth', function () {
     return response()->json('Usuário não autenticado.');
 })->name('withoutAuth');
 
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/autenticar', [AuthController::class, 'autenticar']);
+Route::apiResource('formapagamento', FormaPagamentoController::class);
+
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('produtos', ProductController::class);
     Route::apiResource('clientes', ClientController::class);
-    Route::apiResource('formapagamento', FormaPagamentoController::class);
     Route::apiResource('programations', ProgramationController::class);
     Route::apiResource('condominios', CondominiumController::class);
     Route::apiResource('users', UserController::class);
+    Route::apiResource('programacaoproduto', ProgramationProductController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

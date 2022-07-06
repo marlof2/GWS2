@@ -21,6 +21,10 @@ class ProductController extends Controller
                 $product = Product::PesquisaPorNome($request->search);
                 return response()->json($product);
             }
+            if ($request->filled('limit')) {
+                $product = Product::all();
+                return response()->json(['data' => $product]);
+            }
 
             $product = Product::paginate(config('app.pageLimit'));
             return response()->json($product);

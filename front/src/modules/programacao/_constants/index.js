@@ -31,16 +31,15 @@ const formStep2 = {
 };
 const formStep3 = {
   programation_id: null,
+  pivot: {
+    "programation_id": null,
+    "product_id": null
+  },
   product_id: null,
   quantidade: null
 };
 
 const tblProducts = {
-  products:[],
-  allProducts:[{nome:'Marlo', quantidade:10}],
-  programation_id: null,
-  product_id: null,
-  quantidade: null,
   dialog: false,
   dialogDelete: false,
   headers: [
@@ -106,6 +105,7 @@ const paginate = {
 };
 
 const headers = [
+  { text: "#Id", value: "id", align: "left" },
   { text: "Nome", value: "cliente.nome", align: "left" },
   { text: "Condomínio", value: "condominio.nome", align: "left" },
   { text: "Data/Hora", value: "data_hora", align: "left" },

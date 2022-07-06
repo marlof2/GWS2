@@ -221,3 +221,10 @@
 // .v-list-item__title {
 //   white-space: pre-wrap;
 // }
+
+.flex-toolbar-dialog {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

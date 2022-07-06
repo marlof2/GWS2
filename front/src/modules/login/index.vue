@@ -2,8 +2,8 @@
   <div>
     <v-card class="text-center pa-1">
       <img class="image-logo" height="100" width="100"  src="../../../public/images/gws.jpeg" />
-      <v-card-title class="justify-center display-1 mb-1">Bem-vindo(a)</v-card-title>
-      <v-card-subtitle>FAÇA LOGIN PARA INICIAR SUA SESSÃO.</v-card-subtitle>
+      <!-- <v-card-title class="justify-center display-1 mb-1">Bem-vindo(a)</v-card-title> -->
+      <v-card-subtitle class="title">FAÇA LOGIN PARA INICIAR SUA SESSÃO.</v-card-subtitle>
 
       <!-- sign in form -->
       <v-card-text>
