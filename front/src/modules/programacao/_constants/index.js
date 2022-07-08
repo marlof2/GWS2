@@ -31,12 +31,8 @@ const formStep2 = {
 };
 const formStep3 = {
   programation_id: null,
-  pivot: {
-    "programation_id": null,
-    "product_id": null
-  },
   product_id: null,
-  quantidade: null
+  quantidade: null,
 };
 
 const tblProducts = {

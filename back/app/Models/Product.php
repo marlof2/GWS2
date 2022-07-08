@@ -31,20 +31,24 @@ class Product extends Model
         return $produto;
     }
 
-    public function retiraDoEstoque($data, $product)
+    public function retiraDoEstoque($request)
     {
-        $product =  $product->find($data['product_id']);
-        $product->quantidade = $product->quantidade - $data['quantidade'];
+        $product =  Product::find($request['product_id']);
+        $product->quantidade = $product->quantidade - $request['quantidade'];
         $product->save();
 
         return 'Retirado com sucesso';
     }
 
-    public function adicionaNoEstoque($data, $product)
+    public function adicionaNoEstoque($quantAnterior, $request)
     {
+        $product =  Product::find($request['product_id']);
 
-        $product =  $product->find($data['product_id']);
-        $product->quantidade = $product->quantidade + $data['quantidade'];
+        if ($quantAnterior) {
+            $product->quantidade = $product->quantidade + $quantAnterior;
+        } else {
+            $product->quantidade = $product->quantidade +  $request['quantidade'];
+        }
         $product->save();
 
         return 'Adicionado com sucesso';

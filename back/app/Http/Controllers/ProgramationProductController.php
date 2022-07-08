@@ -82,9 +82,36 @@ class ProgramationProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $programacaoProduto = ProgramationProduct::whereProgramationId($id)->whereProductId($request->product_id)->get();
+            $quantAnterior = $programacaoProduto[0]->quantidade;
+
+
+            if ($quantAnterior != $request->quantidade) {
+                $product->adicionaNoEstoque($quantAnterior, $request->all());
+                $product->retiraDoEstoque($request->all());
+            }
+
+            $programacaoProduto = ProgramationProduct::whereProgramationId($id)
+                ->whereProductId($request->product_id)->update([
+                    'programation_id' => $request->programation_id,
+                    'product_id' => $request->product_id,
+                    'quantidade' => $request->quantidade,
+                ]);
+
+            DB::commit();
+            return response()->json([
+                'message' => 'Produto atualizado com sucesso!',
+            ], 200);
+        } catch (\Exception $e) {
+            // DB::rollBack();
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 
     /**
@@ -93,8 +120,22 @@ class ProgramationProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Product $product)
     {
-        //
+        try {
+
+            $product->adicionaNoEstoque(null, $request->all());
+
+             ProgramationProduct::whereProgramationId($request->programation_id)
+                ->whereProductId($request->product_id)->delete();
+
+            return response()->json([
+                'status' => '200'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 }

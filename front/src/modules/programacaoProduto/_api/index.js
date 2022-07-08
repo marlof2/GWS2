@@ -20,8 +20,7 @@ const getItemById = async (id) => {
 };
 
 const updateItem = async (params) => {
-  const id = params.id;
-  delete params.id;
+  const id = params.programation_id;
   const result = await Api.put(apiUrl, id, params);
   if (result) {
     return result;
@@ -37,8 +36,8 @@ const createItem = async (params) => {
   return false;
 };
 
-const deleteItem = async (id) => {
-  const result = await Api.delete(apiUrl, id);
+const deleteItem = async (params) => {
+  const result = await Api.post('programacaoprodutodelete', params);
   if (result) {
     return result;
   }

@@ -29,5 +29,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('condominios', CondominiumController::class);
     Route::apiResource('users', UserController::class);
     Route::apiResource('programacaoproduto', ProgramationProductController::class);
+    Route::post('/programacaoprodutodelete', [ProgramationProductController::class, 'destroy']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

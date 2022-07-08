@@ -48,7 +48,7 @@
                     <TextField
                       v-model="formStep1.cpf_cnpj"
                       label="CPF/CNPJ"
-                      v-mask="cnpjOrCpf"
+                      v-mask="dualMask"
                       :rules="required"
                       required
                     />
@@ -288,11 +288,7 @@
                 </v-row>
                 <DataTableInsider
                   :headers="tblProducts.headers"
-                  :items="
-                    formStep3.programation_id && getProgramacaoById[0]
-                      ? getProgramacaoById[0].produtos
-                      : []
-                  "
+                  :items="itemDataTableInsider() "
                   @onClickEdit="editProducts"
                   @onClickDelete="deleteProductsDialog"
                 >
@@ -345,12 +341,12 @@
                 <Dialog
                   v-model="tblProducts.dialogDelete"
                   :maxWidth="600"
-                  :title="'Ítems'"
+                  :title="''"
                   :closeClick="closeDeleteProducts"
                   :deleteClick="deleteProductsConfirm"
                   :isDelete="true"
                 >
-                  <h3>Tem certeza que deseja excluir este PF Documento?</h3>
+                  <h3>Tem certeza que deseja excluir este produto?</h3>
                 </Dialog>
               </v-col>
 
@@ -462,7 +458,7 @@ export default {
       breadcrumbs: [...constants.breadcrumbsForm],
 
       e1: 1,
-      cnpjOrCpf: "",
+      dualMask: "",
     };
   },
   async mounted() {
@@ -502,6 +498,7 @@ export default {
       //programacaoProduto
       actionCreateProgramacaoProduto: "$_programacaoProduto/createItem",
       actionUpdateProgramacaoProduto: "$_programacaoProduto/updateItem",
+      actionDeleteProgramacaoProduto: "$_programacaoProduto/deleteItem",
       //programacao
       actionProgramacao: "$_programacao/getItems",
       actionCreateProgramacao: "$_programacao/createItem",
@@ -547,7 +544,6 @@ export default {
         return false;
       }
       if (this.$route.params.id != undefined) {
-        this.form.id = this.$route.params.id;
         const resp = await this.actionUpdateProgramacao(this.formStep2);
         if (resp.status == 200) {
           Swal.messageToast(this.$strings.msg_alterar, "success");
@@ -568,15 +564,14 @@ export default {
         return false;
       }
 
-      if (this.tblProducts.editedIndex > -1) {
+      if (this.$route.params.id != undefined) {
         const { status } = await this.actionUpdateProgramacaoProduto(
-          this.tblProducts
+          this.formStep3
         );
         if (status == 200)
           Swal.messageToast(this.$strings.msg_alterar, "success");
         await this.actionProgramacaoById(this.$route.params.id);
       } else {
-        // this.formStep3.programation_id = this.$route.params.id;
         const { status } = await this.actionCreateProgramacaoProduto(
           this.formStep3
         );
@@ -591,19 +586,17 @@ export default {
     },
 
     async editProducts(item) {
-      await this.actionProgramacaoById(item.id);
-      console.log(item);
 
-      this.tblProducts.editedIndex = this.formStep3.indexOf(item);
-      console.log(this.formStep3);
+      this.formStep3.product_id = item.pivot.product_id;
+      this.formStep3.quantidade = item.quantidade;
+
       this.tblProducts.dialog = true;
     },
 
     async deleteProductsConfirm() {
-      const { id } =
-        this.form.pessoa_fisica_documento[this.tblProducts.editedIndex];
-      const { status } = await this.deleteProducts(id);
-      if (status == 200) {
+      const { status } = await this.actionDeleteProgramacaoProduto(this.formStep3);
+      console.log(status);
+      if (status === 200) {
         Swal.messageToast(this.$strings.item_excluido, "success");
         await this.actionProgramacaoById(this.$route.params.id);
       }
@@ -611,8 +604,9 @@ export default {
     },
 
     deleteProductsDialog(item) {
-      this.tblProducts.editedIndex =
-        this.form.pessoa_fisica_documento.indexOf(item);
+      this.formStep3.product_id = item.pivot.product_id;
+      this.formStep3.quantidade = item.quantidade;
+
       this.tblProducts.dialogDelete = true;
     },
 
@@ -627,13 +621,13 @@ export default {
     },
 
     closeDeleteProducts() {
-      this.tblProducts.dialogDelete = false;
       this.tblProducts = { ...constants.tblProducts };
-      this.$refs.form3.reset();
+      // this.$refs.form3.reset();
+      this.tblProducts.dialogDelete = false;
     },
 
     itemDataTableInsider() {
-      this.formStep3.programation_id && this.getProgramacaoById[0]
+     return this.formStep3.programation_id && this.getProgramacaoById[0]
         ? this.getProgramacaoById[0].produtos
         : [];
     },
@@ -646,28 +640,28 @@ export default {
         this.formStep3.programation_id = item[0].id;
       }
     },
-    getProductsById(Products) {
-      const {
-        id,
-        pessoa_fisica_id,
-        tipo_documento_id,
-        inscricao,
-        complemento,
-      } = Products;
-      this.tblProducts.id = id;
-      this.tblProducts.pessoa_fisica_id = pessoa_fisica_id;
-      this.tblProducts.tipo_documento_id = tipo_documento_id;
-      this.tblProducts.inscricao = inscricao;
-      this.tblProducts.complemento = complemento;
-    },
+    // getProductsById(Products) {
+    //   const {
+    //     id,
+    //     pessoa_fisica_id,
+    //     tipo_documento_id,
+    //     inscricao,
+    //     complemento,
+    //   } = Products;
+    //   this.tblProducts.id = id;
+    //   this.tblProducts.pessoa_fisica_id = pessoa_fisica_id;
+    //   this.tblProducts.tipo_documento_id = tipo_documento_id;
+    //   this.tblProducts.inscricao = inscricao;
+    //   this.tblProducts.complemento = complemento;
+    // },
 
-    "formStep1.cpf_cnpj": function () {
-      if (this.formStep1.cpf_cnpj.length < 15) {
-        this.cnpjOrCpf = "###.###.###-##";
-      } else {
-        this.cnpjOrCpf = "##.###.###/####-##";
-      }
-    },
+    // "formStep1.cpf_cnpj": function () {
+    //   if (this.formStep1.cpf_cnpj.length < 15) {
+    //     this.dualMask = "###.###.###-##";
+    //   } else {
+    //     this.dualMask = "##.###.###/####-##";
+    //   }
+    // },
   },
 };
 </script>

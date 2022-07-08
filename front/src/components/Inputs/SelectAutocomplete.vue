@@ -24,8 +24,8 @@ export default {
       default: "",
     },
     items: {
-      type: Array,
-      default: [],
+      type: [Array, Object],
+      default: () => [],
     },
     itemText: {
       type: String,

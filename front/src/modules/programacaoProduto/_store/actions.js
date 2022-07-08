@@ -19,8 +19,8 @@ const updateItem = async (context, object) => {
   return await api.updateItem(object);
 };
 
-const deleteItem = async (context, id) => {
-  const result = await api.deleteItem(id);
+const deleteItem = async (context, params) => {
+  return await api.deleteItem(params);
 };
 
 export default {
