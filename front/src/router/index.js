@@ -4,7 +4,7 @@ import Jwt from "../api/jwt";
 
 // Routes
 import PagesRoutes from "./pages.routes";
-import UsersRoutes from "./users.routes";
+import UsersRoutes from "@/modules/users/_routes";
 import LoginRoutes from "@/modules/login/_routes";
 import ProdutosRoutes from "@/modules/produto/_routes";
 import CondominioRoutes from "@/modules/condominio/_routes";

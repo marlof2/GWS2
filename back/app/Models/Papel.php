@@ -10,4 +10,10 @@ class Papel extends Model
     use HasFactory;
 
     protected $table = 'papeis';
+
+
+    public function permissao()
+    {
+        return $this->belongsToMany(Permissao::class, 'papel_permissao', 'permissao_id', 'papel_id');
+    }
 }

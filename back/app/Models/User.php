@@ -34,4 +34,14 @@ class User extends Authenticatable
     {
         return $query->where('name', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
     }
+
+    public function permissao()
+    {
+        return $this->belongsToMany(Permissao::class,'papel_permissao', 'papel_id', 'permissao_id')->select('id', 'nome');
+    }
+
+    public function papel()
+    {
+        return $this->belongsToMany(Papel::class, 'papel_users', 'user_id', 'papel_id')->select('id', 'nome');
+    }
 }
