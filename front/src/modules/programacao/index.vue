@@ -90,7 +90,12 @@ export default {
       permissions: { ...constants.permissions },
       filter: {},
       drawer: null,
-      customItemTable: [{ situacao: true }],
+      customItemTable: [
+        {
+          situacao: true,
+          dateformat: "dateformat",
+        },
+      ],
     };
   },
   async mounted() {

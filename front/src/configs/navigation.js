@@ -1,10 +1,11 @@
-import menuPages from "./menus/pages.menu";
+import menu from './menus/menu'
 
 export default {
   // main navigation - side menu
   menu: [
     {
-      text: "Painel de Controle",
+      text: 'Agenda',
+      key: 'menu.agenda',
       items: [
         {
           icon: "mdi-home",
@@ -17,6 +18,17 @@ export default {
           link: "/programacao",
         },
         {
+          icon: "mdi-calendar-check-outline",
+          text: "Visitação",
+          link: "/Visitação",
+        },
+      ],
+    },
+    {
+      text: 'Administrativo',
+      key: 'menu.admin',
+      items: [
+        {
           icon: "mdi-archive-outline",
           text: "Produtos",
           link: "/produtos",
@@ -28,7 +40,7 @@ export default {
         },
         {
           icon: "mdi-account-supervisor-outline",
-          text: "Usuarios",
+          text: "Funcionários",
           link: "/usuario",
         },
         {
@@ -37,16 +49,14 @@ export default {
           link: "/clientes",
         },
         {
+          key: '',
+          text: 'Relatório',
           icon: "mdi-file-chart-outline",
-          text: "Relatório",
-          link: "/clientes",
+          items: [
+            { text: 'Faturamento', link: '/relatorio' },
+          ]
         },
       ],
     },
-    // {
-    //   text: "Pages",
-    //   key: "menu.pages",
-    //   items: menuPages,
-    // },
   ],
-};
+}

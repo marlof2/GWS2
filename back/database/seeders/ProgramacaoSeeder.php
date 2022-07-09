@@ -24,7 +24,8 @@ class ProgramacaoSeeder extends Seeder
             'valor' => "100",
             'situacao' => 'A',
             'garantia' => '1',
-            'data_hora' => "2022-07-04 00:00:00",
+            'data' => "2022-07-04",
+            'hora' => " 00:00:00",
         ]);
 
         Programation::firstOrCreate([
@@ -35,7 +36,8 @@ class ProgramacaoSeeder extends Seeder
             'valor' => "50",
             'situacao' => 'N',
             'garantia' => '1',
-            'data_hora' => "2022-07-04 00:00:00",
+            'data' => "2022-07-04",
+            'hora' => " 00:00:00",
         ]);
     }
 }

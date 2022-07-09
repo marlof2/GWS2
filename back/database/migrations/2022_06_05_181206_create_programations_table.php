@@ -24,7 +24,8 @@ return new class extends Migration
             $table->char('situacao', 1)->comment('A = Atendido, N = Não Atendido');
             $table->string('observacao')->nullable();
             $table->string('garantia');
-            $table->dateTime('data_hora');
+            $table->date('data');
+            $table->time('hora');
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

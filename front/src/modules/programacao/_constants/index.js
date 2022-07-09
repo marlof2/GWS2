@@ -19,7 +19,8 @@ const formStep1 = {
 };
 const formStep2 = {
   id: null,
-  data_hora: null,
+  data: null,
+  hora: null,
   valor: null,
   situacao: 'N',
   observacao: null,
@@ -47,7 +48,7 @@ const tblProducts = {
     { text: "Quantidade", value: "quantidade", align: "left" },
     { text: "Ações", value: "actions", sortable: false },
   ],
-  editedIndex: -1,
+  isEdit: false,
 };
 
 const permissions = {
@@ -101,10 +102,11 @@ const paginate = {
 };
 
 const headers = [
-  { text: "#Id", value: "id", align: "left" },
-  { text: "Nome", value: "cliente.nome", align: "left" },
+  { text: "Id", value:"id", align: "left" },
+  { text: "Cliente", value: "cliente.nome", align: "left" },
   { text: "Condomínio", value: "condominio.nome", align: "left" },
-  { text: "Data/Hora", value: "data_hora", align: "left" },
+  { text: "Data", value: "data", align: "left" },
+  { text: "Hora", value: "hora", align: "left" },
   { text: "Situação", value: "situacao", align: "left" },
   { text: "Funcionário", value: "user.name", align: "left" },
   { text: "Ação", value: "acao" },

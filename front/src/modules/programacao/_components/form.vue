@@ -13,15 +13,15 @@
       </div>
     </div>
     <v-card class="pa-2">
-      <v-stepper v-model="e1">
+      <v-stepper v-model="transition">
         <v-stepper-header>
-          <v-stepper-step :complete="e1 > 1" step="1"
+          <v-stepper-step :complete="transition > 1" step="1"
             >Dados do Clientes</v-stepper-step
           >
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="e1 > 2" step="2"
+          <v-stepper-step :complete="transition > 2" step="2"
             >Dados da Programação</v-stepper-step
           >
 
@@ -140,7 +140,7 @@
                         :isBack="true"
                         :label="'Avançar'"
                         dark
-                        @click="e1 = 2"
+                        @click="transition = 2"
                         small
                       />
                     </v-card-actions>
@@ -203,11 +203,20 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" sm="12" md="12" xs="12">
+                  <v-col cols="12" sm="6" md="6" xs="6">
                     <DatePicker
-                      :label="'Data/Hora'"
-                      :date.sync="formStep2.data_hora"
-                      v-model="formStep2.data_hora"
+                      :label="'Data'"
+                      :date.sync="formStep2.data"
+                      v-model="formStep2.data"
+                      :rules="required"
+                      required
+                    />
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6" xs="6">
+                    <TimePicker
+                      :label="'Hora'"
+                      :return-value.sync="formStep2.hora"
+                      v-model="formStep2.hora"
                       :rules="required"
                       required
                     />
@@ -248,7 +257,7 @@
                         :isBack="true"
                         :label="'Voltar'"
                         dark
-                        @click="e1 = 1"
+                        @click="transition = 1"
                         small
                       />
                       <FormButton
@@ -261,7 +270,7 @@
                         :isBack="true"
                         :label="'Avançar'"
                         dark
-                        @click="e1 = 3"
+                        @click="transition = 3"
                         small
                       />
                     </v-card-actions>
@@ -288,7 +297,7 @@
                 </v-row>
                 <DataTableInsider
                   :headers="tblProducts.headers"
-                  :items="itemDataTableInsider() "
+                  :items="itemDataTableInsider()"
                   @onClickEdit="editProducts"
                   @onClickDelete="deleteProductsDialog"
                 >
@@ -357,7 +366,7 @@
                       :isBack="true"
                       :label="'Voltar'"
                       dark
-                      @click="e1 = 2"
+                      @click="transition = 2"
                       small
                     />
                     <FormButton
@@ -398,6 +407,7 @@ import Dialog from "../../../components/UI/Dialog.vue";
 import DataTableInsider from "../../../components/UI/DataTableInsider.vue";
 import HeaderDataTableInsider from "../../../components/UI/HeaderDataTableInsider.vue";
 import DatePicker from "../../../components/Inputs/DatePicker.vue";
+import TimePicker from "../../../components/Inputs/TimePicker.vue";
 
 export default {
   name: "produtoForm",
@@ -411,6 +421,7 @@ export default {
     DataTableInsider,
     HeaderDataTableInsider,
     DatePicker,
+    TimePicker,
   },
   beforeCreate() {
     const STORE_PROGRAMACAO = "$_programacao";
@@ -456,8 +467,7 @@ export default {
       formStep3: { ...constants.formStep3 },
       tblProducts: { ...constants.tblProducts },
       breadcrumbs: [...constants.breadcrumbsForm],
-
-      e1: 1,
+      transition: 1,
       dualMask: "",
     };
   },
@@ -523,7 +533,7 @@ export default {
       if (!this.formValidated) {
         return false;
       }
-      if (this.$route.params.id != undefined) {
+      if (this.tblProducts.isEdit) {
         this.formStep1.id = this.$route.params.id;
         const resp = await this.actionUpdateCliente(this.formStep1);
         if (resp.status == 200) {
@@ -564,29 +574,30 @@ export default {
         return false;
       }
 
-      if (this.$route.params.id != undefined) {
+      if (this.tblProducts.isEdit) {
         const { status } = await this.actionUpdateProgramacaoProduto(
           this.formStep3
         );
-        if (status == 200)
+        if (status == 200) {
           Swal.messageToast(this.$strings.msg_alterar, "success");
-        await this.actionProgramacaoById(this.$route.params.id);
+          await this.actionProgramacaoById(this.formStep3.programation_id);
+          this.tblProducts.isEdit = false;
+        }
       } else {
         const { status } = await this.actionCreateProgramacaoProduto(
           this.formStep3
         );
-        if (status == 201)
-          Swal.messageToast(this.$strings.msg_adicionar, "success");
+        if (status == 201) console.log("adicionar");
+        Swal.messageToast(this.$strings.msg_adicionar, "success");
         await this.actionProgramacaoById(this.formStep3.programation_id);
       }
 
       this.resetProducts();
       this.closeProducts();
-      this.tblProducts.editedIndex = -1;
     },
 
     async editProducts(item) {
-
+      this.tblProducts.isEdit = true;
       this.formStep3.product_id = item.pivot.product_id;
       this.formStep3.quantidade = item.quantidade;
 
@@ -594,8 +605,9 @@ export default {
     },
 
     async deleteProductsConfirm() {
-      const { status } = await this.actionDeleteProgramacaoProduto(this.formStep3);
-      console.log(status);
+      const { status } = await this.actionDeleteProgramacaoProduto(
+        this.formStep3
+      );
       if (status === 200) {
         Swal.messageToast(this.$strings.item_excluido, "success");
         await this.actionProgramacaoById(this.$route.params.id);
@@ -627,7 +639,7 @@ export default {
     },
 
     itemDataTableInsider() {
-     return this.formStep3.programation_id && this.getProgramacaoById[0]
+      return this.formStep3.programation_id && this.getProgramacaoById[0]
         ? this.getProgramacaoById[0].produtos
         : [];
     },
@@ -640,28 +652,6 @@ export default {
         this.formStep3.programation_id = item[0].id;
       }
     },
-    // getProductsById(Products) {
-    //   const {
-    //     id,
-    //     pessoa_fisica_id,
-    //     tipo_documento_id,
-    //     inscricao,
-    //     complemento,
-    //   } = Products;
-    //   this.tblProducts.id = id;
-    //   this.tblProducts.pessoa_fisica_id = pessoa_fisica_id;
-    //   this.tblProducts.tipo_documento_id = tipo_documento_id;
-    //   this.tblProducts.inscricao = inscricao;
-    //   this.tblProducts.complemento = complemento;
-    // },
-
-    // "formStep1.cpf_cnpj": function () {
-    //   if (this.formStep1.cpf_cnpj.length < 15) {
-    //     this.dualMask = "###.###.###-##";
-    //   } else {
-    //     this.dualMask = "##.###.###/####-##";
-    //   }
-    // },
   },
 };
 </script>

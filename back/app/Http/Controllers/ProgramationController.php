@@ -41,6 +41,7 @@ class ProgramationController extends Controller
     {
 
         try {
+            // dd($request->all());
             $programation = Programation::create($request->all());
 
             return response()->json([
