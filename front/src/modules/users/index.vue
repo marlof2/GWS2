@@ -15,6 +15,133 @@
           :rules="required"
         />
         <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.name"
+          :label="'Nome'"
+          required
+          :rules="required"
+        />
+
+        <TextField
           v-model="form.email"
           :label="'E-mail'"
           required
@@ -27,7 +154,7 @@
             :isBack="true"
             :label="this.$strings.btn_voltar"
             dark
-            @click="$router.go(-1)"
+            @click="$router.push(`/condominios`)"
           />
           <FormButton
             :label="this.$strings.btn_salvar"
@@ -46,7 +173,7 @@ import TextField from "../../components/Inputs/TextField.vue";
 import FormButton from "../../components/UI/FormButton.vue";
 import { mapActions, mapGetters } from "vuex";
 import { constants } from "./_constants";
-import criptografia from "../../seguranca";
+// import criptografia from "../../seguranca";
 
 export default {
   name: "perfilModule",

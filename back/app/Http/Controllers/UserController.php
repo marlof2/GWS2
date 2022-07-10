@@ -21,13 +21,13 @@ class UserController extends Controller
                 $user = User::PesquisaPorNome($request->search);
                 return response()->json($user);
             }
-            
+
             if ($request->filled('limit')) {
                 $user = User::all();
                 return response()->json(['data' => $user]);
             }
 
-            $user = User::paginate(config('app.pageLimit'));
+            $user = User::with('papel')->paginate(config('app.pageLimit'));
             return response()->json($user);
         } catch (\Exception $e) {
             return response()->json([
@@ -63,10 +63,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, User $user)
+    public function show($id)
     {
         try {
-            return response()->json($user->where('id', $id)->get()[0], 200);
+            return response()->json(User::whereId($id)->with('papel', 'permissao')->get(), 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),

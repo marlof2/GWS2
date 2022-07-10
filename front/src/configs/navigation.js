@@ -40,8 +40,8 @@ export default {
         },
         {
           icon: "mdi-account-supervisor-outline",
-          text: "Funcionários",
-          link: "/usuario",
+          text: "Usuarios",
+          link: "/users",
         },
         {
           icon: "mdi-account-group-outline",
