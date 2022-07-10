@@ -20,17 +20,6 @@ class Product extends Model
         return $query->where('nome', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
     }
 
-    public function excluir($dataAlteracao, $excluido, $id)
-    {
-        $produto = Product::find($id);
-        $produto->data_alteracao = $dataAlteracao;
-        $produto->excluido = $excluido;
-
-        $produto->save();
-
-        return $produto;
-    }
-
     public function retiraDoEstoque($request)
     {
         $product =  Product::find($request['product_id']);
