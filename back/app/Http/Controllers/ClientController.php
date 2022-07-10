@@ -64,9 +64,15 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show($id, Client $client)
     {
-        //
+        try {
+            return response()->json($client->where('id', $id)->get()[0], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 
     /**
@@ -76,9 +82,20 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(UpdateClientRequest $request, $id, Client $client)
     {
-        //
+        try {
+            $client->find($id)->update($request->all());
+
+            return response()->json([
+                'message' => 'Produto atualizado com sucesso!',
+                'status' => '200'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 
     /**
@@ -87,8 +104,20 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy($id, Client $client)
     {
-        //
+        try {
+            $products = $client->find($id);
+            $products->delete();
+
+            return response()->json([
+                'message' => $client->nome . ' excluído(a) com sucesso!',
+                'status' => '200'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 }

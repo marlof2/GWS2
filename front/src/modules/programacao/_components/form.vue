@@ -533,7 +533,7 @@ export default {
       if (!this.formValidated) {
         return false;
       }
-      if (this.tblProducts.isEdit) {
+      if (this.$route.params.id != undefined) {
         this.formStep1.id = this.$route.params.id;
         const resp = await this.actionUpdateCliente(this.formStep1);
         if (resp.status == 200) {

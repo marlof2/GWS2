@@ -22,7 +22,7 @@ class ProgramationController extends Controller
                 return response()->json($programation);
             }
 
-            $programation = Programation::with('cliente', 'condominio', 'user', 'produtos')->paginate(config('app.pageLimit'));
+            $programation = Programation::with('cliente', 'condominio', 'user')->paginate(config('app.pageLimit'));
             return response()->json($programation);
         } catch (\Exception $e) {
             return response()->json([
