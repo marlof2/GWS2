@@ -54,10 +54,6 @@ import Api from "@/api";
 export default {
   props: {
     item: null,
-    itemToExclude: {
-      type: String,
-      default: "",
-    },
     permissions: {
       type: Object,
       default: () => {},
@@ -79,9 +75,7 @@ export default {
       const pathRoute = this.$router.currentRoute.name;
       this.$swal
         .fire({
-          title: `Tem certeza que deseja apagar <b>${
-            this.item[`${this.itemToExclude}`]
-          }</b>?`,
+          title: `Tem certeza que deseja apagar?`,
           text: "Esta ação não poderá ser desfeita!",
           icon: "warning",
           showCancelButton: true,
@@ -96,9 +90,8 @@ export default {
               id
             );
             if (!response) return false;
-            console.log(response);
             this.$swal.fire({
-              title: response.data.message,
+              title: 'Deletado com Sucesso!',
               icon: "success",
             });
             this.$root.$emit("reloadDelete");

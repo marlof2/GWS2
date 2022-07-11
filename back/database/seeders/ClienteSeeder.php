@@ -21,5 +21,17 @@ class ClienteSeeder extends Seeder
             'complemento' => 'Perto da rua A',
             'telefone' => '71991717209',
         ]);
+         Client::firstOrCreate([
+            'nome' => 'Mayara',
+            'cpf_cnpj' => '03296244581',
+            'complemento' => 'Perto da rua A',
+            'telefone' => '71991717209',
+        ]);
+         Client::firstOrCreate([
+            'nome' => 'Jola',
+            'cpf_cnpj' => '03296244581',
+            'complemento' => 'Perto da rua A',
+            'telefone' => '71991717209',
+        ]);
     }
 }

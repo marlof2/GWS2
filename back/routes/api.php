@@ -25,7 +25,7 @@ Route::apiResource('formapagamento', FormaPagamentoController::class);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('produtos', ProductController::class);
     Route::apiResource('clientes', ClientController::class);
-    Route::apiResource('programations', ProgramationController::class);
+    Route::apiResource('programacao', ProgramationController::class);
     Route::apiResource('condominios', CondominiumController::class);
     Route::apiResource('users', UserController::class);
     Route::apiResource('programacaoproduto', ProgramationProductController::class);

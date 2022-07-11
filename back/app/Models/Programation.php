@@ -27,7 +27,7 @@ class Programation extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Client::class, 'client_id', 'id')->select('id', 'nome');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
     public function condominio()
     {

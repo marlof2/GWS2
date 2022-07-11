@@ -74,7 +74,6 @@
       <template col-1 v-slot:[`item.acao`]="{ item }">
         <ActionInline
           :permissions="permissions"
-          :itemToExclude="itemToExclude"
           :item="item"
         />
         <MaisOpcoesTable :idUser="item.id" />
@@ -107,7 +106,7 @@
         </v-btn>
       </span>
     </div>
-    <div class="mt-2 d-flex flex-row align-items-flex-start justify-center">
+    <!-- <div class="mt-2 d-flex flex-row align-items-flex-start justify-center">
       <SelectAutocomplete
         v-model="page"
         class="select-custom text-center"
@@ -117,7 +116,7 @@
         :fields="[]"
         pagination
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -169,10 +168,6 @@ export default {
       type: Object,
       default: () => {},
     },
-    itemToExclude: {
-      type: String,
-      default: "",
-    },
   },
   mounted() {
     this.headers = this.headersProp;
@@ -212,9 +207,9 @@ export default {
       this.$emit("handleSearch", this.searchQuery);
       this.searchQuery = "";
     },
-    async handleDrawer() {
-      this.$emit("handleDrawer", true);
-    },
+    // async handleDrawer() {
+    //   this.$emit("handleDrawer", true);
+    // },
     countPages() {
       let i = 0;
       let array = [];

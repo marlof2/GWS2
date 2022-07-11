@@ -107,7 +107,7 @@ class ProgramationProductController extends Controller
                 'message' => 'Produto atualizado com sucesso!',
             ], 200);
         } catch (\Exception $e) {
-            // DB::rollBack();
+            DB::rollBack();
             return response()->json([
                 'message' => $e->getMessage(),
             ], 406);
@@ -123,16 +123,19 @@ class ProgramationProductController extends Controller
     public function destroy(Request $request, Product $product)
     {
         try {
+            DB::beginTransaction();
 
             $product->adicionaNoEstoque(null, $request->all());
 
-             ProgramationProduct::whereProgramationId($request->programation_id)
+            ProgramationProduct::whereProgramationId($request->programation_id)
                 ->whereProductId($request->product_id)->delete();
 
+            DB::commit();
             return response()->json([
                 'status' => '200'
             ]);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'message' => $e->getMessage(),
             ], 406);

@@ -1,4 +1,4 @@
-const routeMain = "programations";
+const routeMain = "programacao";
 
 let state = {};
 

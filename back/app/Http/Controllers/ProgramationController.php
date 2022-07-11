@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Programation;
 use App\Http\Requests\StoreProgramationRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Http\Requests\UpdateProgramationRequest;
+use App\Models\Product;
+use App\Models\ProgramationProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProgramationController extends Controller
 {
@@ -41,7 +45,6 @@ class ProgramationController extends Controller
     {
 
         try {
-            // dd($request->all());
             $programation = Programation::create($request->all());
 
             return response()->json([
@@ -80,9 +83,20 @@ class ProgramationController extends Controller
      * @param  \App\Models\Programation  $programation
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProgramationRequest $request, Programation $programation)
+    public function update($id, UpdateClientRequest $request)
     {
-        //
+        try {
+            Programation::find($id)->update($request->all());
+
+            return response()->json([
+                'message' => 'Programação atualizado com sucesso!',
+                'status' => '200'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 
     /**
@@ -91,8 +105,36 @@ class ProgramationController extends Controller
      * @param  \App\Models\Programation  $programation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Programation $programation)
+    public function destroy($id)
     {
-        //
+        try {
+            $product = new Product();
+            $procuctsForExclude =  ProgramationProduct::whereProgramationId($id)->get();
+
+            DB::beginTransaction();
+            foreach ($procuctsForExclude as  $value) {
+
+                $data = [
+                    'product_id' => $value->product_id,
+                    'quantidade' => $value->quantidade
+                ];
+
+                $product->adicionaNoEstoque(null, $data);
+
+                $deleteProducts =  ProgramationProduct::whereProgramationId($id)->delete();
+            }
+
+            Programation::find($id)->delete();
+
+            DB::commit();
+            return response()->json([
+                'status' => '200'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
     }
 }

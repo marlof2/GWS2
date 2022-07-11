@@ -372,7 +372,11 @@
                     <FormButton
                       :label="'Finalizar'"
                       dark
-                      @click="() => {}"
+                      @click="
+                        () => {
+                          this.$router.push({ name: 'programacao' });
+                        }
+                      "
                       small
                     />
                   </v-card-actions>
@@ -482,8 +486,6 @@ export default {
     await this.actionCondominio({ limit: "-1" });
     await this.actionUsuario({ limit: "-1" });
     await this.actionFormaPagamento();
-    // this.formStep3.programation_id = 1
-    //       await this.actionProgramacaoById(this.formStep3.programation_id);
   },
   computed: {
     ...mapGetters({
@@ -534,7 +536,6 @@ export default {
         return false;
       }
       if (this.$route.params.id != undefined) {
-        this.formStep1.id = this.$route.params.id;
         const resp = await this.actionUpdateCliente(this.formStep1);
         if (resp.status == 200) {
           Swal.messageToast(this.$strings.msg_alterar, "success");
@@ -554,6 +555,9 @@ export default {
         return false;
       }
       if (this.$route.params.id != undefined) {
+        this.formStep2.id = this.$route.params.id;
+        console.log(this.formStep2);
+
         const resp = await this.actionUpdateProgramacao(this.formStep2);
         if (resp.status == 200) {
           Swal.messageToast(this.$strings.msg_alterar, "success");

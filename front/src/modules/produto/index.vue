@@ -45,12 +45,6 @@
         :itemsPerPageProp="paginate.perPages"
         @handleSearch="search"
         @handlePageChange="handlePageChange"
-        @handleDrawer="
-          (drawer) => {
-            this.drawer = drawer;
-          }
-        "
-        :itemToExclude="'nome'"
         :permissions="permissions"
       />
     </v-card>
