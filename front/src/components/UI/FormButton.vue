@@ -8,6 +8,7 @@
     :outlined="isBack"
     :color="'primary'"
     :loading="isLoading"
+    :disabled="disabled"
     >{{ label }}</v-btn
   >
 </template>
@@ -19,7 +20,11 @@ export default {
     dark: Boolean,
     click: Function,
     isLoading: Boolean,
-    small:Boolean
+    small: Boolean,
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -27,6 +32,6 @@ export default {
 <style scoped>
 .label {
   font-size: 12pt;
-  margin-left: -7px
+  margin-left: -7px;
 }
 </style>

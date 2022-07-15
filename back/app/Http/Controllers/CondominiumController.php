@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CondominiumRequest;
 use App\Models\Condominium;
-use App\Http\Requests\StoreCondominiumRequest;
-use App\Http\Requests\UpdateCondominiumRequest;
 use Illuminate\Http\Request;
 
 class CondominiumController extends Controller
@@ -40,10 +39,10 @@ class CondominiumController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCondominiumRequest  $request
+     * @param  \App\Http\Requests\CondominiumRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCondominiumRequest $request, Condominium $condominium)
+    public function store(CondominiumRequest $request, Condominium $condominium)
     {
         try {
             $result = $condominium::create($request->all());
@@ -78,11 +77,11 @@ class CondominiumController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCondominiumRequest  $request
+     * @param  \App\Http\Requests\CondominiumRequest  $request
      * @param  \App\Models\Condominium  $condominium
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCondominiumRequest $request, Condominium $condominium, $id)
+    public function update(CondominiumRequest $request, Condominium $condominium, $id)
     {
         try {
             $condominium->find($id)->update($request->all());

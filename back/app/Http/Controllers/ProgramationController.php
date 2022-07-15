@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProgramationRequest;
 use App\Models\Programation;
-use App\Http\Requests\StoreProgramationRequest;
-use App\Http\Requests\UpdateClientRequest;
-use App\Http\Requests\UpdateProgramationRequest;
 use App\Models\Product;
 use App\Models\ProgramationProduct;
 use Illuminate\Http\Request;
@@ -38,10 +36,10 @@ class ProgramationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProgramationRequest  $request
+     * @param  \App\Http\Requests\ProgramationRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProgramationRequest $request)
+    public function store(ProgramationRequest $request)
     {
 
         try {
@@ -79,11 +77,11 @@ class ProgramationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProgramationRequest  $request
+     * @param  \App\Http\Requests\ProgramationRequest  $request
      * @param  \App\Models\Programation  $programation
      * @return \Illuminate\Http\Response
      */
-    public function update($id, UpdateClientRequest $request)
+    public function update($id, ProgramationRequest $request)
     {
         try {
             Programation::find($id)->update($request->all());

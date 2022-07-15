@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientRequest;
 use App\Models\Client;
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -40,10 +39,10 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreClientRequest  $request
+     * @param  \App\Http\Requests\ClientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClientRequest $request, Client $client)
+    public function store(ClientRequest $request, Client $client)
     {
         try {
             $result = $client::create($request->all());
@@ -78,11 +77,11 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateClientRequest  $request
+     * @param  \App\Http\Requests\ClientRequest  $request
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClientRequest $request, $id, Client $client)
+    public function update(ClientRequest $request, $id, Client $client)
     {
         try {
             $client->find($id)->update($request->all());

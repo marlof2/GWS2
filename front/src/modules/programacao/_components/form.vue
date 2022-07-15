@@ -123,11 +123,7 @@
                         :isBack="true"
                         :label="'Voltar'"
                         dark
-                        @click="
-                          () => {
-                            this.$router.push({ name: 'programacao' });
-                          }
-                        "
+                        @click="backToProgramation()"
                         small
                       />
                       <FormButton
@@ -262,16 +258,16 @@
                       />
                       <FormButton
                         :label="'Salvar'"
-                        dark
                         @click="saveProgramacao()"
                         small
+                        :disabled="$route.name == 'programacao-cadastrar' && !disabledBtnProgramacao()"
                       />
                       <FormButton
+                        @click="transition = 3"
                         :isBack="true"
                         :label="'Avançar'"
-                        dark
-                        @click="transition = 3"
                         small
+                        :disabled="disabledBtnProgramacao()"
                       />
                     </v-card-actions>
                   </v-col>
@@ -284,14 +280,16 @@
             <v-card class="pa-2">
               <v-col cols="12" sm="12" md="12">
                 <v-row>
-                  <v-col cols="12" sm="4" md="4" xs="12">
+                  <v-col
+                    v-if="formStep3.programation_id"
+                    cols="12"
+                    sm="4"
+                    md="4"
+                    xs="12"
+                  >
                     <h4>
                       Código da Programação
-                      {{
-                        formStep3.programation_id
-                          ? "#" + formStep3.programation_id
-                          : "#"
-                      }}
+                      {{ "#" + formStep3.programation_id }}
                     </h4>
                   </v-col>
                 </v-row>
@@ -372,11 +370,7 @@
                     <FormButton
                       :label="'Finalizar'"
                       dark
-                      @click="
-                        () => {
-                          this.$router.push({ name: 'programacao' });
-                        }
-                      "
+                      @click="backToProgramation()"
                       small
                     />
                   </v-card-actions>
@@ -530,6 +524,13 @@ export default {
       //forma de pagamento
       actionFormaPagamento: "$_formaPagamento/getItems",
     }),
+    disabledBtnProgramacao() {
+      if (this.formStep3.programation_id == null) return true;
+      else return false;
+    },
+    backToProgramation() {
+      return this.$router.push({ name: "programacao" });
+    },
     async saveCliente() {
       this.formValidated = await this.$refs.form1.validate();
       if (!this.formValidated) {
@@ -556,7 +557,6 @@ export default {
       }
       if (this.$route.params.id != undefined) {
         this.formStep2.id = this.$route.params.id;
-        console.log(this.formStep2);
 
         const resp = await this.actionUpdateProgramacao(this.formStep2);
         if (resp.status == 200) {
@@ -591,7 +591,7 @@ export default {
         const { status } = await this.actionCreateProgramacaoProduto(
           this.formStep3
         );
-        if (status == 201) console.log("adicionar");
+        if (status == 201) 
         Swal.messageToast(this.$strings.msg_adicionar, "success");
         await this.actionProgramacaoById(this.formStep3.programation_id);
       }

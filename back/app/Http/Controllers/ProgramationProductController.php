@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProgramationProductsRequest;
+use App\Http\Requests\ProgramationProductsRequest;
 use App\Models\Product;
 use App\Models\ProgramationProduct;
 use Illuminate\Http\Request;
@@ -31,10 +31,10 @@ class ProgramationProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ProgramationProductsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProgramationProductsRequest $request, Product $product)
+    public function store(ProgramationProductsRequest $request, Product $product)
     {
         try {
             DB::beginTransaction();
@@ -78,11 +78,11 @@ class ProgramationProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ProgramationProductsRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product, $id)
+    public function update(ProgramationProductsRequest $request, Product $product, $id)
     {
         try {
             DB::beginTransaction();

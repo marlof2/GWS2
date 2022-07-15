@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateProductRequest extends FormRequest
+class ProgramationProductsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,8 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required|max:30',
+            'programation_id' => 'required',
+            'product_id' => 'required',
             'quantidade' => 'required',
         ];
     }
@@ -36,7 +37,7 @@ class UpdateProductRequest extends FormRequest
     {
 
         throw new HttpResponseException(
-            response()->json(['errors' => $validator->errors(), 'tipo' => 'Validação de Campo'], Response::HTTP_NOT_ACCEPTABLE)
+            response()->json(['error' => $validator->errors(), 'tipo' => 'Validação de Campo'], Response::HTTP_NOT_ACCEPTABLE)
         );
     }
 }

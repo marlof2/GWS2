@@ -1,5 +1,14 @@
 <template>
-  <v-btn @click="click" class="mx-2" v-bind="vBind" v-on="on" color="#10A375" dark fab x-small>
+  <v-btn
+    @click="click"
+    class="mx-2"
+    v-bind="vBind"
+    v-on="on"
+    color="#10A375"
+    fab
+    x-small
+    :disabled="disabled"
+  >
     <v-icon>mdi-plus</v-icon>
   </v-btn>
 </template>
@@ -11,6 +20,10 @@ export default {
     click: {
       type: Function,
       default: () => {},
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 };

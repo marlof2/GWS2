@@ -1,35 +1,5 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <FiltroAvancado v-model="drawer">
-      <v-col cols="12" sm="12" md="12">
-        <TextField
-          v-model="filter.nome"
-          label="Nome"
-          :maxlength="40"
-          v-mask="''"
-        />
-      </v-col>
-
-      <!-- <v-col cols="12" sm="12" md="12">
-        <Select
-          v-model="filter.quantidade"
-          :itemValue="'id'"
-          :itemText="'descricao'"
-          :items="['teste']"
-          :label="'Porte'"
-        />
-      </v-col> -->
-
-      <v-row justify="center">
-        <FormButton
-          :isBack="true"
-          :label="this.$strings.btn_filtrar"
-          dark
-          @click="filterAdvanced()"
-          small
-        />
-      </v-row>
-    </FiltroAvancado>
     <div class="d-flex align-center py-3">
       <div>
         <div class="display-1">Programação</div>
@@ -58,7 +28,6 @@ import DataTable from "../../components/UI/DataTable.vue";
 import Breadcrumbs from "../../components/UI/Breadcrumbs.vue";
 import { mapActions, mapGetters } from "vuex";
 import { constants } from "./_constants";
-import FiltroAvancado from "../../components/UI/FilterAdvanced.vue";
 import FormButton from "../../components/UI/FormButton.vue";
 import TextField from "../../components/Inputs/TextField.vue";
 import Select from "../../components/Inputs/Select.vue";
@@ -68,7 +37,6 @@ export default {
   components: {
     DataTable,
     Breadcrumbs,
-    FiltroAvancado,
     TextField,
     FormButton,
     Select,
