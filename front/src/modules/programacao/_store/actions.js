@@ -23,10 +23,20 @@ const deleteItem = async (context, id) => {
   const result = await api.deleteItem(id);
 };
 
+const atender = async (context, id) => {
+  return await api.atender(id);
+};
+
+const naoAtender = async (context, id) => {
+  return await api.naoAtender(id);
+};
+
 export default {
   getItems,
   getItemById,
   createItem,
   updateItem,
   deleteItem,
+  atender,
+  naoAtender,
 };

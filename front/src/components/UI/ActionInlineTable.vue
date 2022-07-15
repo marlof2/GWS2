@@ -7,7 +7,7 @@
           @click="editar(item.id)"
           text
           icon
-          color="#5abf7a"
+          color="#468bd9"
           size="22"
         >
           <v-icon v-on="on" v-bind="attrs">mdi-square-edit-outline</v-icon>
@@ -22,7 +22,7 @@
           @click="visualizar(item.id)"
           text
           icon
-          color="#468bd9"
+          color="grey-black"
           size="22"
         >
           <v-icon v-on="on" v-bind="attrs">mdi-eye-outline</v-icon>
@@ -94,7 +94,7 @@ export default {
               title: 'Deletado com Sucesso!',
               icon: "success",
             });
-            this.$root.$emit("reloadDelete");
+            this.$root.$emit("reloadIndex");
             this.$root.$emit("resetPage");
           }
         });

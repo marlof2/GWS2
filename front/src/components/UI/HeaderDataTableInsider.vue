@@ -1,9 +1,18 @@
 <template>
   <v-toolbar class="pa-0" flat>
-    <v-toolbar-title><strong>{{title}}</strong></v-toolbar-title>
+    <v-toolbar-title
+      ><strong>{{ title }}</strong></v-toolbar-title
+    >
     <v-divider class="mx-4" inset vertical></v-divider>
     <v-spacer></v-spacer>
-    <AddButtonIcon :click="addButtonClick"/>
+    <span class="icons">
+      <template>
+        <AddButtonIcon
+          v-permissions="permissions ? permissions.incluirInseder : ''"
+          :click="addButtonClick"
+        />
+      </template>
+    </span>
   </v-toolbar>
 </template>
 
@@ -18,6 +27,10 @@ export default {
     },
     addButtonClick: {
       type: Function,
+      default: () => {},
+    },
+    permissions: {
+      type: Object,
       default: () => {},
     },
   },

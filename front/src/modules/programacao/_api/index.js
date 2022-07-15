@@ -45,10 +45,28 @@ const deleteItem = async (id) => {
   return false;
 };
 
+const atender = async (id) => {
+  const result = await Api.patch(apiUrl + '/atender', id);
+  if (result) {
+    return result;
+  }
+  return false;
+};
+
+const naoAtender = async (id) => {
+  const result = await Api.patch(apiUrl + '/naoAtender', id);
+  if (result) {
+    return result;
+  }
+  return false;
+};
+
 export default {
   getItems,
   getItemById,
   createItem,
   updateItem,
   deleteItem,
+  atender,
+  naoAtender,
 };

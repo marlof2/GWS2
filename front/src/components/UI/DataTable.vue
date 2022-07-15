@@ -48,7 +48,7 @@
       hide-default-footer
     >
       <template v-slot:[`item.situacao`]="{ item }">
-        <v-chip  v-if="customItemsProp[0].situacao" :color="getColor(item.situacao)" dark>
+        <v-chip  v-if="customItemsProp[1].situacao" :color="getColor(item.situacao)" dark>
           {{ item.situacao == "N" ? "Não Atendido" : "Atendido" }}
         </v-chip>
       </template>
@@ -149,7 +149,7 @@ export default {
       default: 10,
     },
     customItemsProp: {
-      type: Array,
+      type: Object,
       default: () => [],
     },
     headersProp: {

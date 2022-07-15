@@ -45,6 +45,11 @@ class ClientController extends Controller
     public function store(ClientRequest $request, Client $client)
     {
         try {
+
+            $request['cep'] = preg_replace('/[^0-9]/', '', $request->cep);
+            $request['cpf_cnpj'] = preg_replace('/[^0-9]/', '', $request->cpf_cnpj);
+            $request['telefone'] = preg_replace('/[^0-9]/', '', $request->telefone);
+
             $result = $client::create($request->all());
 
             return response()->json([
@@ -84,10 +89,14 @@ class ClientController extends Controller
     public function update(ClientRequest $request, $id, Client $client)
     {
         try {
+            $request['cep'] = preg_replace('/[^0-9]/', '', $request->cep);
+            $request['cpf_cnpj'] = preg_replace('/[^0-9]/', '', $request->cpf_cnpj);
+            $request['telefone'] = preg_replace('/[^0-9]/', '', $request->telefone);
+
             $client->find($id)->update($request->all());
 
             return response()->json([
-                'message' => 'Produto atualizado com sucesso!',
+                'message' => 'Cliente atualizado com sucesso!',
                 'status' => '200'
             ]);
         } catch (\Exception $e) {

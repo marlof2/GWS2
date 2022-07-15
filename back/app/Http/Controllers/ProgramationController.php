@@ -135,4 +135,34 @@ class ProgramationController extends Controller
             ], 406);
         }
     }
+
+    public function atender($id, )
+    {
+        try {
+            Programation::find($id)->update(['situacao' => 'A']);
+
+            return response()->json([
+                'status' => '200'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
+    }
+
+    public function naoAtender($id)
+    {
+        try {
+            Programation::find($id)->update(['situacao' => 'N']);
+
+            return response()->json([
+                'status' => '200'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 406);
+        }
+    }
 }

@@ -23,6 +23,7 @@ const formStep2 = {
   hora: null,
   valor: null,
   situacao: 'N',
+  descricao: null,
   observacao: null,
   garantia: null,
   forma_pagamento_id: null,
@@ -102,7 +103,7 @@ const paginate = {
 };
 
 const headers = [
-  { text: "Id", value:"id", align: "left" },
+  { text: "Id", value: "id", align: "left" },
   { text: "Cliente", value: "cliente.nome", align: "left" },
   { text: "Condomínio", value: "condominio.nome", align: "left" },
   { text: "Data", value: "data", align: "left" },
@@ -110,6 +111,18 @@ const headers = [
   { text: "Situação", value: "situacao", align: "left" },
   { text: "Funcionário", value: "user.name", align: "left" },
   { text: "Ação", value: "acao" },
+];
+
+const customItemsProp = [
+  {
+    id: 1,
+    name: "data",
+    filter: "dateformat",
+  },
+  {
+    id: 2,
+    situacao: true,
+  },
 ];
 
 export const constants = {
@@ -125,4 +138,5 @@ export const constants = {
   headers,
   permissions,
   tblProducts,
+  customItemsProp,
 };

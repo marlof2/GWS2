@@ -27,7 +27,6 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'cpf_cnpj' => 'required',
             'nome' => 'required',
             'complemento' => 'required',
             'telefone' => 'required',

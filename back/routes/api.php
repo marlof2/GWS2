@@ -26,6 +26,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('produtos', ProductController::class);
     Route::apiResource('clientes', ClientController::class);
     Route::apiResource('programacao', ProgramationController::class);
+    Route::patch('programacao/atender/{id}', [ProgramationController::class, 'atender']);
+    Route::patch('programacao/naoAtender/{id}', [ProgramationController::class, 'naoAtender']);
+
     Route::apiResource('condominios', CondominiumController::class);
     Route::apiResource('users', UserController::class);
     Route::apiResource('programacaoproduto', ProgramationProductController::class);

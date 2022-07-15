@@ -21,7 +21,7 @@ const getItemById = async (id) => {
 
 const updateItem = async (params) => {
   const id = params.id;
-  delete params.id;
+  // delete params.id;
   const result = await Api.put(apiUrl, id, params);
   if (result) {
     return result;

@@ -49,8 +49,6 @@
                       v-model="formStep1.cpf_cnpj"
                       label="CPF/CNPJ"
                       v-mask="dualMask"
-                      :rules="required"
-                      required
                     />
                   </v-col>
                 </v-row>
@@ -150,7 +148,7 @@
             <v-card class="pa-2">
               <v-form ref="form2" v-model="validStep2" lazy-validation>
                 <v-row>
-                  <v-col cols="12" sm="6" md="6" xs="12">
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
                       :items="getCliente.data"
                       :itemValue="'id'"
@@ -161,7 +159,7 @@
                       v-model="formStep2.client_id"
                     />
                   </v-col>
-                  <v-col cols="12" sm="6" md="6" xs="12">
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
                       :items="getCondominio.data"
                       :itemValue="'id'"
@@ -172,10 +170,7 @@
                       required
                     />
                   </v-col>
-                </v-row>
-
-                <v-row>
-                  <v-col cols="6" sm="6" md="6" xs="12">
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
                       :items="getFormaPagamento.data"
                       :itemValue="'id'"
@@ -186,7 +181,9 @@
                       required
                     />
                   </v-col>
-                  <v-col cols="6" sm="6" md="6" xs="12">
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
                       :items="getUsuario.data"
                       :itemValue="'id'"
@@ -197,9 +194,7 @@
                       required
                     />
                   </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="12" sm="6" md="6" xs="6">
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <DatePicker
                       :label="'Data'"
                       :date.sync="formStep2.data"
@@ -208,7 +203,7 @@
                       required
                     />
                   </v-col>
-                  <v-col cols="12" sm="6" md="6" xs="6">
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <TimePicker
                       :label="'Hora'"
                       :return-value.sync="formStep2.hora"
@@ -219,7 +214,7 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" sm="6" md="6" xs="12">
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <TextField
                       v-model="formStep2.valor"
                       label="Valor"
@@ -228,7 +223,7 @@
                       required
                     />
                   </v-col>
-                  <v-col cols="6" sm="6" md="6" xs="12">
+                  <v-col cols="12" sm="4" md="4" xs="12">
                     <TextField
                       v-model="formStep2.garantia"
                       label="Garantia"
@@ -237,11 +232,20 @@
                       required
                     />
                   </v-col>
+                  <v-col cols="12" sm="4" md="4" xs="12">
+                    <TextField
+                      v-model="formStep2.descricao"
+                      label="Descricão"
+                      :maxlength="150"
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
                   <v-col cols="12" sm="12" md="12" xs="12">
                     <TextArea
                       v-model="formStep2.observacao"
                       label="Observação"
-                      :maxlength="200"
+                      :maxlength="300"
                     />
                   </v-col>
                 </v-row>
@@ -260,14 +264,14 @@
                         :label="'Salvar'"
                         @click="saveProgramacao()"
                         small
-                        :disabled="$route.name == 'programacao-cadastrar' && !disabledBtnProgramacao()"
+                        :disabled="disabledBtnSalvarProgramacao()"
                       />
                       <FormButton
                         @click="transition = 3"
                         :isBack="true"
                         :label="'Avançar'"
                         small
-                        :disabled="disabledBtnProgramacao()"
+                        :disabled="disabledBtnProximoProgramacao()"
                       />
                     </v-card-actions>
                   </v-col>
@@ -467,6 +471,7 @@ export default {
       breadcrumbs: [...constants.breadcrumbsForm],
       transition: 1,
       dualMask: "",
+      verifyValueDisabled: false,
     };
   },
   async mounted() {
@@ -524,9 +529,17 @@ export default {
       //forma de pagamento
       actionFormaPagamento: "$_formaPagamento/getItems",
     }),
-    disabledBtnProgramacao() {
+    disabledBtnProximoProgramacao() {
       if (this.formStep3.programation_id == null) return true;
       else return false;
+    },
+    disabledBtnSalvarProgramacao() {
+      if (
+        this.$route.name == "programacao-cadastrar" &&
+        this.verifyValueDisabled
+      ) {
+        return true;
+      }
     },
     backToProgramation() {
       return this.$router.push({ name: "programacao" });
@@ -536,7 +549,7 @@ export default {
       if (!this.formValidated) {
         return false;
       }
-      if (this.$route.params.id != undefined) {
+      if (this.formStep1.id) {
         const resp = await this.actionUpdateCliente(this.formStep1);
         if (resp.status == 200) {
           Swal.messageToast(this.$strings.msg_alterar, "success");
@@ -568,6 +581,7 @@ export default {
           Swal.messageToast(this.$strings.msg_adicionar, "success");
           this.formStep3.programation_id = resp.data.data.id;
           await this.actionProgramacaoById(this.formStep3.programation_id);
+          this.verifyValueDisabled = true
         }
       }
     },
@@ -591,9 +605,12 @@ export default {
         const { status } = await this.actionCreateProgramacaoProduto(
           this.formStep3
         );
-        if (status == 201) 
-        Swal.messageToast(this.$strings.msg_adicionar, "success");
+        if (status == 201)
+          Swal.messageToast(this.$strings.msg_adicionar, "success");
         await this.actionProgramacaoById(this.formStep3.programation_id);
+
+        this.resetFormStep3();
+        this.resetProducts();
       }
 
       this.resetProducts();
@@ -614,9 +631,11 @@ export default {
       );
       if (status === 200) {
         Swal.messageToast(this.$strings.item_excluido, "success");
-        await this.actionProgramacaoById(this.$route.params.id);
+        await this.actionProgramacaoById(this.formStep3.programation_id);
       }
       this.tblProducts.dialogDelete = false;
+      this.resetProducts();
+      this.resetFormStep3();
     },
 
     deleteProductsDialog(item) {
@@ -630,15 +649,21 @@ export default {
       this.tblProducts = { ...constants.tblProducts };
     },
 
+    resetFormStep3() {
+      this.formStep3.quantidade = null;
+      this.formStep3.product_id = null;
+    },
+
     closeProducts() {
-      this.tblProducts.dialog = false;
-      this.tblProducts = { ...constants.tblProducts };
       this.$refs.form3.reset();
+      this.resetProducts();
+      this.tblProducts.dialog = false;
     },
 
     closeDeleteProducts() {
-      this.tblProducts = { ...constants.tblProducts };
-      // this.$refs.form3.reset();
+      this.$refs.form3.reset();
+      this.resetProducts();
+      this.resetFormStep3();
       this.tblProducts.dialogDelete = false;
     },
 
@@ -656,6 +681,18 @@ export default {
         this.formStep3.programation_id = item[0].id;
       }
     },
+    // "formStep1.cpf_cnpj": {
+    //   handler(newValue) {
+    //     if (newValue.length <= 14) {
+    //       this.dualMask = "###.###.###-##";
+    //     }
+    //     if (newValue.length >= 15) {
+    //       this.dualMask = "##.###.###/####-##";
+    //     }
+    //     // console.log(this.dualMask);
+    //   },
+    //   deep: true,
+    // },
   },
 };
 </script>

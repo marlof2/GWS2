@@ -15,6 +15,7 @@ class Programation extends Model
         'valor', 
         'situacao',
         'observacao',
+        'descricao',
         'garantia',
         'data',
         'hora',

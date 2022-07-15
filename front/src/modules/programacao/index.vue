@@ -16,7 +16,7 @@
         @handleSearch="search"
         @handlePageChange="handlePageChange"
         :permissions="permissions"
-        :customItemsProp="customItemTable"
+        :customItemsProp="customItemsProp"
       >
       </DataTable>
     </v-card>
@@ -50,23 +50,20 @@ export default {
       },
       headers: [...constants.headers],
       permissions: { ...constants.permissions },
+      customItemsProp: { ...constants.customItemsProp },
       filter: {},
       drawer: null,
-      customItemTable: [
-        {
-          situacao: true,
-          dateformat: "dateformat",
-        },
-      ],
     };
   },
   async mounted() {
     await this.search();
-    this.$root.$on("reloadDelete", () => this.search());
+    this.$root.$on("reloadIndex", () => this.search());
   },
   methods: {
     ...mapActions({
       programacao: "$_programacao/getItems",
+      actionAtender: "$_programacao/atender",
+      actionNaoAtender: "$_programacao/naoAtender",
     }),
     async search(search) {
       await this.programacao({ search });

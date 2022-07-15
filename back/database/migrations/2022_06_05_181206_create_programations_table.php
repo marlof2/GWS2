@@ -19,10 +19,10 @@ return new class extends Migration
             $table->unsignedBigInteger('condominium_id');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('forma_pagamento_id');
-            // $table->unsignedBigInteger('product_id');
             $table->string('valor');
             $table->char('situacao', 1)->comment('A = Atendido, N = Não Atendido');
             $table->string('observacao')->nullable();
+            $table->string('descricao')->nullable();
             $table->string('garantia');
             $table->date('data');
             $table->time('hora');
@@ -32,7 +32,6 @@ return new class extends Migration
             $table->foreign('condominium_id')->references('id')->on('condominium')->onDelete('cascade');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->foreign('forma_pagamento_id')->references('id')->on('forma_pagamento')->onDelete('cascade');
-            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }
