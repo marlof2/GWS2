@@ -6,21 +6,66 @@ state[routeMain] = [];
 state[`${routeMain}ById`] = [];
 
 const form = {
-  id:null,
-  password: null,
+  id: null,
   name: "",
   email: "",
+  password: ""
+};
+
+const permissions = {
+  incluir: "",
+  alterar: "",
+  excluir: "",
+  visualizar: "",
+  listar: "",
 };
 
 const breadcrumbsIndex = [
   {
-    text: "Perfil",
+    text: "Usuário",
     disabled: false,
     href: "#",
   },
   {
-    text: "Editar",
+    text: "Listar",
   },
+];
+
+const breadcrumbsForm = [
+  {
+    text: "Usuário",
+    disabled: false,
+    to: "/produto",
+    exact: true,
+  },
+  {
+    text: "Visualizar",
+  },
+];
+
+const breadcrumbsShow = [
+  {
+    text: "Usuário",
+    disabled: false,
+    to: "/produto",
+    exact: true,
+  },
+  {
+    text: "Visualizar",
+  },
+];
+
+const paginate = {
+  totalPages: 0,
+  page: 1,
+  lastPage: null,
+  perPages: 15,
+};
+
+const headers = [
+  { text: "Nome", value: "name", align: "left" },
+  { text: "Email", value: "email", align: "left" },
+  { text: "Ação", value: "acao" },
 ];
 
 export const constants = {
@@ -28,4 +73,9 @@ export const constants = {
   state,
   form,
   breadcrumbsIndex,
+  breadcrumbsForm,
+  breadcrumbsShow,
+  paginate,
+  headers,
+  permissions,
 };

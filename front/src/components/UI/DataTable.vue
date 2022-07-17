@@ -48,7 +48,11 @@
       hide-default-footer
     >
       <template v-slot:[`item.situacao`]="{ item }">
-        <v-chip  v-if="customItemsProp[1].situacao" :color="getColor(item.situacao)" dark>
+        <v-chip
+          v-if="customItemsProp[1].situacao"
+          :color="getColor(item.situacao)"
+          dark
+        >
           {{ item.situacao == "N" ? "Não Atendido" : "Atendido" }}
         </v-chip>
       </template>
@@ -72,11 +76,11 @@
         </div>
       </template>
       <template col-1 v-slot:[`item.acao`]="{ item }">
-        <ActionInline
-          :permissions="permissions"
-          :item="item"
+        <ActionInline :permissions="permissions" :item="item" />
+        <MaisOpcoesTable
+          v-if="verifyIfIsRouteProgramation()"
+          :idUser="item.id"
         />
-        <MaisOpcoesTable :idUser="item.id" />
       </template>
     </v-data-table>
     <div class="pt-2 d-flex flex-row align-items-flex-start justify-center">
@@ -150,7 +154,7 @@ export default {
     },
     customItemsProp: {
       type: Object,
-      default: () => [],
+      default: () => {},
     },
     headersProp: {
       type: Array,
@@ -189,6 +193,9 @@ export default {
     };
   },
   methods: {
+    verifyIfIsRouteProgramation() {
+      return this.$router.currentRoute.name === "programacao" ? true : false;
+    },
     async handlePageChange() {
       const paginate = { page: this.page, per_page: this.itemsPerPage };
       this.$emit("handlePageChange", paginate);
