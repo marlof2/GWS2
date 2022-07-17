@@ -15,135 +15,14 @@
           :rules="required"
         />
         <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-        <TextField
-          v-model="form.name"
-          :label="'Nome'"
-          required
-          :rules="required"
-        />
-
-        <TextField
           v-model="form.email"
-          :label="'E-mail'"
+          :label="'Email'"
+          required
+          :rules="required"
+        />
+        <TextField
+          v-model="form.password"
+          :label="'Password'"
           required
           :rules="required"
         />
@@ -154,7 +33,7 @@
             :isBack="true"
             :label="this.$strings.btn_voltar"
             dark
-            @click="$router.push(`/condominios`)"
+            @click="$router.push(`/usuario`)"
           />
           <FormButton
             :label="this.$strings.btn_salvar"

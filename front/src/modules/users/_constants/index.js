@@ -6,7 +6,8 @@ state[routeMain] = [];
 state[`${routeMain}ById`] = [];
 
 const form = {
-  user_key: null,
+  id:null,
+  password: null,
   name: "",
   email: "",
 };
