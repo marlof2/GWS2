@@ -20,9 +20,8 @@ const getItemById = async (user_key) => {
 };
 
 const updateItem = async (params) => {
-  const user_key = params.user_key;
-  delete params.user_key;
-  const result = await Api.put(url, user_key, params);
+  const id = params.id;
+  const result = await Api.put(url, id, params);
   if (result) {
     return result;
   }

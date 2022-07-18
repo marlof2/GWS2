@@ -24,7 +24,7 @@ Route::apiResource('formapagamento', FormaPagamentoController::class);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('produtos', ProductController::class);
-    Route::apiResource('clientes', ClientController::class);
+    Route::apiResource('cliente', ClientController::class);
     Route::apiResource('programacao', ProgramationController::class);
     Route::patch('programacao/atender/{id}', [ProgramationController::class, 'atender']);
     Route::patch('programacao/naoAtender/{id}', [ProgramationController::class, 'naoAtender']);

@@ -9,6 +9,7 @@ import LoginRoutes from "@/modules/login/_routes";
 import ProdutosRoutes from "@/modules/produto/_routes";
 import CondominioRoutes from "@/modules/condominio/_routes";
 import ProgramacaoRoutes from "@/modules/programacao/_routes";
+import ClienteRoutes from "@/modules/cliente/_routes";
 
 Vue.use(Router);
 
@@ -19,6 +20,7 @@ export const routes = [
   ...PagesRoutes,
   ...UsersRoutes,
   ...ProgramacaoRoutes,
+  ...ClienteRoutes,
   {
     path: "/",
     redirect: "/autenticar",

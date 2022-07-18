@@ -4,7 +4,7 @@
       <div>
         <div class="display-1">
           {{
-            $route.params.id != undefined ? "Edição de País" : "Novo País"
+            $route.params.id != undefined ? "Edição de Usuário" : "Novo Usuário"
           }}
         </div>
         <Breadcrumbs :breadcrumbs="breadcrumbs" />
@@ -13,87 +13,56 @@
     <v-card class="pa-2">
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
-
-          <v-col cols="12" sm="12" md="12">
+          <v-col cols="12" sm="3" md="3">
             <TextField
-              v-model="form.nome"
+              v-model="form.name"
               label="Nome"
-              :maxlength="100"
-              v-mask="''"
+              :maxlength="50"
               :rules="required"
               required
             />
           </v-col>
         </v-row>
         <v-row>
-
-          <v-col cols="3" sm="3" md="3">
+          <v-col cols="12" sm="3" md="3">
             <TextField
-              v-model="form.codigo_iso_alpha2"
-              label="Código Alpha-2"
-              :maxlength="2"
-              v-mask="''"
+              v-model="form.email"
+              label="E-mail"
+              :maxlength="50"
               :rules="required"
               required
-            />
-          </v-col>
-
-          <v-col cols="3" sm="3" md="3">
-            <TextField
-              v-model="form.codigo_iso_alpha3"
-              label="Código Alpha-3"
-              :maxlength="3"
-              v-mask="''"
-              :rules="required"
-              required
-            />
-          </v-col>
-
-          <v-col cols="3" sm="3" md="3">
-            <TextField
-              v-model="form.codigo_m49"
-              label="Código M49"
-              :maxlength="3"
-              v-mask="'###'"
-              :rules="required"
-              required
-            />
-          </v-col>
-
-          <v-col cols="3" sm="3" md="3">
-            <TextField
-              v-model="form.codigo_esus"
-              label="Código E-Sus"
-              v-mask="'###'"
             />
           </v-col>
         </v-row>
+
         <v-row>
-
-          <v-col cols="12" sm="12" md="12">
-            <TextField
-              v-model="form.nacionalidade"
-              label="Nacionalidade"
-              :maxlength="30"
-              v-mask="''"
-            />
+          <v-col>
+            <v-card-actions>
+              <FormButton
+                :isBack="true"
+                :label="this.$strings.btn_voltar"
+                dark
+                @click="$router.go(-1)"
+              />
+              <FormButton
+                :label="this.$strings.btn_salvar"
+                dark
+                @click="save"
+              />
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text icon color="grey-black" size="22">
+                    <v-icon v-on="on" v-bind="attrs">mdi-alert-decagram</v-icon>
+                  </v-btn>
+                </template>
+                <span
+                  >A primeira senha será "gws@123" e depois deverá ser
+                  trocada no perfil.</span
+                >
+              </v-tooltip>
+            </v-card-actions>
           </v-col>
         </v-row>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <FormButton
-            :isBack="true"
-            :label="this.$strings.btn_voltar"
-            dark
-            @click="$router.go(-1)"
-          />
-          <FormButton
-            :label="this.$strings.btn_salvar"
-            dark
-            @click="save"
-          />
-        </v-card-actions>
       </v-form>
     </v-card>
   </div>
@@ -108,33 +77,26 @@ import { constants } from "../_constants";
 
 import TextField from "../../../components/Inputs/TextField.vue";
 
-
 export default {
-  name: "paisForm",
+  name: "userForm",
   components: {
     FormButton,
     Breadcrumbs,
     TextField,
   },
   beforeCreate() {
-    const STORE_PAIS = "$_pais";
+    const STORE_PAIS = "$_user";
     if (!(STORE_PAIS in this.$store._modules.root._children))
       this.$store.registerModule(STORE_PAIS, store);
-
-},
+  },
   data() {
     return {
       valid: true,
       formValidated: true,
       required: [(v) => !!v || "Campo obrigatório"],
 
-
-      rulesNumber: [(v) => v.length <= 10 || "Max 10 números"],
-      rulesTextArea: [(v) => v.length <= 100 || "Max 100 caratéres"],
-      rulesCodigo: [(v) => v.length <= 5 || "Max 5 números"],
-
-    form: { ...constants.form },
-    breadcrumbs: [...constants.breadcrumbsForm],
+      form: { ...constants.form },
+      breadcrumbs: [...constants.breadcrumbsForm],
     };
   },
 
@@ -144,21 +106,18 @@ export default {
       this.breadcrumbs[1].text = "Editar";
       await this.itemById(this.$route.params.id);
     }
-
   },
 
   computed: {
     ...mapGetters({
-      getItemById: "$_pais/getItemById",
-
+      getItemById: "$_user/getItemById",
     }),
   },
   methods: {
     ...mapActions({
-      itemById: "$_pais/getItemById",
-      createItem: "$_pais/createItem",
-      updateItem: "$_pais/updateItem",
-
+      itemById: "$_user/getItemById",
+      createItem: "$_user/createItem",
+      updateItem: "$_user/updateItem",
     }),
     async save() {
       this.formValidated = await this.$refs.form.validate();
@@ -169,13 +128,13 @@ export default {
         this.form.id = this.$route.params.id;
         const resp = await this.updateItem(this.form);
         if (resp.status == 200) {
-          this.$router.push({ name: "pais" });
+          this.$router.push({ name: "users" });
           Swal.messageToast(this.$strings.msg_alterar, "success");
         }
       } else {
         const resp = await this.createItem(this.form);
         if (resp.status == 201) {
-          this.$router.push({ name: "pais" });
+          this.$router.push({ name: "users" });
           Swal.messageToast(this.$strings.msg_adicionar, "success");
         }
       }
@@ -186,9 +145,8 @@ export default {
       if (this.$route.params.id != undefined) {
         let keys = Object.keys(this.form);
         keys.forEach((i) => {
-          this.form[i] = item[i];
+          this.form[i] = item[0][i];
         });
-
       }
     },
   },

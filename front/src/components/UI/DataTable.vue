@@ -78,7 +78,7 @@
       <template col-1 v-slot:[`item.acao`]="{ item }">
         <ActionInline :permissions="permissions" :item="item" />
         <MaisOpcoesTable
-          v-if="verifyIfIsRouteProgramation()"
+          v-if="verifyRoute()"
           :idUser="item.id"
         />
       </template>
@@ -193,8 +193,8 @@ export default {
     };
   },
   methods: {
-    verifyIfIsRouteProgramation() {
-      return this.$router.currentRoute.name === "programacao" ? true : false;
+    verifyRoute() {
+     return this.$router.currentRoute.name == "programacao" || this.$router.currentRoute.name === "users" ? true : false
     },
     async handlePageChange() {
       const paginate = { page: this.page, per_page: this.itemsPerPage };

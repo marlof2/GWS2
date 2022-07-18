@@ -24,7 +24,7 @@ class ProdutoSeeder extends Seeder
         foreach ($datas as $data) {
             Product::firstOrCreate([
                 "nome" => "$data",
-                "quantidade" => 10
+                "quantidade" => 100
             ]);
         }
     }

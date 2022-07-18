@@ -46,7 +46,7 @@ export default {
         {
           icon: "mdi-account-group-outline",
           text: "Clientes",
-          link: "/clientes",
+          link: "/cliente",
         },
         {
           key: '',

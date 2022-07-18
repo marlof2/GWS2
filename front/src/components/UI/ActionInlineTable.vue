@@ -94,7 +94,7 @@ export default {
               title: 'Deletado com Sucesso!',
               icon: "success",
             });
-            this.$root.$emit("reloadIndex");
+            this.$root.$emit("reloadDelete");
             this.$root.$emit("resetPage");
           }
         });

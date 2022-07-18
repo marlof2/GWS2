@@ -104,7 +104,6 @@ export default {
         }
       } else {
         const resp = await this.createItem(this.form);
-        console.log(resp);
         if (resp.status == 201) {
           this.$router.push({ name: "produtos" });
           Swal.messageToast(this.$strings.msg_adicionar, "success");

@@ -6,6 +6,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -26,10 +28,19 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $nameRoute = Route::currentRouteName();
         return [
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => ['required', Rule::unique('users')->ignore($this->id)],
+            'name' => ['required', Rule::unique('users')->ignore($this->id)],
+            'password' => $nameRoute == 'users.update' ? '' : 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.unique' => 'E-mail já está cadastrado.',
+            'name.unique' => 'Nome de usuário já está cadastrado.',
         ];
     }
     protected function failedValidation(Validator $validator)

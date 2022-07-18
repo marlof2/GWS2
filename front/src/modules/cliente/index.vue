@@ -2,7 +2,7 @@
   <div class="d-flex flex-grow-1 flex-column">
     <div class="d-flex align-center py-3">
       <div>
-        <div class="display-1">Usuários</div>
+        <div class="display-1">Clientes</div>
         <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </div>
     </div>
@@ -58,27 +58,27 @@ export default {
   },
   methods: {
     ...mapActions({
-      users: "$_user/getItems",
+      actionCliente: "$_cliente/getItems",
     }),
     async search(search) {
-      await this.users({ search });
+      await this.actionCliente({ search });
     },
     async handlePageChange(paginate) {
-      await this.users(paginate);
+      await this.actionCliente(paginate);
     },
   },
   beforeCreate() {
-    const STORE_USER = "$_user";
-    if (!(STORE_USER in this.$store._modules.root._children))
-      this.$store.registerModule(STORE_USER, store);
+    const STORE_CLIENTE = "$_cliente";
+    if (!(STORE_CLIENTE in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_CLIENTE, store);
   },
   computed: {
     ...mapGetters({
-      getItems: "$_user/getItems",
+      getCliente: "$_cliente/getItems",
     }),
   },
   watch: {
-    getItems(value) {
+    getCliente(value) {
       const resp = value;
       this.items = resp.data;
       this.paginate.totalPages = resp.total;

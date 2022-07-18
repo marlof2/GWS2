@@ -10,53 +10,74 @@
         mdi-dots-vertical</v-icon
       >
     </template>
-    <v-list dense>
-      <!-- Profile -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon color="#18bf93" size="22"> mdi-check-circle-outline </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title @click="atender(idUser)"
-            >Atendido</v-list-item-title
-          >
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>
-      <!-- Settings -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon color="#bb153c" size="18"> mdi-block-helper </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title @click="naoAtender(idUser)"
-            >Não Atendido</v-list-item-title
-          >
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon color="grey-black" size="18"> mdi-printer-settings </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title @click="visualizar(idUser)"
-            >Imprimir</v-list-item-title
-          >
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon color="brown" size="18"> mdi-file-upload </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title @click="visualizar(idUser)"
-            >Comprovante</v-list-item-title
-          >
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <div v-if="verifyRouteProgramation()">
+      <v-list dense>
+        <!-- Profile -->
+        <v-list-item link>
+          <v-list-item-icon class="me-2">
+            <v-icon color="#18bf93" size="22">
+              mdi-check-circle-outline
+            </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title @click="atender(idUser)"
+              >Atendido</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+        <!-- Settings -->
+        <v-list-item link>
+          <v-list-item-icon class="me-2">
+            <v-icon color="#bb153c" size="18"> mdi-block-helper </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title @click="naoAtender(idUser)"
+              >Não Atendido</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+        <v-list-item link>
+          <v-list-item-icon class="me-2">
+            <v-icon color="grey-black" size="18"> mdi-printer-settings </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title @click="visualizar(idUser)"
+              >Imprimir</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+        <v-list-item link>
+          <v-list-item-icon class="me-2">
+            <v-icon color="brown" size="18"> mdi-file-upload </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title @click="visualizar(idUser)"
+              >Comprovante</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </div>
+    <div v-if="verifyRouteUser()">
+      <v-list dense>
+        <!-- Profile -->
+        <v-list-item link>
+          <v-list-item-icon class="me-2">
+            <v-icon color="grey-dark" size="22">
+              mdi-account-lock
+            </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title @click="gerenciar(idUser)"
+              >Gerenciar Permissões</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </div>
   </v-menu>
 </template>
 
@@ -80,17 +101,30 @@ export default {
       actionAtender: "$_programacao/atender",
       actionNaoAtender: "$_programacao/naoAtender",
     }),
+    verifyRouteProgramation() {
+      return this.$router.currentRoute.name == "programacao" ? true : false;
+    },
+    verifyRouteUser() {
+      return this.$router.currentRoute.name === "users" ? true : false;
+    },
+    async gerenciar(id) {
+      // const result = await this.actionAtender(id);
+      // if (result.status === 200) {
+      //   this.$root.$emit("reloadDelete");
+      // }
+        Swal.message("Em andamento!");
+    },
     async atender(id) {
       const result = await this.actionAtender(id);
       if (result.status === 200) {
-        this.$root.$emit("reloadIndex");
+        this.$root.$emit("reloadProgramation");
         Swal.message("Atentido!");
       }
     },
     async naoAtender(id) {
-     const result = await this.actionNaoAtender(id);
+      const result = await this.actionNaoAtender(id);
       if (result.status === 200) {
-        this.$root.$emit("reloadIndex");
+        this.$root.$emit("reloadProgramation");
         Swal.message("Não Atentido!");
       }
     },

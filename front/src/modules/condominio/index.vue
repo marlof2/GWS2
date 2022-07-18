@@ -54,7 +54,7 @@ export default {
   },
   async mounted() {
     await this.search();
-    this.$root.$on("reloadIndex", () => this.search());
+    this.$root.$on("reloadDelete", () => this.search());
   },
   methods: {
     ...mapActions({

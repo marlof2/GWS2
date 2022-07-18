@@ -9,7 +9,7 @@ const form = {
   id: null,
   name: "",
   email: "",
-  password: ""
+  password: "gws@123"
 };
 
 const permissions = {
@@ -35,7 +35,7 @@ const breadcrumbsForm = [
   {
     text: "Usuário",
     disabled: false,
-    to: "/produto",
+    to: "/users",
     exact: true,
   },
   {
@@ -47,7 +47,7 @@ const breadcrumbsShow = [
   {
     text: "Usuário",
     disabled: false,
-    to: "/produto",
+    to: "/users",
     exact: true,
   },
   {
