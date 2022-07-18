@@ -39,15 +39,15 @@ class Programation extends Model
         return $this->belongsTo(User::class, 'user_id', 'id')->select('id','name');
     }
 
-    public  function scopePesquisaPorNome($query, $nome)
-    {
-        return $query->where('nome', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
-    }
-
     public function produtos()
     {
         return $this->belongsToMany(Product::class, 'programation_products', 'programation_id', 'product_id')->select('id','nome','programation_products.quantidade');
     }
 
+
+    public  function scopePesquisaPorNome($query, $nome)
+    {
+        return $query->where('nome', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
+    }
     
 }

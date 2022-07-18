@@ -9,7 +9,7 @@ const form = {
   id: null,
   name: "",
   email: "",
-  password: "gws@123"
+  password: process.env.VUE_APP_PASSWORD
 };
 
 const permissions = {

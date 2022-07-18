@@ -50,6 +50,8 @@
 
 <script>
 import Api from "@/api";
+import store from "../../modules/deleteGlobal/_store";
+import { mapActions } from "vuex";
 
 export default {
   props: {
@@ -59,8 +61,16 @@ export default {
       default: () => {},
     },
   },
+  beforeCreate() {
+    const STORE_DELETE = "$_deleteGlobal";
+    if (!(STORE_DELETE in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_DELETE, store);
+  },
   mounted() {},
   methods: {
+    ...mapActions({
+      reloadIndex: "$_deleteGlobal/reloadIndex",
+    }),
     editar(id) {
       return this.$router.push({
         path: this.$router.currentRoute.path + `/editar/${id}`,
@@ -91,10 +101,10 @@ export default {
             );
             if (!response) return false;
             this.$swal.fire({
-              title: 'Deletado com Sucesso!',
+              title: "Deletado com Sucesso!",
               icon: "success",
             });
-            this.$root.$emit("reloadDelete");
+            await this.reloadIndex(true);
             this.$root.$emit("resetPage");
           }
         });

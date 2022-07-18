@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('programations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('condominium_id');
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id')->nullable();
             $table->unsignedBigInteger('forma_pagamento_id');
             $table->string('valor');
             $table->char('situacao', 1)->comment('A = Atendido, N = Não Atendido');
@@ -28,10 +28,10 @@ return new class extends Migration
             $table->time('hora');
 
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('condominium_id')->references('id')->on('condominium')->onDelete('cascade');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-            $table->foreign('forma_pagamento_id')->references('id')->on('forma_pagamento')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('forma_pagamento_id')->references('id')->on('forma_pagamento');
             $table->timestamps();
         });
     }

@@ -127,13 +127,16 @@ const Api = {
         break;
 
       case 406:
+        let messageTitle = dataResponse.data.message;
         let erros = dataResponse.data.error;
         let bodyMessage = "";
 
-        let messageTitle = dataResponse.data.message;
+        if(dataResponse.data.error.errorInfo[0] == 23000){
+          erros = "Não é possível deletar um cliente enquanto o mesmo estiver associado a uma programacão."
+        }
 
         Object.keys(erros).forEach((item) => {
-          bodyMessage += erros[item] + "\r\n";
+          bodyMessage += erros[item];
         });
 
         this.messageError(

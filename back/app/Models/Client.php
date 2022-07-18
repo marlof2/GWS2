@@ -17,8 +17,8 @@ class Client extends Model
         return $query->where('nome', 'LIKE', '%' . $nome . '%')->paginate(config('app.pageLimit'));
     }
 
-    public function programacao()
-    {
-        return $this->belongsTo(Programation::class);
-    }
+    // public function programacao()
+    // {
+    //     return $this->hasMany(Programation::class);
+    // }
 }

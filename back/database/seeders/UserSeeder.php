@@ -45,6 +45,16 @@ class UserSeeder extends Seeder
 
         $usuarios->push($usuario);
 
+        $usuario = User::firstOrCreate(
+            [
+                'name' => 'Mayara',
+                'email' => 'mayara@gmail.com',
+                'password' => Hash::make('teste'),
+            ]
+        );
+
+        $usuarios->push($usuario);
+
         $papel = Papel::find(1);
         $permissao = Permissao::get();
 

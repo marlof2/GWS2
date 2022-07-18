@@ -124,7 +124,7 @@ class ClientController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => $e->getMessage(),
+                'error' => $e->getPrevious(),
             ], 406);
         }
     }

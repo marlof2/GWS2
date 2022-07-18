@@ -66,9 +66,7 @@
         <!-- Profile -->
         <v-list-item link>
           <v-list-item-icon class="me-2">
-            <v-icon color="grey-dark" size="22">
-              mdi-account-lock
-            </v-icon>
+            <v-icon color="grey-dark" size="22"> mdi-account-lock </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title @click="gerenciar(idUser)"
@@ -110,9 +108,8 @@ export default {
     async gerenciar(id) {
       // const result = await this.actionAtender(id);
       // if (result.status === 200) {
-      //   this.$root.$emit("reloadDelete");
       // }
-        Swal.message("Em andamento!");
+      Swal.message("Em andamento!");
     },
     async atender(id) {
       const result = await this.actionAtender(id);

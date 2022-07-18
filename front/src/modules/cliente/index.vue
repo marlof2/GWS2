@@ -22,6 +22,7 @@
 </template>
 <script>
 import store from "./_store";
+import storeDelete from "../deleteGlobal/_store";
 import DataTable from "../../components/UI/DataTable.vue";
 import Breadcrumbs from "../../components/UI/Breadcrumbs.vue";
 import { mapActions, mapGetters } from "vuex";
@@ -54,11 +55,11 @@ export default {
   },
   async mounted() {
     await this.search();
-    this.$root.$on("reloadDelete", () => this.search());
   },
   methods: {
     ...mapActions({
       actionCliente: "$_cliente/getItems",
+      reloadIndex: "$_deleteGlobal/reloadIndex",
     }),
     async search(search) {
       await this.actionCliente({ search });
@@ -71,10 +72,14 @@ export default {
     const STORE_CLIENTE = "$_cliente";
     if (!(STORE_CLIENTE in this.$store._modules.root._children))
       this.$store.registerModule(STORE_CLIENTE, store);
+    const STORE_DELETE = "$_deleteGlobal";
+    if (!(STORE_DELETE in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_DELETE, storeDelete);
   },
   computed: {
     ...mapGetters({
       getCliente: "$_cliente/getItems",
+      getReloadIndex: "$_deleteGlobal/reloadIndex",
     }),
   },
   watch: {
@@ -84,6 +89,12 @@ export default {
       this.paginate.totalPages = resp.total;
       this.paginate.page = resp.current_page;
       this.paginate.lastPage = resp.last_page;
+    },
+    async getReloadIndex(value) {
+      if (value) {
+        await this.search();
+      }
+      await this.reloadIndex(false);
     },
   },
 };

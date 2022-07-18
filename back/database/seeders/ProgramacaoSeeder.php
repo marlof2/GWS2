@@ -17,7 +17,7 @@ class ProgramacaoSeeder extends Seeder
     public function run(Faker $faker)
     {
         Programation::Create([
-            'user_id' => 2,
+            'user_id' => 3,
             'condominium_id' => 1,
             'client_id' => 1,
             'forma_pagamento_id' => 1,
@@ -30,7 +30,7 @@ class ProgramacaoSeeder extends Seeder
         ]);
 
         Programation::Create([
-            'user_id' => 2,
+            'user_id' => 3,
             'condominium_id' => 2,
             'client_id' => 1,
             'forma_pagamento_id' => 2,
@@ -42,7 +42,7 @@ class ProgramacaoSeeder extends Seeder
             'hora' => " 00:00:00",
         ]);
         Programation::Create([
-            'user_id' => 2,
+            'user_id' => 3,
             'condominium_id' => 1,
             'client_id' => 1,
             'forma_pagamento_id' => 1,
@@ -55,7 +55,7 @@ class ProgramacaoSeeder extends Seeder
         ]);
 
         Programation::Create([
-            'user_id' => 2,
+            'user_id' => 3,
             'condominium_id' => 2,
             'client_id' => 1,
             'forma_pagamento_id' => 2,
