@@ -31,6 +31,22 @@ const naoAtender = async (context, id) => {
   return await api.naoAtender(id);
 };
 
+const flagAtender = async (context, params) => {
+  context.commit("ATENDER", params);
+};
+
+const flagNaoAtender = async (context, params) => {
+  context.commit("NAO_ATENDER", params);
+};
+
+const flagImprimir = async (context, params) => {
+  context.commit("IMPRIMIR", params);
+};
+
+const flagComprovante = async (context, params) => {
+  context.commit("COMPROVANTE", params);
+};
+
 export default {
   getItems,
   getItemById,
@@ -39,4 +55,8 @@ export default {
   deleteItem,
   atender,
   naoAtender,
+  flagAtender,
+  flagNaoAtender,
+  flagImprimir,
+  flagComprovante,
 };

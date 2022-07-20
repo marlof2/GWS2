@@ -51,11 +51,13 @@
                 :label="this.$strings.btn_voltar"
                 dark
                 @click="$router.go(-1)"
+                small
               />
               <FormButton
                 :label="this.$strings.btn_salvar"
                 dark
                 @click="save"
+                small
               />
             </v-card-actions>
           </v-col>

@@ -12,6 +12,7 @@
       dense
       outlined
       clearable
+      :disabled="disabled"
     ></v-autocomplete>
   </div>
 </template>
@@ -46,6 +47,10 @@ export default {
     value: {
       type: [String, Number, Boolean, Array],
       default: null,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

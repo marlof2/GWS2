@@ -43,11 +43,13 @@
                 :label="this.$strings.btn_voltar"
                 dark
                 @click="$router.go(-1)"
+                small
               />
               <FormButton
                 :label="this.$strings.btn_salvar"
                 dark
                 @click="save"
+                small
               />
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -85,9 +87,9 @@ export default {
     TextField,
   },
   beforeCreate() {
-    const STORE_PAIS = "$_user";
-    if (!(STORE_PAIS in this.$store._modules.root._children))
-      this.$store.registerModule(STORE_PAIS, store);
+    const STORE_USER = "$_user";
+    if (!(STORE_USER in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_USER, store);
   },
   data() {
     return {

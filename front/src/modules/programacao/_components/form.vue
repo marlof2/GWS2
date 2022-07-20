@@ -13,15 +13,15 @@
       </div>
     </div>
     <v-card class="pa-2">
-      <v-stepper v-model="transition">
+      <v-stepper v-model="step">
         <v-stepper-header>
-          <v-stepper-step :complete="transition > 1" step="1"
+          <v-stepper-step :complete="step > 1" step="1"
             >Dados do Clientes</v-stepper-step
           >
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="transition > 2" step="2"
+          <v-stepper-step :complete="step > 2" step="2"
             >Dados da Programação</v-stepper-step
           >
 
@@ -37,6 +37,7 @@
                 <v-row>
                   <v-col cols="6" sm="6" md="6" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.nome"
                       label="Nome"
                       :maxlength="30"
@@ -46,6 +47,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="6" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.cpf_cnpj"
                       label="CPF/CNPJ"
                       v-mask="dualMask"
@@ -55,6 +57,7 @@
                 <v-row>
                   <v-col cols="2" sm="2" md="2" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.cep"
                       label="CEP"
                       :maxlength="10"
@@ -63,6 +66,7 @@
                   </v-col>
                   <v-col cols="5" sm="5" md="5" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.endereco"
                       label="Endereço"
                       :maxlength="60"
@@ -70,6 +74,7 @@
                   </v-col>
                   <v-col cols="5" sm="5" md="5" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.complemento"
                       label="Complemento"
                       :maxlength="60"
@@ -81,6 +86,7 @@
                 <v-row>
                   <v-col cols="6" sm="6" md="6" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.cidade"
                       label="Cidade"
                       :maxlength="30"
@@ -88,6 +94,7 @@
                   </v-col>
                   <v-col cols="6" sm="6" md="6" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.bairro"
                       label="Bairro"
                       :maxlength="30"
@@ -97,6 +104,7 @@
                 <v-row>
                   <v-col cols="6" sm="6" md="6" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.telefone"
                       label="Telefone"
                       :maxlength="30"
@@ -107,6 +115,7 @@
                   </v-col>
                   <v-col cols="6" sm="6" md="6" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep1.email"
                       label="E-mail"
                       :maxlength="30"
@@ -125,6 +134,7 @@
                         small
                       />
                       <FormButton
+                        v-if="!readOnly()"
                         :label="'Salvar'"
                         dark
                         @click="saveCliente()"
@@ -134,7 +144,7 @@
                         :isBack="true"
                         :label="'Avançar'"
                         dark
-                        @click="transition = 2"
+                        @click="step = 2"
                         small
                       />
                     </v-card-actions>
@@ -150,6 +160,7 @@
                 <v-row>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
+                      :disabled="readOnly()"
                       :items="getCliente.data"
                       :itemValue="'id'"
                       :itemText="'nome'"
@@ -161,6 +172,7 @@
                   </v-col>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
+                      :disabled="readOnly()"
                       :items="getCondominio.data"
                       :itemValue="'id'"
                       :itemText="'nome'"
@@ -172,6 +184,7 @@
                   </v-col>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
+                      :disabled="readOnly()"
                       :items="getFormaPagamento.data"
                       :itemValue="'id'"
                       :itemText="'nome'"
@@ -185,6 +198,7 @@
                 <v-row>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <SelectAutocomplete
+                      :disabled="readOnly()"
                       :items="getUsuario.data"
                       :itemValue="'id'"
                       :itemText="'name'"
@@ -196,6 +210,7 @@
                   </v-col>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <DatePicker
+                      :disabled="readOnly()"
                       :label="'Data'"
                       :date.sync="formStep2.data"
                       v-model="formStep2.data"
@@ -205,6 +220,7 @@
                   </v-col>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <TimePicker
+                      :disabled="readOnly()"
                       :label="'Hora'"
                       :return-value.sync="formStep2.hora"
                       v-model="formStep2.hora"
@@ -216,6 +232,7 @@
                 <v-row>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep2.valor"
                       label="Valor"
                       :maxlength="30"
@@ -225,6 +242,7 @@
                   </v-col>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep2.garantia"
                       label="Garantia"
                       :maxlength="30"
@@ -234,6 +252,7 @@
                   </v-col>
                   <v-col cols="12" sm="4" md="4" xs="12">
                     <TextField
+                      :disabled="readOnly()"
                       v-model="formStep2.descricao"
                       label="Descricão"
                       :maxlength="150"
@@ -246,6 +265,7 @@
                       v-model="formStep2.observacao"
                       label="Observação"
                       :maxlength="300"
+                      :disabled="readOnly()"
                     />
                   </v-col>
                 </v-row>
@@ -257,17 +277,18 @@
                         :isBack="true"
                         :label="'Voltar'"
                         dark
-                        @click="transition = 1"
+                        @click="step = 1"
                         small
                       />
                       <FormButton
+                        v-if="!readOnly()"
                         :label="'Salvar'"
                         @click="saveProgramacao()"
                         small
                         :disabled="disabledBtnSalvarProgramacao()"
                       />
                       <FormButton
-                        @click="transition = 3"
+                        @click="step = 3"
                         :isBack="true"
                         :label="'Avançar'"
                         small
@@ -302,11 +323,13 @@
                   :items="itemDataTableInsider()"
                   @onClickEdit="editProducts"
                   @onClickDelete="deleteProductsDialog"
+                  :disabled="readOnly()"
                 >
                   <template v-slot:top>
                     <HeaderDataTableInsider
                       :title="'Ítems'"
                       :addButtonClick="() => (tblProducts.dialog = true)"
+                      :disabled="readOnly()"
                     />
                     <Dialog
                       v-model="tblProducts.dialog"
@@ -323,6 +346,7 @@
                         <v-row>
                           <v-col cols="6" sm="6" md="6">
                             <SelectAutocomplete
+                              :disabled="readOnly()"
                               v-model="formStep3.product_id"
                               :itemValue="'id'"
                               :itemText="'nome'"
@@ -337,6 +361,7 @@
                         <v-row>
                           <v-col cols="3" sm="3" md="3">
                             <TextField
+                              :disabled="readOnly()"
                               v-model="formStep3.quantidade"
                               label="Quantidade"
                               :maxlength="30"
@@ -360,7 +385,6 @@
                   <h3>Tem certeza que deseja excluir este produto?</h3>
                 </Dialog>
               </v-col>
-
               <v-row>
                 <v-col>
                   <v-card-actions>
@@ -368,7 +392,7 @@
                       :isBack="true"
                       :label="'Voltar'"
                       dark
-                      @click="transition = 2"
+                      @click="step = 2"
                       small
                     />
                     <FormButton
@@ -402,7 +426,7 @@ import FormButton from "../../../components/UI/FormButton.vue";
 import Breadcrumbs from "../../../components/UI/Breadcrumbs.vue";
 import { constants } from "../_constants";
 
-import TextField from "../../../components/Inputs/TextField.vue";
+import TextField from "../../../components/Inputs/TextField";
 import SelectAutocomplete from "../../../components/Inputs/SelectAutocomplete.vue";
 import TextArea from "../../../components/Inputs/TextArea.vue";
 import Dialog from "../../../components/UI/Dialog.vue";
@@ -469,7 +493,7 @@ export default {
       formStep3: { ...constants.formStep3 },
       tblProducts: { ...constants.tblProducts },
       breadcrumbs: [...constants.breadcrumbsForm],
-      transition: 1,
+      step: 1,
       dualMask: "",
       verifyValueDisabled: false,
     };
@@ -533,6 +557,9 @@ export default {
       if (this.formStep3.programation_id == null) return true;
       else return false;
     },
+    readOnly() {
+      return this.$route.name == "programacao-visualizar" ? true : false;
+    },
     disabledBtnSalvarProgramacao() {
       if (
         this.$route.name == "programacao-cadastrar" &&
@@ -581,7 +608,7 @@ export default {
           Swal.messageToast(this.$strings.msg_adicionar, "success");
           this.formStep3.programation_id = resp.data.data.id;
           await this.actionProgramacaoById(this.formStep3.programation_id);
-          this.verifyValueDisabled = true
+          this.verifyValueDisabled = true;
         }
       }
     },

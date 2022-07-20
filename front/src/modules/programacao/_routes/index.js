@@ -17,6 +17,6 @@ export default [
   {
     path: "/programacao/visualizar/:id",
     name: "programacao-visualizar",
-    component: () => import("@/modules/programacao/_components/show"),
+    component: () => import("@/modules/programacao/_components/form"),
   },
 ];

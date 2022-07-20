@@ -4,6 +4,10 @@ let state = {};
 
 state[routeMain] = [];
 state[`${routeMain}ById`] = [];
+state[`flagAtender`] = { flag: false };
+state[`flagNaoAtender`] = { flag: false };
+state[`flagImprimir`] = { flag: false };
+state[`flagComprovante`] = { flag: false };
 
 const formStep1 = {
   id: null,

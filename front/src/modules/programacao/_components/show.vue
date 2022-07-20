@@ -18,6 +18,7 @@
           :label="this.$strings.btn_voltar"
           dark
           @click="$router.go(-1)"
+          small
         />
       </v-card-actions>
     </v-card>

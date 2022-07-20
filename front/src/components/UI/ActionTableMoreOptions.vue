@@ -43,7 +43,7 @@
             <v-icon color="grey-black" size="18"> mdi-printer-settings </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title @click="visualizar(idUser)"
+            <v-list-item-title @click="imprimir(idUser)"
               >Imprimir</v-list-item-title
             >
           </v-list-item-content>
@@ -54,7 +54,7 @@
             <v-icon color="brown" size="18"> mdi-file-upload </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title @click="visualizar(idUser)"
+            <v-list-item-title @click="comprovante(idUser)"
               >Comprovante</v-list-item-title
             >
           </v-list-item-content>
@@ -81,14 +81,16 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import store from "../../modules/programacao/_store";
-import Api from "@/api";
+import store from "../../modules/deleteGlobal/_store";
 export default {
   props: ["idUser"],
   data() {
     return {};
   },
   beforeCreate() {
+    const STORE_DELETE = "$_deleteGlobal";
+    if (!(STORE_DELETE in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_DELETE, store);
     const STORE_PROGRAMACAO = "$_programacao";
     if (!(STORE_PROGRAMACAO in this.$store._modules.root._children))
       this.$store.registerModule(STORE_PROGRAMACAO, store);
@@ -96,8 +98,11 @@ export default {
   mounted() {},
   methods: {
     ...mapActions({
-      actionAtender: "$_programacao/atender",
-      actionNaoAtender: "$_programacao/naoAtender",
+      reloadIndex: "$_deleteGlobal/reloadIndex",
+      flagAtender: "$_programacao/flagAtender",
+      flagNaoAtender: "$_programacao/flagNaoAtender",
+      flagImprimir: "$_programacao/flagImprimir",
+      flagComprovante: "$_programacao/flagComprovante",
     }),
     verifyRouteProgramation() {
       return this.$router.currentRoute.name == "programacao" ? true : false;
@@ -111,19 +116,17 @@ export default {
       // }
       Swal.message("Em andamento!");
     },
+    async comprovante(id) {
+      await this.flagComprovante({ id: id, flag: true });
+    },
+    async imprimir(id) {
+      await this.flagImprimir({ id: id, flag: true });
+    },
     async atender(id) {
-      const result = await this.actionAtender(id);
-      if (result.status === 200) {
-        this.$root.$emit("reloadProgramation");
-        Swal.message("Atentido!");
-      }
+      await this.flagAtender({ id: id, flag: true });
     },
     async naoAtender(id) {
-      const result = await this.actionNaoAtender(id);
-      if (result.status === 200) {
-        this.$root.$emit("reloadProgramation");
-        Swal.message("Não Atentido!");
-      }
+      await this.flagNaoAtender({ id: id, flag: true });
     },
     visualizar(id) {
       return this.$router.push({

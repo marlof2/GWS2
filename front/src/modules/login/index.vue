@@ -82,7 +82,9 @@ export default {
       },
     };
   },
-  async mounted() {},
+  async mounted() {
+    console.log('HELLO DEV, WELCOME TO MY SYSTEM. MY CONTACT IS marlosilva.f2@gmail.com');
+  },
   methods: {
     ...mapActions({
       login: "$_login/authenticate",

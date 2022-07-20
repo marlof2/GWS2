@@ -17,6 +17,6 @@ export default [
   {
     path: "/cliente/visualizar/:id",
     name: "cliente-visualizar",
-    component: () => import("@/modules/cliente/_components/form"),
+    component: () => import("@/modules/cliente/_components/show"),
   },
 ];

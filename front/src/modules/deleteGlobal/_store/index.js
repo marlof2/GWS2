@@ -3,7 +3,7 @@ import getters from "./getters";
 import mutations from "./mutations";
 
 const state = {
-  reloadIndex: false
+  reloadIndex: false,
 };
 
 export default {

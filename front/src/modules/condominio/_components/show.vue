@@ -3,24 +3,38 @@
     <div class="d-flex align-center py-3">
       <div>
         <div class="display-1">Visualização Condomínio</div>
-        <Breadcrumbs :items="breadcrumbs" />
+        <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </div>
     </div>
     <v-card class="pa-2">
-      <v-row>
-        <ShowData :cols="6" :label="'Nome'" :data="form.nome" />
-        <ShowData :cols="6" :label="'Valor à vista'" :data="form.valor_avista" />
-        <ShowData :cols="6" :label="'Valor em cartão'" :data="form.valor_cartao" />
-      </v-row>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <FormButton
-          :isBack="true"
-          :label="this.$strings.btn_voltar"
-          dark
-          @click="$router.go(-1)"
-        />
-      </v-card-actions>
+      <v-form>
+        <v-row>
+          <v-col cols="4" sm="4" md="4" xs="12">
+            <ShowData :label="'Nome'" :data="form.nome" />
+          </v-col>
+          <v-col cols="4" sm="4" md="4" xs="12">
+            <ShowData :label="'Valor à vista'" :data="form.valor_avista" />
+          </v-col>
+          <v-col cols="4" sm="4" md="4" xs="12">
+            <ShowData :label="'Valor em cartão'" :data="form.valor_cartao" />
+          </v-col>
+        </v-row>
+        <v-row class="mt-5">
+          <v-col cols="12" sm="12" md="12" xs="12">
+            <v-card-actions>
+              <v-col cols="12" sm="12" md="12" xs="12">
+                <FormButton
+                  small
+                  :isBack="true"
+                  :label="this.$strings.btn_voltar"
+                  dark
+                  @click="$router.go(-1)"
+                />
+              </v-col>
+            </v-card-actions>
+          </v-col>
+        </v-row>
+      </v-form>
     </v-card>
   </div>
 </template>
@@ -29,12 +43,11 @@ import { mapActions, mapGetters } from "vuex";
 import store from "../_store";
 import FormButton from "../../../components/UI/FormButton.vue";
 import Breadcrumbs from "../../../components/UI/Breadcrumbs.vue";
-import Vcol from "../../../components/UI/Vcol.vue";
 import ShowData from "../../../components/UI/ShowData.vue";
 import { constants } from "../_constants";
 
 export default {
-  name: "condominioShow",
+  name: "VisualizarCondominio",
   beforeCreate() {
     const STORE_CONDOMINIO = "$_condominio";
     if (!(STORE_CONDOMINIO in this.$store._modules.root._children))
@@ -55,7 +68,6 @@ export default {
   components: {
     FormButton,
     Breadcrumbs,
-    Vcol,
     ShowData,
   },
   computed: {

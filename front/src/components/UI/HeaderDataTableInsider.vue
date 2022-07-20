@@ -10,6 +10,7 @@
         <AddButtonIcon
           v-permissions="permissions ? permissions.incluirInseder : ''"
           :click="addButtonClick"
+          :disabled="disabled"
         />
       </template>
     </span>
@@ -33,9 +34,16 @@ export default {
       type: Object,
       default: () => {},
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   components: {
     AddButtonIcon,
+  },
+  mounted() {
   },
 };
 </script>

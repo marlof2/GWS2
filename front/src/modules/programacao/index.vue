@@ -58,13 +58,16 @@ export default {
   },
   async mounted() {
     await this.search();
-    this.$root.$on("reloadProgramation", () => this.search());
   },
   methods: {
     ...mapActions({
       programacao: "$_programacao/getItems",
       actionAtender: "$_programacao/atender",
       actionNaoAtender: "$_programacao/naoAtender",
+      actionFlagAtender: "$_programacao/flagAtender",
+      actionFlagNaoAtender: "$_programacao/flagNaoAtender",
+      actionFlagComprovante: "$_programacao/flagComprovante",
+      actionFlagImprimir: "$_programacao/flagImprimir",
       reloadIndex: "$_deleteGlobal/reloadIndex",
     }),
     async search(search) {
@@ -85,7 +88,11 @@ export default {
   computed: {
     ...mapGetters({
       getItems: "$_programacao/getItems",
+      getAtender: "$_programacao/flagAtender",
+      getNaoAtender: "$_programacao/flagNaoAtender",
       getReloadIndex: "$_deleteGlobal/reloadIndex",
+      getComprovante: "$_programacao/flagComprovante",
+      getImprirmir: "$_programacao/flagImprimir",
     }),
   },
   watch: {
@@ -101,6 +108,39 @@ export default {
         await this.search();
       }
       await this.reloadIndex(false);
+    },
+    async getAtender(object) {
+      if (object.flag) {
+        const result = await this.actionAtender(object.id);
+        if (result.status === 200) {
+          Swal.message("Atentido!");
+          await this.search();
+        }
+      }
+      await this.actionFlagAtender({ flag: false });
+    },
+    async getNaoAtender(object) {
+      if (object.flag) {
+        const result = await this.actionNaoAtender(object.id);
+        if (result.status === 200) {
+          Swal.message("Não Atentido!");
+          await this.search();
+        }
+      }
+      await this.actionFlagNaoAtender({ flag: false });
+    },
+    async getComprovante(object) {
+      if (object.flag) {
+        // console.log(object);
+        // Swal.message("Em andamento!");
+      }
+      await this.actionFlagComprovante({ flag: false });
+    },
+    async getImprirmir(object) {
+      if (object.flag) {
+        // Swal.message("Em andamento!");
+      }
+      await this.actionFlagImprimir({ flag: false });
     },
   },
 };

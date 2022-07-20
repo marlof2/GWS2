@@ -17,6 +17,7 @@
               @click="onClickEdit(item)"
               icon
               color="#5abf7a"
+              :disabled="disabled"
             >
               <v-icon size="26" v-on="on" v-bind="attrs">
                 mdi-pencil-circle-outline</v-icon
@@ -32,6 +33,7 @@
               @click="onClickDelete(item)"
               icon
               color="#be5b59"
+              :disabled="disabled"
             >
               <v-icon size="26" v-on="on" v-bind="attrs"
                 >mdi-trash-can-outline</v-icon
@@ -54,8 +56,7 @@ export default {
       this.$emit("onClickDelete", item);
     },
   },
-  mounted() {
-  },
+  mounted() {},
   props: {
     headers: {
       type: Array,
@@ -76,6 +77,10 @@ export default {
     permissions: {
       type: Object,
       default: () => {},
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 };

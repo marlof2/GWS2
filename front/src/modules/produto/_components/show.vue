@@ -3,23 +3,33 @@
     <div class="d-flex align-center py-3">
       <div>
         <div class="display-1">Visualização Produto</div>
-        <Breadcrumbs :items="breadcrumbs" />
+         <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </div>
     </div>
     <v-card class="pa-2">
       <v-row>
-        <ShowData :cols="6" :label="'Nome'" :data="form.nome" />
-        <ShowData :cols="6" :label="'Quantidade'" :data="form.quantidade" />
+        <v-col cols="4" sm="4" md="4" xs="12">
+          <ShowData :label="'Nome'" :data="form.nome" />
+        </v-col>
+        <v-col cols="4" sm="4" md="4" xs="12">
+          <ShowData :label="'Quantidade'" :data="form.quantidade" />
+        </v-col>
       </v-row>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <FormButton
-          :isBack="true"
-          :label="this.$strings.btn_voltar"
-          dark
-          @click="$router.go(-1)"
-        />
-      </v-card-actions>
+      <v-row class="mt-5">
+        <v-col cols="12" sm="12" md="12" xs="12">
+          <v-card-actions>
+            <v-col cols="12" sm="12" md="12" xs="12">
+              <FormButton
+                small
+                :isBack="true"
+                :label="this.$strings.btn_voltar"
+                dark
+                @click="$router.go(-1)"
+              />
+            </v-col>
+          </v-card-actions>
+        </v-col>
+      </v-row>
     </v-card>
   </div>
 </template>

@@ -4,7 +4,7 @@
       <div>
         <div class="display-1">
           {{
-              $route.params.id != undefined ? "Edição de Produto" : "Novo Produto"
+            $route.params.id != undefined ? "Edição de Produto" : "Novo Produto"
           }}
         </div>
         <Breadcrumbs :breadcrumbs="breadcrumbs" />
@@ -14,23 +14,45 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
           <v-col cols="3" sm="3" md="3">
-            <TextField v-model="form.nome" label="Nome" :maxlength="30" v-mask="''" :rules="required" required />
+            <TextField
+              v-model="form.nome"
+              label="Nome"
+              :maxlength="30"
+              v-mask="''"
+              :rules="required"
+              required
+            />
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="3" sm="3" md="3">
-            <TextField v-model="form.quantidade" label="Quantidade" :maxlength="30" v-mask="''" :rules="required"
-              required />
+            <TextField
+              v-model="form.quantidade"
+              label="Quantidade"
+              :maxlength="30"
+              v-mask="''"
+              :rules="required"
+              required
+            />
           </v-col>
         </v-row>
 
         <v-row>
           <v-col>
-            <v-card-actions >
-              <FormButton :isBack="true" :label="this.$strings.btn_voltar" dark
-                @click="$router.go(-1)" />
-              <FormButton :label="this.$strings.btn_salvar" dark
-                @click="save" />
+            <v-card-actions>
+              <FormButton
+                :isBack="true"
+                :label="this.$strings.btn_voltar"
+                dark
+                small
+                @click="$router.go(-1)"
+              />
+              <FormButton
+                :label="this.$strings.btn_salvar"
+                dark
+                small
+                @click="save"
+              />
             </v-card-actions>
           </v-col>
         </v-row>

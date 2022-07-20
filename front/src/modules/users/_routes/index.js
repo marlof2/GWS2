@@ -17,6 +17,6 @@ export default [
   {
     path: "/users/visualizar/:id",
     name: "users-visualizar",
-    component: () => import("@/modules/users/_components/form"),
+    component: () => import("@/modules/users/_components/show"),
   },
 ];

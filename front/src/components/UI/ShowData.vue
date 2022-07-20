@@ -1,18 +1,14 @@
 <template>
-  <Vcol :col="cols">
-    <h5>{{ label }}</h5>
-    <span>{{ data ? data : "" }}</span>
+  <v-col>
+    <h4 class="mt-4">{{ label }}</h4>
+    <span>{{ data ? data : "Sem Informação" }}</span>
     <span v-if="data === false">Não</span>
     <span v-if="data === true">Sim</span>
-  </Vcol>
+  </v-col>
 </template>
 <script>
-import Vcol from './Vcol.vue';
-
 export default {
-  components: {
-    Vcol,
-  },
+  components: {},
   props: {
     label: {
       type: String,
@@ -29,3 +25,8 @@ export default {
   },
 };
 </script>
+<style  scoped>
+he {
+  font-weight: normal;
+}
+</style>

@@ -13,6 +13,7 @@
       :row-height="rowHeight"
       :counter="maxlength"
       :rules="rules"
+      :disabled="disabled"
     ></v-textarea>
   </div>
 </template>
@@ -47,6 +48,10 @@ export default {
     rowHeight: {
       type: Number,
       default: 0,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
