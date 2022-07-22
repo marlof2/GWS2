@@ -131,7 +131,7 @@ const Api = {
         let erros = dataResponse.data.error;
         let bodyMessage = "";
 
-        if(dataResponse.data.error.errorInfo[0] == 23000){
+        if (dataResponse.data.error.errorInfo[0] == 23000) {
           erros = "Não é possível deletar um cliente enquanto o mesmo estiver associado a uma programacão."
         }
 
@@ -252,7 +252,7 @@ const Api = {
     return new Promise((resolve) => {
       const result = Vue.axios.post(`${resource}`, params, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       });
       resolve(result);

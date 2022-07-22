@@ -30,7 +30,7 @@ const updateItem = async (params) => {
 };
 
 const createItem = async (params) => {
-  const result = await Api.post(apiUrl, params);
+  const result = await Api.postFormData(apiUrl, params);
   if (result) {
     return result;
   }
@@ -45,37 +45,10 @@ const deleteItem = async (id) => {
   return false;
 };
 
-const atender = async (id) => {
-  const result = await Api.patch(apiUrl + '/atender', id);
-  if (result) {
-    return result;
-  }
-  return false;
-};
-
-const naoAtender = async (id) => {
-  const result = await Api.patch(apiUrl + '/naoAtender', id);
-  if (result) {
-    return result;
-  }
-  return false;
-};
-
-const createUpload = async (params) => {
-  const result = await Api.post(apiUrl + '/createUpload', params);
-  if (result) {
-    return result;
-  }
-  return false;
-};
-
 export default {
   getItems,
   getItemById,
   createItem,
   updateItem,
   deleteItem,
-  atender,
-  naoAtender,
-  createUpload,
 };

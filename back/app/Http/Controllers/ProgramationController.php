@@ -165,4 +165,5 @@ class ProgramationController extends Controller
             ], 406);
         }
     }
+
 }

@@ -7,6 +7,7 @@ const flagAtender = state => state['flagAtender']
 const flagNaoAtender = state => state['flagNaoAtender']
 const flagImprimir = state => state['flagImprimir']
 const flagComprovante = state => state['flagComprovante']
+// const createUpload = state => state['createUpload']
 
 export default {
   getItems,
@@ -15,4 +16,5 @@ export default {
   flagNaoAtender,
   flagImprimir,
   flagComprovante,
+  // createUpload,
 };

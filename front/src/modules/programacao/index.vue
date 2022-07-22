@@ -20,11 +20,56 @@
       >
       </DataTable>
     </v-card>
+    <Dialog
+      v-model="tblUpload.dialog"
+      :maxWidth="900"
+      :title="'Anexar Comprovantes'"
+      :saveClick="saveReceipt"
+      :closeClick="closeDialog"
+    >
+      <v-form
+        ref="form"
+        v-model="lazyValidation"
+        lazy-validation
+        enctype="multipart/form-data"
+      >
+        <v-row>
+          <v-col cols="12" sm="12" md="12" xs="12">
+            <v-file-input
+              accept="image/*"
+              v-model="formUpload"
+              counter
+              show-size
+              label="Upload de Arquivos"
+            ></v-file-input>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" sm="12" md="12" xs="12">
+            <DataTableInsider
+              :headers="tblUpload.headers"
+              :items="[{ nome: 'comprovante-maria' }]"
+              @onClickEdit="editUpload"
+              @onClickDelete="deleteUploadDialog"
+            >
+              <template v-slot:top>
+                <HeaderDataTableInsider
+                  :title="'Comprovantes'"
+                  :hideBtnAdd="false"
+                />
+              </template>
+            </DataTableInsider>
+          </v-col>
+        </v-row>
+      </v-form>
+    </Dialog>
   </div>
 </template>
 <script>
 import store from "./_store";
 import storeDelete from "../deleteGlobal/_store";
+import storeProgramacaoDocumento from "../programacaoDocumento/_store";
+import storeDocumento from "../documento/_store";
 import DataTable from "../../components/UI/DataTable.vue";
 import Breadcrumbs from "../../components/UI/Breadcrumbs.vue";
 import { mapActions, mapGetters } from "vuex";
@@ -32,6 +77,9 @@ import { constants } from "./_constants";
 import FormButton from "../../components/UI/FormButton.vue";
 import TextField from "../../components/Inputs/TextField.vue";
 import Select from "../../components/Inputs/Select.vue";
+import Dialog from "../../components/UI/Dialog.vue";
+import DataTableInsider from "../../components/UI/DataTableInsider.vue";
+import HeaderDataTableInsider from "../../components/UI/HeaderDataTableInsider.vue";
 
 export default {
   name: "programacaoModule",
@@ -41,9 +89,13 @@ export default {
     TextField,
     FormButton,
     Select,
+    Dialog,
+    DataTableInsider,
+    HeaderDataTableInsider,
   },
   data() {
     return {
+      lazyValidation: true,
       breadcrumbs: [...constants.breadcrumbsIndex],
       items: [],
       paginate: {
@@ -52,12 +104,15 @@ export default {
       headers: [...constants.headers],
       permissions: { ...constants.permissions },
       customItemsProp: { ...constants.customItemsProp },
+      tblUpload: { ...constants.tblUpload },
       filter: {},
       drawer: null,
+      formUpload: null,
     };
   },
   async mounted() {
     await this.search();
+    // this.tblUpload.dialog = true;
   },
   methods: {
     ...mapActions({
@@ -69,12 +124,51 @@ export default {
       actionFlagComprovante: "$_programacao/flagComprovante",
       actionFlagImprimir: "$_programacao/flagImprimir",
       reloadIndex: "$_deleteGlobal/reloadIndex",
+      actionProgramacaoDocumento: "$_programacaoDocumento/createItem",
+      actionDocumento: "$_documento/createItem",
     }),
     async search(search) {
       await this.programacao({ search });
     },
     async handlePageChange(paginate) {
       await this.programacao(paginate);
+    },
+    async closeDialog() {
+      this.tblUpload.dialog = false;
+    },
+    async saveReceipt() {
+      const payload = new FormData();
+
+      payload.append("file", this.formUpload, this.formUpload.name);
+      payload.append("type", this.formUpload.type);
+
+      const result = await this.actionDocumento(payload);
+      if (result.status === 201) {
+        const objProductDocumento = {
+          programation_id: this.tblUpload.programation_id,
+          documents_id: result.data.data.id,
+        };
+
+        const response = await this.actionProgramacaoDocumento(
+          objProductDocumento
+        );
+        if (response.status === 201) {
+          Swal.messageToast(this.$strings.msg_adicionar, "success");
+        }
+      }
+    },
+    async editUpload(item) {
+      this.tblUpload.isEdit = true;
+      // this.formStep3.product_id = item.pivot.product_id;
+      // this.formStep3.quantidade = item.quantidade;
+
+      this.tblUpload.dialog = true;
+    },
+    deleteUploadDialog(item) {
+      // this.formStep3.product_id = item.pivot.product_id;
+      // this.formStep3.quantidade = item.quantidade;
+
+      this.tblUpload.dialogDelete = true;
     },
   },
   beforeCreate() {
@@ -84,15 +178,24 @@ export default {
     const STORE_DELETE = "$_deleteGlobal";
     if (!(STORE_DELETE in this.$store._modules.root._children))
       this.$store.registerModule(STORE_DELETE, storeDelete);
+    const STORE_PROGRAMACAO_DOCUMENTO = "$_programacaoDocumento";
+    if (!(STORE_PROGRAMACAO_DOCUMENTO in this.$store._modules.root._children))
+      this.$store.registerModule(
+        STORE_PROGRAMACAO_DOCUMENTO,
+        storeProgramacaoDocumento
+      );
+    const STORE_DOCUMENTO = "$_documento";
+    if (!(STORE_DOCUMENTO in this.$store._modules.root._children))
+      this.$store.registerModule(STORE_DOCUMENTO, storeDocumento);
   },
   computed: {
     ...mapGetters({
       getItems: "$_programacao/getItems",
       getAtender: "$_programacao/flagAtender",
       getNaoAtender: "$_programacao/flagNaoAtender",
-      getReloadIndex: "$_deleteGlobal/reloadIndex",
       getComprovante: "$_programacao/flagComprovante",
       getImprirmir: "$_programacao/flagImprimir",
+      getReloadIndex: "$_deleteGlobal/reloadIndex",
     }),
   },
   watch: {
@@ -130,15 +233,15 @@ export default {
       await this.actionFlagNaoAtender({ flag: false });
     },
     async getComprovante(object) {
+      this.tblUpload.dialog = true;
       if (object.flag) {
-        // console.log(object);
-        // Swal.message("Em andamento!");
+        this.tblUpload.programation_id = object.id;
+        // console.log(this.$store.state.$_programacao.flagComprovante.flag);
+        await this.actionFlagComprovante({ flag: false });
       }
-      await this.actionFlagComprovante({ flag: false });
     },
     async getImprirmir(object) {
       if (object.flag) {
-        // Swal.message("Em andamento!");
       }
       await this.actionFlagImprimir({ flag: false });
     },

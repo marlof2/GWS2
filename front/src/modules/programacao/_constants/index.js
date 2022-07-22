@@ -8,6 +8,7 @@ state[`flagAtender`] = { flag: false };
 state[`flagNaoAtender`] = { flag: false };
 state[`flagImprimir`] = { flag: false };
 state[`flagComprovante`] = { flag: false };
+// state[`createUpload`] = [];
 
 const formStep1 = {
   id: null,
@@ -51,6 +52,17 @@ const tblProducts = {
       align: "left",
     },
     { text: "Quantidade", value: "quantidade", align: "left" },
+    { text: "Ações", value: "actions", sortable: false },
+  ],
+  isEdit: false,
+};
+
+const tblUpload = {
+  programation_id: null,
+  dialog: false,
+  dialogDelete: false,
+  headers: [
+    { text: "Nome", value: "nome", align: "left" },
     { text: "Ações", value: "actions", sortable: false },
   ],
   isEdit: false,
@@ -143,4 +155,5 @@ export const constants = {
   permissions,
   tblProducts,
   customItemsProp,
+  tblUpload,
 };

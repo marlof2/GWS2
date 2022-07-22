@@ -4,6 +4,7 @@
     :headers="headers"
     :items="items"
     hide-default-footer
+    style="height: auto;"
   >
     <template v-slot:top>
       <slot name="top"></slot>

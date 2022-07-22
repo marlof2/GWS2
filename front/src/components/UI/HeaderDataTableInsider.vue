@@ -8,6 +8,7 @@
     <span class="icons">
       <template>
         <AddButtonIcon
+          v-if="hideBtnAdd"
           v-permissions="permissions ? permissions.incluirInseder : ''"
           :click="addButtonClick"
           :disabled="disabled"
@@ -38,13 +39,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    hideBtnAdd: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   components: {
     AddButtonIcon,
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 

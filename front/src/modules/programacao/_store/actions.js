@@ -20,7 +20,7 @@ const updateItem = async (context, object) => {
 };
 
 const deleteItem = async (context, id) => {
-  const result = await api.deleteItem(id);
+  return await api.deleteItem(id);
 };
 
 const atender = async (context, id) => {
@@ -47,6 +47,10 @@ const flagComprovante = async (context, params) => {
   context.commit("COMPROVANTE", params);
 };
 
+const createUpload = async (context, object) => {
+  return await api.createUpload(object);
+};
+
 export default {
   getItems,
   getItemById,
@@ -59,4 +63,5 @@ export default {
   flagNaoAtender,
   flagImprimir,
   flagComprovante,
+  createUpload,
 };

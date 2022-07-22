@@ -120,7 +120,7 @@ export default {
       await this.flagComprovante({ id: id, flag: true });
     },
     async imprimir(id) {
-      await this.flagImprimir({ id: id, flag: true });
+      // await this.flagImprimir({ id: id, flag: true });
     },
     async atender(id) {
       await this.flagAtender({ id: id, flag: true });
