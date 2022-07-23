@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDocumentoRequest;
 use App\Models\Documents;
+use App\Models\ProgramationDocuments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DocumentsController extends Controller
 {
@@ -35,6 +37,7 @@ class DocumentsController extends Controller
     public function store(StoreDocumentoRequest $request)
     {
         try {
+            DB::beginTransaction();
             $inputs = $request->all();
             $file = $inputs['file'];
 
@@ -44,11 +47,23 @@ class DocumentsController extends Controller
             }
 
             $document = Documents::create($inputs);
+            if ($document->id) {
+            }
 
+            $programationDocuments = [
+                'documents_id' => $document->id,
+                'programation_id' => $inputs['programation_id']
+            ];
+            
+            ProgramationDocuments::create($programationDocuments);
+
+
+            DB::commit();
             return response()->json([
                 'data' => $document,
             ], 201);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'message' => $e->getMessage(),
             ], 406);

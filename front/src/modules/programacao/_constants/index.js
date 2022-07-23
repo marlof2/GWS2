@@ -62,7 +62,7 @@ const tblUpload = {
   dialog: false,
   dialogDelete: false,
   headers: [
-    { text: "Nome", value: "nome", align: "left" },
+    { text: "Nome", value: "name", align: "left" },
     { text: "Ações", value: "actions", sortable: false },
   ],
   isEdit: false,

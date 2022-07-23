@@ -29,7 +29,7 @@
     >
       <v-form
         ref="form"
-        v-model="lazyValidation"
+        v-model="validForm"
         lazy-validation
         enctype="multipart/form-data"
       >
@@ -41,6 +41,8 @@
               counter
               show-size
               label="Upload de Arquivos"
+              required
+              :rules="required"
             ></v-file-input>
           </v-col>
         </v-row>
@@ -48,7 +50,7 @@
           <v-col cols="12" sm="12" md="12" xs="12">
             <DataTableInsider
               :headers="tblUpload.headers"
-              :items="[{ nome: 'comprovante-maria' }]"
+              :items="itemsUpload"
               @onClickEdit="editUpload"
               @onClickDelete="deleteUploadDialog"
             >
@@ -95,7 +97,9 @@ export default {
   },
   data() {
     return {
-      lazyValidation: true,
+      required: [(v) => !!v || "Campo obrigatório"],
+      validForm: true,
+      formValidated: true,
       breadcrumbs: [...constants.breadcrumbsIndex],
       items: [],
       paginate: {
@@ -108,6 +112,7 @@ export default {
       filter: {},
       drawer: null,
       formUpload: null,
+      itemsUpload: [],
     };
   },
   async mounted() {
@@ -130,6 +135,10 @@ export default {
     async search(search) {
       await this.programacao({ search });
     },
+    loadDocumentos(items, programation_id) {
+      const documentos = items.find((docs) => docs.id == programation_id);
+      this.itemsUpload = documentos.documento;
+    },
     async handlePageChange(paginate) {
       await this.programacao(paginate);
     },
@@ -137,24 +146,22 @@ export default {
       this.tblUpload.dialog = false;
     },
     async saveReceipt() {
+      this.formValidated = await this.$refs.form.validate();
+      if (!this.formValidated) {
+        return false;
+      }
       const payload = new FormData();
 
       payload.append("file", this.formUpload, this.formUpload.name);
+      payload.append("name", this.formUpload.name);
       payload.append("type", this.formUpload.type);
+      payload.append("programation_id", this.tblUpload.programation_id);
 
       const result = await this.actionDocumento(payload);
       if (result.status === 201) {
-        const objProductDocumento = {
-          programation_id: this.tblUpload.programation_id,
-          documents_id: result.data.data.id,
-        };
-
-        const response = await this.actionProgramacaoDocumento(
-          objProductDocumento
-        );
-        if (response.status === 201) {
-          Swal.messageToast(this.$strings.msg_adicionar, "success");
-        }
+        await this.search();
+        this.formUpload = null;
+        Swal.messageToast(this.$strings.msg_adicionar, "success");
       }
     },
     async editUpload(item) {
@@ -205,6 +212,9 @@ export default {
       this.paginate.totalPages = resp.total;
       this.paginate.page = resp.current_page;
       this.paginate.lastPage = resp.last_page;
+      if (this.tblUpload.programation_id) {
+        this.loadDocumentos(this.items, this.tblUpload.programation_id);
+      }
     },
     async getReloadIndex(value) {
       if (value) {
@@ -236,7 +246,7 @@ export default {
       this.tblUpload.dialog = true;
       if (object.flag) {
         this.tblUpload.programation_id = object.id;
-        // console.log(this.$store.state.$_programacao.flagComprovante.flag);
+        this.loadDocumentos(this.items, this.tblUpload.programation_id);
         await this.actionFlagComprovante({ flag: false });
       }
     },

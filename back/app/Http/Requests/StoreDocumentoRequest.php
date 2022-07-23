@@ -25,6 +25,7 @@ class StoreDocumentoRequest extends FormRequest
     {
         return [
             'file' => 'image|required|max:2048',
+            'name' => 'string|required',
             // 'programation_id' => 'int|required|'
         ];
     }

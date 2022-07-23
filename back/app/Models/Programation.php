@@ -44,6 +44,11 @@ class Programation extends Model
         return $this->belongsToMany(Product::class, 'programation_products', 'programation_id', 'product_id')->select('id','nome','programation_products.quantidade');
     }
 
+    public function documento()
+    {
+        return $this->belongsToMany(Documents::class, 'programation_documents', 'programation_id', 'documents_id')->select('id','file','name');
+    }
+
 
     public  function scopePesquisaPorNome($query, $nome)
     {

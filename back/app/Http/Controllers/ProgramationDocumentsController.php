@@ -25,7 +25,6 @@ class ProgramationDocumentsController extends Controller
     public function store(StoreProgramationDocumentoRequest $request)
     {
         try {
-
             $document = ProgramationDocuments::create($request->all());
 
             return response()->json([
