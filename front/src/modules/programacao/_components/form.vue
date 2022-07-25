@@ -657,10 +657,10 @@ export default {
         this.formStep3
       );
       if (status === 200) {
+        this.tblProducts.dialogDelete = false;
         Swal.messageToast(this.$strings.item_excluido, "success");
         await this.actionProgramacaoById(this.formStep3.programation_id);
       }
-      this.tblProducts.dialogDelete = false;
       this.resetProducts();
       this.resetFormStep3();
     },
@@ -688,10 +688,10 @@ export default {
     },
 
     closeDeleteProducts() {
-      this.$refs.form3.reset();
       this.resetProducts();
       this.resetFormStep3();
       this.tblProducts.dialogDelete = false;
+      this.$refs.form3.reset();
     },
 
     itemDataTableInsider() {

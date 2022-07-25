@@ -45,10 +45,19 @@ const deleteItem = async (id) => {
   return false;
 };
 
+const downloadAnexo = async (id) => {
+  const result = await Api.get(`${apiUrl}/download/${id}`);
+  if (result) {
+    return result;
+  }
+  return false;
+};
+
 export default {
   getItems,
   getItemById,
   createItem,
   updateItem,
   deleteItem,
+  downloadAnexo,
 };

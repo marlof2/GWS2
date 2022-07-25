@@ -20,7 +20,22 @@ const updateItem = async (context, object) => {
 };
 
 const deleteItem = async (context, id) => {
-  const result = await api.deleteItem(id);
+  return await api.deleteItem(id);
+};
+
+const downloadAnexo = async (context, params) => {
+  return await api.downloadAnexo(params.id);
+
+  // console.log(response);
+  // const url = window.URL.createObjectURL(new Blob([response.data]));
+  // const link = document.createElement("a");
+  // link.href = url;
+  // link.setAttribute("download", params.name);
+  // document.body.appendChild(link);
+  // link.click();
+
+  // return response
+
 };
 
 export default {
@@ -29,4 +44,5 @@ export default {
   createItem,
   updateItem,
   deleteItem,
+  downloadAnexo,
 };

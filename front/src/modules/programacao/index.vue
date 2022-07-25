@@ -35,9 +35,14 @@
       >
         <v-row>
           <v-col cols="12" sm="12" md="12" xs="12">
+            <img :src="srcImage" width="50" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" sm="12" md="12" xs="12">
             <v-file-input
               accept="image/*"
-              v-model="formUpload"
+              v-model="uploadFile"
               counter
               show-size
               label="Upload de Arquivos"
@@ -51,7 +56,8 @@
             <DataTableInsider
               :headers="tblUpload.headers"
               :items="itemsUpload"
-              @onClickEdit="editUpload"
+              :hideBtnEdit="false"
+              @onClickDownload="downloadFile"
               @onClickDelete="deleteUploadDialog"
             >
               <template v-slot:top>
@@ -64,6 +70,16 @@
           </v-col>
         </v-row>
       </v-form>
+    </Dialog>
+    <Dialog
+      v-model="tblUpload.dialogDelete"
+      :maxWidth="600"
+      :title="''"
+      :closeClick="closeDeleteUpload"
+      :deleteClick="deleteUploadConfirm"
+      :isDelete="true"
+    >
+      <h3>Tem certeza que deseja excluir este produto?</h3>
     </Dialog>
   </div>
 </template>
@@ -82,6 +98,7 @@ import Select from "../../components/Inputs/Select.vue";
 import Dialog from "../../components/UI/Dialog.vue";
 import DataTableInsider from "../../components/UI/DataTableInsider.vue";
 import HeaderDataTableInsider from "../../components/UI/HeaderDataTableInsider.vue";
+import Vue from "vue";
 
 export default {
   name: "programacaoModule",
@@ -111,13 +128,13 @@ export default {
       tblUpload: { ...constants.tblUpload },
       filter: {},
       drawer: null,
-      formUpload: null,
+      uploadFile: null,
       itemsUpload: [],
+      idDocument: null,
     };
   },
   async mounted() {
     await this.search();
-    // this.tblUpload.dialog = true;
   },
   methods: {
     ...mapActions({
@@ -131,6 +148,8 @@ export default {
       reloadIndex: "$_deleteGlobal/reloadIndex",
       actionProgramacaoDocumento: "$_programacaoDocumento/createItem",
       actionDocumento: "$_documento/createItem",
+      actionDeleteDocumento: "$_documento/deleteItem",
+      // actionDownloadDocumento: "$_documento/downloadAnexo",
     }),
     async search(search) {
       await this.programacao({ search });
@@ -145,37 +164,56 @@ export default {
     async closeDialog() {
       this.tblUpload.dialog = false;
     },
+    closeDeleteUpload() {
+      this.tblUpload.dialogDelete = false;
+    },
+    deleteUploadDialog(item) {
+      this.idDocument = item.id;
+      this.tblUpload.dialogDelete = true;
+    },
+    async deleteUploadConfirm() {
+      const { status } = await this.actionDeleteDocumento(this.idDocument);
+      if (status === 200) {
+        await this.search();
+        this.tblUpload.dialogDelete = false;
+        Swal.messageToast(this.$strings.item_excluido, "success");
+      }
+    },
     async saveReceipt() {
       this.formValidated = await this.$refs.form.validate();
       if (!this.formValidated) {
         return false;
       }
+
       const payload = new FormData();
 
-      payload.append("file", this.formUpload, this.formUpload.name);
-      payload.append("name", this.formUpload.name);
-      payload.append("type", this.formUpload.type);
+      payload.append("file", this.uploadFile, this.uploadFile.name);
+      payload.append("name", this.uploadFile.name);
+      payload.append("type", this.uploadFile.type);
       payload.append("programation_id", this.tblUpload.programation_id);
 
       const result = await this.actionDocumento(payload);
       if (result.status === 201) {
         await this.search();
-        this.formUpload = null;
+        this.uploadFile = null;
+        this.$refs.form.reset();
         Swal.messageToast(this.$strings.msg_adicionar, "success");
       }
     },
-    async editUpload(item) {
-      this.tblUpload.isEdit = true;
-      // this.formStep3.product_id = item.pivot.product_id;
-      // this.formStep3.quantidade = item.quantidade;
-
-      this.tblUpload.dialog = true;
-    },
-    deleteUploadDialog(item) {
-      // this.formStep3.product_id = item.pivot.product_id;
-      // this.formStep3.quantidade = item.quantidade;
-
-      this.tblUpload.dialogDelete = true;
+    async downloadFile(item) {
+      Vue.axios
+        .get("/documents/download/" + item.id, { responseType: "blob" })
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", item.name);
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
   },
   beforeCreate() {
@@ -204,6 +242,9 @@ export default {
       getImprirmir: "$_programacao/flagImprimir",
       getReloadIndex: "$_deleteGlobal/reloadIndex",
     }),
+    srcImage() {
+      return this.uploadFile ? URL.createObjectURL(this.uploadFile) : null;
+    },
   },
   watch: {
     getItems(value) {

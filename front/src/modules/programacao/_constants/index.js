@@ -65,7 +65,6 @@ const tblUpload = {
     { text: "Nome", value: "name", align: "left" },
     { text: "Ações", value: "actions", sortable: false },
   ],
-  isEdit: false,
 };
 
 const permissions = {

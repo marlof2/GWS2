@@ -4,14 +4,14 @@
     :headers="headers"
     :items="items"
     hide-default-footer
-    style="height: auto;"
+    style="height: auto"
   >
     <template v-slot:top>
       <slot name="top"></slot>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
       <span class="icons">
-        <v-tooltip bottom>
+        <v-tooltip v-if="hideBtnEdit" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-permissions="permissions ? permissions.alterarInseder : ''"
@@ -43,6 +43,22 @@
           </template>
           <span>Excluir</span>
         </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-permissions="permissions ? permissions.excluirInseder : ''"
+              @click="onClickDownload(item)"
+              icon
+              color="blue"
+              :disabled="disabled"
+            >
+              <v-icon size="26" v-on="on" v-bind="attrs"
+                >mdi-download</v-icon
+              >
+            </v-btn>
+          </template>
+          <span>Download</span>
+        </v-tooltip>
       </span>
     </template>
   </v-data-table>
@@ -55,6 +71,9 @@ export default {
     },
     async onClickDelete(item) {
       this.$emit("onClickDelete", item);
+    },
+    async onClickDownload(item) {
+      this.$emit("onClickDownload", item);
     },
   },
   mounted() {},
@@ -82,6 +101,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    hideBtnEdit: {
+      type: Boolean,
+      default: true,
     },
   },
 };
